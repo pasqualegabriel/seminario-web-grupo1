@@ -1,7 +1,7 @@
-
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
-
+const {Artista} = require('./Models/Artista');
+const {Album} = require('./Models/Album');
 
 class UNQfy {
 
@@ -9,12 +9,13 @@ class UNQfy {
   //   artistData.name (string)
   //   artistData.country (string)
   // retorna: el nuevo artista creado
-  addArtist(artistData) {
-  /* Crea un artista y lo agrega a unqfy.
+    /* Crea un artista y lo agrega a unqfy.
   El objeto artista creado debe soportar (al menos):
     - una propiedad name (string)
     - una propiedad country (string)
   */
+  addArtist(artistData) {
+    return new Artista(artistData);
   }
 
 
@@ -22,12 +23,16 @@ class UNQfy {
   //   albumData.name (string)
   //   albumData.year (number)
   // retorna: el nuevo album creado
-  addAlbum(artistId, albumData) {
-  /* Crea un album y lo agrega al artista con id artistId.
+    /* Crea un album y lo agrega al artista con id artistId.
     El objeto album creado debe tener (al menos):
      - una propiedad name (string)
      - una propiedad year (number)
   */
+  addAlbum(artistId, albumData) {
+    const artist = this.getArtistById(artistId);
+    const album = new Album(albumData);
+    artist.addAlbum(album);
+    return album;
   }
 
 
@@ -36,17 +41,21 @@ class UNQfy {
   //   trackData.duration (number)
   //   trackData.genres (lista de strings)
   // retorna: el nuevo track creado
-  addTrack(albumId, trackData) {
-  /* Crea un track y lo agrega al album con id albumId.
+    /* Crea un track y lo agrega al album con id albumId.
   El objeto track creado debe tener (al menos):
       - una propiedad name (string),
       - una propiedad duration (number),
       - una propiedad genres (lista de strings)
   */
+  addTrack(albumId, trackData) {
+    const album = this.getAlbumById(albumId);
+    const track = new Album(trackData);
+    album.addTrack(track);
+    return track;
   }
 
   getArtistById(id) {
-
+    
   }
 
   getAlbumById(id) {
@@ -101,7 +110,7 @@ class UNQfy {
   static load(filename) {
     const serializedData = fs.readFileSync(filename, {encoding: 'utf-8'});
     //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
-    const classes = [UNQfy];
+    const classes = [UNQfy, Artista, Album];
     return picklify.unpicklify(JSON.parse(serializedData), classes);
   }
 }
@@ -109,5 +118,7 @@ class UNQfy {
 // COMPLETAR POR EL ALUMNO: exportar todas las clases que necesiten ser utilizadas desde un modulo cliente
 module.exports = {
   UNQfy,
+  Artista,
+  Album
 };
 

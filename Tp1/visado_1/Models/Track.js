@@ -1,8 +1,12 @@
 class Track{
-    constructor({id,name,duration,genres}){
+    constructor({id = 0,name,duration,genres}){
         this.id=id;
-        this.nobre=name;
-        this.duracion=duration;
-        this.generos=genres;
+        this.name=name;
+        this.duration=duration;
+        this.genres=genres;
     }
 }
+
+module.exports = {
+    Track
+  };

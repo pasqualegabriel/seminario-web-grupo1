@@ -1,8 +1,8 @@
 class Album{
-    constructor({id,name,year}){
+    constructor({id = 0,name,year}){
         this.id=id;
-        this.nombre=name;
-        this.anioCreacion=year;
+        this.name=name;
+        this.year=year;
         this.tracks=[]
     }
 
@@ -14,3 +14,7 @@ class Album{
         this.tracks.pop(track);
     }
 }
+
+module.exports = {
+    Album,
+  };
