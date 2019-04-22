@@ -4,7 +4,11 @@ const {Artista} = require('./Models/Artista');
 const {Album} = require('./Models/Album');
 
 class UNQfy {
-
+  
+  constructor(){
+    this.listaDeArtistas = [];
+    this.listaDePlayList = [];
+  }
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
   //   artistData.country (string)
@@ -15,7 +19,9 @@ class UNQfy {
     - una propiedad country (string)
   */
   addArtist(artistData) {
-    return new Artista(artistData);
+    let nuevoArtista =new Artista(artistData,this.listaDeArtistas.length);
+    this.listaDeArtistas.push(nuevoArtista);
+    return(this.getArtistById(this.listaDeArtistas.length-1))
   }
 
 
@@ -30,7 +36,8 @@ class UNQfy {
   */
   addAlbum(artistId, albumData) {
     const artist = this.getArtistById(artistId);
-    const album = new Album(albumData);
+    const id = artist.getAlbumsCreados.lenght;
+    const album = new Album(albumData,id);
     artist.addAlbum(album);
     return album;
   }
@@ -55,11 +62,12 @@ class UNQfy {
   }
 
   getArtistById(id) {
-    
+   return( this.listaDeArtistas.find(artist =>artist.id ==id));
   }
 
   getAlbumById(id) {
-
+    let artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
+    return artistaDeAlbum.buscarAlbum(id);
   }
 
   getTrackById(id) {

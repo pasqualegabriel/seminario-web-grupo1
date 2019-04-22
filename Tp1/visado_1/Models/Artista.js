@@ -1,5 +1,5 @@
 class Artista {
-    constructor({id=0,name,country}){
+    constructor({name,country},id){
         this.id=id;
         this.name=name;
         this.country=country;
@@ -8,6 +8,14 @@ class Artista {
 
     addAlbum(album){
         this.albumsCreados.push(album);
+    }
+
+    getAlbumsCreados(){
+        return this.albumsCreados
+    }
+
+    buscarAlbum(id){
+        return this.albumsCreados.find(album => album.id === id)
     }
 
     deleteAlbum(album){
