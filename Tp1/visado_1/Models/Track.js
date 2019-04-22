@@ -1,5 +1,5 @@
 class Track{
-    constructor({id = 0,name,duration,genres}){
+    constructor({id,name,duration,genres}){
         this.id=id;
         this.name=name;
         this.duration=duration;

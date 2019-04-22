@@ -1,5 +1,5 @@
 class Album{
-    constructor({id = 0,name,year}){
+    constructor({id,name,year}){
         this.id=id;
         this.name=name;
         this.year=year;
@@ -8,6 +8,10 @@ class Album{
 
     agregarTrack(track){
         this.tracks.push(track);
+    }
+
+    buscarTrack(id){
+        return (this.tracks.find(track =>track.id ===id))
     }
 
     deleteTrack(track){

@@ -33,7 +33,7 @@ describe('Add, remove and filter data', () => {
 
   });
 
-  it.only('should add an album to an artist', () => {
+  it('should add an album to an artist', () => {
     const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
 
