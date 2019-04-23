@@ -31,8 +31,6 @@ class UNQfy {
   addArtist(artistData) {
     let nuevoArtista =new Artista(artistData,this.listaDeArtistas.length);
     this.listaDeArtistas.push(nuevoArtista);
-    console.log(this.getArtistById(this.listaDeArtistas.length-1));
-    
     return(this.getArtistById(this.listaDeArtistas.length-1))
   }
 
@@ -70,6 +68,19 @@ class UNQfy {
     const track = new Track(trackData);
     album.agregarTrack(track);
     return track;
+  }
+
+
+  deleteArtist(id){
+   this.artist = this.artist.filter(artist => artist.id !== id)
+  }
+
+  deleteAlbum(id){
+    this.artist.forEach(artist => artist.deleteAlbum(id));
+  }
+
+  deleteTrack(id){
+    this.artist.forEach(artist => artist.albums.forEach(album => album.deleteTrack(id)))
   }
 
   getArtistById(id) {

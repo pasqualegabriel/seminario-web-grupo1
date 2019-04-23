@@ -14,8 +14,8 @@ class Album{
         return (this.tracks.find(track =>track.id ===id))
     }
 
-    deleteTrack(track){
-        this.tracks.pop(track);
+    deleteTrack(id){
+        this.tracks = this.tracks.filter(track => track.id !==id);
     }
 }
 

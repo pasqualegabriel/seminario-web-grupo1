@@ -18,8 +18,8 @@ class Artista {
         return this.albumsCreados.find(album => album.id === id)
     }
 
-    deleteAlbum(album){
-        this.albumsCreados.pop(album);
+    deleteAlbum(id){
+        this.albumsCreados = this.albumsCreados.filter(album => album.id !==id);
     }
 }
 
