@@ -84,7 +84,7 @@ class UNQfy {
   }
 
   getArtistById(id) {
-    return(this.listaDeArtistas.find(artist =>artist.id ==id))   
+    return this.listaDeArtistas.find(artist =>artist.id ==id) 
   }
 
   getAlbumById(id) {
