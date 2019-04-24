@@ -2,6 +2,18 @@
 
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
+const {    
+  AddArtistCommand,
+  AddAlbumCommand,
+  AddTrackCommand,
+  GetArtistByIdCommand,
+  GetAlbumByIdCommand,
+  GetTrackByIdCommand,
+  GetPlaylistByIdCommand,
+  GetTracksMatchingGenresCommand,
+  GetTracksMatchingArtistCommand,
+  CreatePlaylistCommand,
+} = require('./Models/commands/CommandsUnqfy')
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -45,10 +57,36 @@ function saveUNQfy(unqfy, filename = 'data.json') {
    4. Guardar el estado de UNQfy (saveUNQfy)
 
 */
-
+class Action{
+  constructor(){
+    this.commands = {
+        addArtist :               new AddArtistCommand(),
+        addAlbum  :               new AddAlbumCommand(),
+        addTrack  :               new AddTrackCommand(),
+        getArtistById :           new GetArtistByIdCommand(),
+        getAlbumById :            new GetAlbumByIdCommand(),
+        getTrackById :            new GetTrackByIdCommand(),
+        getPlaylistById :         new GetPlaylistByIdCommand(),
+        getTracksMatchingGenres : new GetTracksMatchingGenresCommand(),
+        getTracksMatchingArtist : new GetTracksMatchingArtistCommand(),
+        createPlaylist :          new CreatePlaylistCommand(),
+    }
+  }
+  get(key) { 
+    return this.commands[key];
+   }
+  
+}
 function main() {
-  console.log('arguments: ');
-  process.argv.forEach(argument => console.log(argument));
+
+  const unqFy        = getUNQfy();
+  const nameFunction = process.argv[2];
+  const args         = process.argv.splice(3);
+
+  const operation    = new Action();
+  const f            = operation.get(nameFunction);
+  f.invoke(args,unqFy)  
+  saveUNQfy(unqFy);
 }
 
 main();

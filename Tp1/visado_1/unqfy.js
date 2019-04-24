@@ -15,6 +15,8 @@ class UNQfy {
     - una propiedad name (string)
     - una propiedad country (string)
   */
+    console.log('Test addArtist');
+    console.log(artistData);
   }
 
 
@@ -28,6 +30,9 @@ class UNQfy {
      - una propiedad name (string)
      - una propiedad year (number)
   */
+    console.log('Test addAlbum');
+    console.log(artistId);
+    console.log(albumData);
   }
 
 
@@ -42,35 +47,44 @@ class UNQfy {
       - una propiedad name (string),
       - una propiedad duration (number),
       - una propiedad genres (lista de strings)
-  */
+      */
+    console.log('Test addTrack');
+    console.log(albumId);
+    console.log(trackData);
   }
 
   getArtistById(id) {
-
+    console.log('Test getArtistById');
+    console.log(id);
   }
 
   getAlbumById(id) {
-
+    console.log('Test getAlbumById');
+    console.log(id);
   }
 
   getTrackById(id) {
-
+    console.log('Test getTrackById');
+    console.log(id);
   }
 
   getPlaylistById(id) {
-
+    console.log('Test getPlaylistById');
+    console.log(id);
   }
 
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
-
+    console.log('Test getTracksMatchingGenres');
+    console.log(genres);
   }
 
   // artistName: nombre de artista(string)
   // retorna: los tracks interpredatos por el artista con nombre artistName
   getTracksMatchingArtist(artistName) {
-
+    console.log('Test getTracksMatchingArtist');
+    console.log(artistName);
   }
 
 
@@ -85,7 +99,10 @@ class UNQfy {
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-
+    console.log('Test createPlaylist');
+    console.log(name);
+    console.log(genresToInclude);
+    console.log(maxDuration);
   }
 
   save(filename) {
