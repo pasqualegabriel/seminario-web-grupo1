@@ -80,7 +80,7 @@ class UNQfy {
   }
 
   deleteTrack(id){
-    this.artist.forEach(artist => artist.albums.forEach(album => album.deleteTrack(id)))
+    this.artist.forEach(artist => artist.buscarYBorrarTracks(id))
   }
 
   getArtistById(id) {
