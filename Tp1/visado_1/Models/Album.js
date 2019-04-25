@@ -1,8 +1,8 @@
 class Album{
     constructor({id,name,year}){
         this.id=id;
-        this.nombre=name;
-        this.anioCreacion=year;
+        this.name=name;
+        this.year=year;
         this.tracks=[]
     }
 
@@ -10,7 +10,15 @@ class Album{
         this.tracks.push(track);
     }
 
-    deleteTrack(track){
-        this.tracks.pop(track);
+    buscarTrack(id){
+        return (this.tracks.find(track =>track.id ===id))
+    }
+
+    deleteTrack(id){
+        this.tracks = this.tracks.filter(track => track.id !==id);
     }
 }
+
+module.exports = {
+    Album,
+  };

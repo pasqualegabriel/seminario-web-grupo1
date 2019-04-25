@@ -86,6 +86,7 @@ function main() {
 
   const operation    = new HandleCommand();
   const command      = operation.get(nameFunction);
+  console.log(command);
   command.invoke(args,unqFy)  
   
   saveUNQfy(unqFy);

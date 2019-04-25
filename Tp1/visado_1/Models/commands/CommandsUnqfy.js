@@ -3,6 +3,7 @@
   //   artistData.country (string)
 class AddArtistCommand{
     invoke(args,unqfy){
+        console.log(args)
         const artistData = {
             name       : args[0],
             country    : args[1],
