@@ -20,7 +20,7 @@ class Usuario {
   
     vecesEscuchado(track){
         return this.tracksEscuchados[track]
-      }
+    }
 }
 
 

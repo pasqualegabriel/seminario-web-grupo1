@@ -30,10 +30,12 @@ class UNQfy {
     - una propiedad country (string)
   */
   addArtist(artistData) {
-    console.log(artistData);
     let nuevoArtista =new Artista(artistData.name,artistData.country,this.nextIdArtist);
+    console.log(nuevoArtista);
+    
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist ++;
+    console.log("Se Registro Exitosamente");
     return(this.getArtistById(nuevoArtista.id))
   }
 
@@ -75,15 +77,17 @@ class UNQfy {
 
 
   deleteArtist(id){
-   this.artist = this.artist.filter(artist => artist.id !== id)
+   this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id != id)   
+   console.log(this.listaDeArtistas);
+   
   }
 
   deleteAlbum(id){
-    this.artist.forEach(artist => artist.deleteAlbum(id));
+    this.listaDeArtistas.forEach(artist => artist.deleteAlbum(id));
   }
 
   deleteTrack(id){
-    this.artist.forEach(artist => artist.buscarYBorrarTracks(id))
+    this.listaDeArtistas.forEach(artist => artist.buscarYBorrarTracks(id))
   }
 
   getArtistById(id) {

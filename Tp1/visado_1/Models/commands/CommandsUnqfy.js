@@ -48,6 +48,7 @@ class AddTrackCommand{
 class GetArtistByIdCommand{
     invoke(args,unqfy){
         const artistId  = Number(args[0]);
+        console.log(unqfy.getArtistById(artistId))
         unqfy.getArtistById(artistId);
     }
 }
@@ -96,6 +97,15 @@ class CreatePlaylistCommand{
     }
 }
 
+class DeleteArtistCommand{
+    invoke(args,unqfy){
+        const nombreDeArtista = unqfy.getArtistById(args).name
+        unqfy.deleteArtist(args)
+        console.log("Se ha Borrado a "+nombreDeArtista+" exitosamente");
+        
+    }
+}
+
 
 module.exports = {
     AddArtistCommand,
@@ -108,4 +118,5 @@ module.exports = {
     GetTracksMatchingGenresCommand,
     GetTracksMatchingArtistCommand,
     CreatePlaylistCommand,
+    DeleteArtistCommand,
 };
