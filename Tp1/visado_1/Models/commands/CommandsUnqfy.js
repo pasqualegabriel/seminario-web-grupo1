@@ -2,7 +2,7 @@ class AddArtistCommand{
     invoke(args,unqfy){
         const artistData = {
             name       : args[0],
-            country    : args[1],
+            country    : args[1],s
         }
         unqfy.addArtist(artistData)
     }
@@ -22,11 +22,14 @@ class AddAlbumCommand{
 
 class AddTrackCommand{
     invoke(args,unqfy){
-        const albumId  = args[0];
+        const albumId  = args.shift();
+        const name = args.shift();
+        const duration = args.shift();
+        
         const trackData = {
-            name      : args[1],
-            duration  : args[2],
-            genres    : args[3].split(','),
+            name      : name,
+            duration  : duration,
+            genres    : args,
         }
         unqfy.addTrack(albumId,trackData);
     }
@@ -62,8 +65,7 @@ class GetPlaylistByIdCommand{
 
 class GetTracksMatchingGenresCommand{
     invoke(args,unqfy){
-        const genres = args[0].split(',');
-        unqfy.getTracksMatchingGenres(genres);
+        unqfy.getTracksMatchingGenres(args);
     }
 }
 
@@ -76,10 +78,9 @@ class GetTracksMatchingArtistCommand{
 
 class CreatePlaylistCommand{
     invoke(args,unqfy){
-        const name = args[0];
-        const genresToInclude = args[1].split(',');
-        const maxDuration = args[2];
-        unqfy.createPlaylist(name,genresToInclude,maxDuration);
+        const name = args.shift();
+        const maxDuration = args.pop();
+        unqfy.createPlaylist(name,args,maxDuration);
     }
 }
 

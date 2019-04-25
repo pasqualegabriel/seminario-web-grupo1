@@ -57,7 +57,7 @@ function saveUNQfy(unqfy, filename = 'data.json') {
    4. Guardar el estado de UNQfy (saveUNQfy)
 
 */
-class Action{
+class HandleCommand{
   constructor(){
     this.commands = {
         addArtist :               new AddArtistCommand(),
@@ -80,12 +80,14 @@ class Action{
 function main() {
 
   const unqFy        = getUNQfy();
+  
   const nameFunction = process.argv[2];
   const args         = process.argv.splice(3);
 
-  const operation    = new Action();
-  const f            = operation.get(nameFunction);
-  f.invoke(args,unqFy)  
+  const operation    = new HandleCommand();
+  const command      = operation.get(nameFunction);
+  command.invoke(args,unqFy)  
+  
   saveUNQfy(unqFy);
 }
 
