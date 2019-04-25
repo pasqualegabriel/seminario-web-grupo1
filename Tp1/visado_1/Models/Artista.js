@@ -1,5 +1,5 @@
 class Artista {
-    constructor({name,country},id){
+    constructor(name,country,id){
         this.id=id;
         this.name=name;
         this.country=country;

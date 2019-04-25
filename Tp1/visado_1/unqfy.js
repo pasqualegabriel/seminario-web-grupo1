@@ -15,9 +15,10 @@ class Handler{
 class UNQfy {
   
   constructor(){
-    this.handler =new Handler()
     this.listaDeArtistas = [];
     this.listaDePlayList = [];
+    this.nextIdArtist   = 1;
+    this.nextIdPlayList = 1;
   }
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
@@ -29,9 +30,11 @@ class UNQfy {
     - una propiedad country (string)
   */
   addArtist(artistData) {
-    let nuevoArtista =new Artista(artistData,this.listaDeArtistas.length);
+    console.log(artistData);
+    let nuevoArtista =new Artista(artistData.name,artistData.country,this.nextIdArtist);
     this.listaDeArtistas.push(nuevoArtista);
-    return(this.getArtistById(this.listaDeArtistas.length-1))
+    this.nextIdArtist ++;
+    return(this.getArtistById(nuevoArtista.id))
   }
 
 
@@ -96,7 +99,7 @@ class UNQfy {
         return(artistaDeAlbum.buscarAlbum(id) );
       }
     } catch (e) {
-      e.handle(this.handler)
+      e.handle(new Handler())
     }
    
     
@@ -108,19 +111,22 @@ class UNQfy {
   }
 
   getPlaylistById(id) {
-
+    console.log('Test getPlaylistById');
+    console.log(id);
   }
 
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
-
+    console.log('Test getTracksMatchingGenres');
+    console.log(genres);
   }
 
   // artistName: nombre de artista(string)
   // retorna: los tracks interpredatos por el artista con nombre artistName
   getTracksMatchingArtist(artistName) {
-
+    console.log('Test getTracksMatchingArtist');
+    console.log(artistName);
   }
 
 
@@ -135,7 +141,10 @@ class UNQfy {
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-
+    console.log('Test createPlaylist');
+    console.log(name);
+    console.log(genresToInclude);
+    console.log(maxDuration);
   }
 
   save(filename) {
