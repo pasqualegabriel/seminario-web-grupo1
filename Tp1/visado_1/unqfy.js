@@ -111,9 +111,7 @@ class UNQfy {
       }
     } catch (e) {
       e.handle(new Handler())
-    }
-   
-    
+    } 
   }
 
   getTrackById(id) {
@@ -133,9 +131,12 @@ class UNQfy {
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
-
+    const albums = flatMap(this.listaDeArtistas, artist => artist.getAlbumsCreados());
+    const tracks = flatMap(albums, album => album.getTracks());
+    const tracksFilteredByGenres = tracks.filter(track => track.getGenres().some(genre => genres.includes(genre)));
     console.log('Test getTracksMatchingGenres');
-    console.log(genres);
+    console.log(tracksFilteredByGenres);
+    return tracksFilteredByGenres;
   }
 
   // artistName: nombre de artista(string)

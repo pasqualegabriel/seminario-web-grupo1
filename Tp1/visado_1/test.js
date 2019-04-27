@@ -53,7 +53,7 @@ describe('Add, remove and filter data', () => {
     assert.lengthOf(track.genres, 2);
   });
 
-  it.only('should find different things by name', () => {
+  it('should find different things by name', () => {
     const artist1 = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Roses Album', 1987);
     const track = createAndAddTrack(unqfy, album1.id, 'Roses track', 200, ['pop', 'movie']);
@@ -68,7 +68,7 @@ describe('Add, remove and filter data', () => {
     });
   });
 
-  it('should get all tracks matching genres', () => {
+  it.only('should get all tracks matching genres', () => {
     const artist1 = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Appetite for Destruction', 1987);
     const t0 = createAndAddTrack(unqfy, album1.id, 'Welcome to the jungle', 200, ['rock', 'hard rock', 'movie']);
@@ -82,7 +82,7 @@ describe('Add, remove and filter data', () => {
 
     const tracksMatching = unqfy.getTracksMatchingGenres(['pop', 'movie']);
 
-    // assert.equal(tracks.matching.constructor.name, Array);
+    assert.equal(tracks.matching.constructor.name, Array);
     assert.isArray(tracksMatching);
     assert.lengthOf(tracksMatching, 4);
     assert.equal(tracksMatching.includes(t0), true);

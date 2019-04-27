@@ -5,6 +5,10 @@ class Track{
         this.duration=duration;
         this.genres=genres;
     }
+
+    getGenres(){
+        return this.genres;
+    }
 }
 
 module.exports = {
