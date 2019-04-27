@@ -5,6 +5,7 @@ const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
+const {flatMap} = require('lodash');
 
 class Handler{
   handleAlbumError(){
@@ -39,7 +40,7 @@ class UNQfy {
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist ++;
     console.log("Se Registro Exitosamente");
-    return(this.getArtistById(nuevoArtista.id))
+    return this.getArtistById(nuevoArtista.id);
   }
 
 
@@ -52,9 +53,9 @@ class UNQfy {
      - una propiedad name (string)
      - una propiedad year (number)
   */
-  addAlbum(artistId, albumData) {
+  addAlbum(artistId, {name, year}) {
     const artist = this.getArtistById(artistId);
-    const album = new Album(albumData,artistId);
+    const album = new Album(this.nextIdAlbum, artistId, name, year);
     artist.addAlbum(album);
     this.nextIdAlbum++;
     return album;
@@ -72,9 +73,9 @@ class UNQfy {
       - una propiedad duration (number),
       - una propiedad genres (lista de strings)
   */
-  addTrack(albumId, trackData) {
+  addTrack(albumId, { name, duration, genres }) {
     const album = this.getAlbumById(albumId);
-    const track = new Track(trackData);
+    const track = new Track(this.nextIdTrack, name, duration, genres);
     album.agregarTrack(track);
     this.nextIdTrack++;
     return track;
@@ -116,8 +117,10 @@ class UNQfy {
   }
 
   getTrackById(id) {
-    let albumDondeEstaElTrack =this.getAlbumById(id)
-    return (albumDondeEstaElTrack.buscarTrack(id))
+    const albumDondeEstaElTrack = this.getAlbumById(id);
+    const track = albumDondeEstaElTrack.buscarTrack(id);
+    console.log(track);
+    return track;
   }
 
   getPlaylistById(id) {
@@ -130,6 +133,7 @@ class UNQfy {
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
+
     console.log('Test getTracksMatchingGenres');
     console.log(genres);
   }
@@ -137,8 +141,11 @@ class UNQfy {
   // artistName: nombre de artista(string)
   // retorna: los tracks interpredatos por el artista con nombre artistName
   getTracksMatchingArtist(artistName) {
-    console.log('Test getTracksMatchingArtist');
-    console.log(artistName);
+    const artist = this.listaDeArtistas.find(artista => artista.name === artistName);
+    const tracks = flatMap(artist.getAlbumsCreados(), album => album.getTracks());
+    console.log(`Test getTracksMatchingArtist: ${artistName}`);
+    console.log(tracks);
+    return tracks;
   }
 
 

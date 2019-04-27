@@ -1,6 +1,7 @@
 class Album{
-    constructor({id,name,year}){
+    constructor(id,artistId,name,year){
         this.id=id;
+        this.artistId=artistId;
         this.name=name;
         this.year=year;
         this.tracks=[]
@@ -8,6 +9,10 @@ class Album{
 
     agregarTrack(track){
         this.tracks.push(track);
+    }
+
+    getTracks(){
+        return this.tracks;
     }
 
     buscarTrack(id){
