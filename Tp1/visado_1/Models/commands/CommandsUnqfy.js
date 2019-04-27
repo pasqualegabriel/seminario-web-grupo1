@@ -64,6 +64,8 @@ class GetTrackByIdCommand{
     invoke(args,unqfy){
         const trackId  = Number(args[0]);
         unqfy.getTrackById(trackId);
+        console.log(unqfy.getTrackById(trackId));
+        
     }
 }
 
@@ -123,6 +125,22 @@ class DeleteTrackCommand{
     }
 }
 
+class AddUsuario{
+    invoke(args,unqfy){
+        unqfy.addUsuario(args[0]);
+        console.log("Se ha Creado a exitosamente");
+        
+    }
+}
+
+
+class Escuchar{
+    invoke(args,unqfy){       
+        unqfy.escuchar(Number(args[0]),Number(args[1]));
+        console.log("Alto Tema!");
+        
+    }
+}
 
 module.exports = {
     AddArtistCommand,
@@ -138,4 +156,6 @@ module.exports = {
     DeleteArtistCommand,
     DeleteAlbumCommand,
     DeleteTrackCommand,
+    AddUsuario,
+    Escuchar,
 };

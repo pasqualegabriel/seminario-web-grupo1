@@ -16,6 +16,8 @@ const {
   DeleteArtistCommand,
   DeleteAlbumCommand,
   DeleteTrackCommand,
+  AddUsuario,
+  Escuchar,
 } = require('./Models/commands/CommandsUnqfy')
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
@@ -74,8 +76,10 @@ class HandleCommand{
         getTracksMatchingArtist : new GetTracksMatchingArtistCommand(),
         createPlaylist :          new CreatePlaylistCommand(),
         deleteArtist :            new DeleteArtistCommand(), 
-        deleteAlbum :            new DeleteAlbumCommand(), 
-        deleteTrack:            new DeleteTrackCommand(), 
+        deleteAlbum :             new DeleteAlbumCommand(), 
+        deleteTrack:              new DeleteTrackCommand(),
+        addUsuario:               new AddUsuario(),
+        escuchar:                 new Escuchar(),
     }
   }
   get(key) { 

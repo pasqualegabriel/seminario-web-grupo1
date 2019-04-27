@@ -22,6 +22,10 @@ class Artista {
         this.albumsCreados.forEach(albums => albums.deleteTrack(id));
     }
 
+    buscarTracks(id){
+       return( this.albumsCreados.find(albums => albums.buscarTrack(id)));
+    }
+
     deleteAlbum(id){
         this.albumsCreados = this.albumsCreados.filter(album => album.id != id);
     }

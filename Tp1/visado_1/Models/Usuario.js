@@ -1,6 +1,8 @@
 class Usuario {
-    constructor(){
-        this.tracksEscuchados = {}
+    constructor(_id,_name){
+        this.id = _id;
+        this.name= _name
+        this.tracksEscuchados = {};
     }
 
     escucharTrack(track){
@@ -8,9 +10,8 @@ class Usuario {
         if(temaAEscuchar){
             this.tracksEscuchados[track]++
         }else{
-            this.tracksEscuchados[track]=1
+            this.tracksEscuchados[track]=1;
         }
-       
     }
 
     
@@ -24,6 +25,7 @@ class Usuario {
 }
 
 
-
-    
+module.exports = {
+    Usuario,
+  };
 

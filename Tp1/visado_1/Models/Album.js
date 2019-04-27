@@ -16,7 +16,8 @@ class Album{
     }
 
     buscarTrack(id){
-        return (this.tracks.find(track =>track.id ===id))
+        
+        return (this.tracks.find(track =>track.id ===id));
     }
 
     deleteTrack(id){

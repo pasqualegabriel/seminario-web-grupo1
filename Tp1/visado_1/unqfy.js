@@ -4,6 +4,7 @@ const {Artista} = require('./Models/Artista');
 const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
+const {Usuario} = require('./Models/Usuario');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
 const {flatMap} = require('lodash');
 
@@ -23,7 +24,29 @@ class UNQfy {
     this.nextIdAlbum = 1;
     this.nextIdTrack = 1;
     this.nextIdPlayList = 1;
+    this.nextIdUsuario = 1;
+    this.listaDeUsuarios =[];
   }
+
+  addUsuario(args){
+    let nuevoUsuario = new Usuario(this.nextIdUsuario,args);
+    this.listaDeUsuarios.push(nuevoUsuario);
+    this.nextIdUsuario ++;
+  }
+
+  escuchar(trackId,userId){
+
+    const usuarioEncontrado = this.listaDeUsuarios.find(usuario => usuario.id === userId)
+    
+    const track = this.getTrackById(trackId); 
+    usuarioEncontrado.escucharTrack(track);
+  }
+
+  imprimirThisIs(){
+
+  }
+
+
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
   //   artistData.country (string)
@@ -114,9 +137,7 @@ class UNQfy {
   }
 
   getTrackById(id) {
-    const albumDondeEstaElTrack = this.getAlbumById(id);
-    const track = albumDondeEstaElTrack.buscarTrack(id);
-    console.log(track);
+    const track = this.listaDeArtistas.find(artista => artista.buscarTracks(id));
     return track;
   }
 
@@ -180,7 +201,7 @@ class UNQfy {
   static load(filename) {
     const serializedData = fs.readFileSync(filename, {encoding: 'utf-8'});
     //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
-    const classes = [UNQfy, Artista, Album, Track, Playlist];
+    const classes = [UNQfy, Artista, Album, Track, Playlist,Usuario];
     return picklify.unpicklify(JSON.parse(serializedData), classes);
   }
 }
@@ -191,6 +212,7 @@ module.exports = {
   Artista,
   Album,
   Track,
-  Playlist
+  Playlist,
+  Usuario
 };
 
