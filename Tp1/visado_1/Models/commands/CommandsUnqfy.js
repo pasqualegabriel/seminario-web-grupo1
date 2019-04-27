@@ -82,8 +82,8 @@ class GetTracksMatchingGenresCommand{
 
 class GetTracksMatchingArtistCommand{
     invoke(args,unqfy){
-        const artistName = args[0];
-        unqfy.getTracksMatchingArtist(artistName);
+        const artistId = Number(args[0]);
+        unqfy.getTracksMatchingArtist(artistId);
     }
 }
   // name: nombre de la playlist
