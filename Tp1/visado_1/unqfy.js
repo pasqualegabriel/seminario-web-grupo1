@@ -5,11 +5,7 @@ const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
-<<<<<<< HEAD
-const {ArtistDAO} = require('./Models/ArtistRepository')
-=======
 const {flatMap} = require('lodash');
->>>>>>> b1038b97bb6f89be0a1c21059a389f766f2d14d5
 
 class Handler{
   handleAlbumError(){
@@ -21,18 +17,13 @@ class Handler{
 class UNQfy {
   
   constructor(){
-<<<<<<< HEAD
     this.handler =new Handler()
-    this.artists = [];
-    this.playlists = [];
-=======
     this.listaDeArtistas = [];
     this.listaDePlayList = [];
     this.nextIdArtist   = 1;
     this.nextIdAlbum = 1;
     this.nextIdTrack = 1;
     this.nextIdPlayList = 1;
->>>>>>> b1038b97bb6f89be0a1c21059a389f766f2d14d5
   }
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
@@ -44,19 +35,13 @@ class UNQfy {
     - una propiedad country (string)
   */
   addArtist(artistData) {
-<<<<<<< HEAD
-    let nuevoArtista = new Artista(artistData,this.artists.length);
-    this.artists.push(nuevoArtista);
-    return(nuevoArtista);
-=======
-    let nuevoArtista =new Artista(artistData.name,artistData.country,this.nextIdArtist);
+    const nuevoArtista =new Artista(this.nextIdArtist, artistData.name, artistData.country);
     console.log(nuevoArtista);
     
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist ++;
     console.log("Se Registro Exitosamente");
     return this.getArtistById(nuevoArtista.id);
->>>>>>> b1038b97bb6f89be0a1c21059a389f766f2d14d5
   }
 
 
@@ -89,6 +74,7 @@ class UNQfy {
       - una propiedad duration (number),
       - una propiedad genres (lista de strings)
   */
+
   addTrack(albumId, { name, duration, genres }) {
     const album = this.getAlbumById(albumId);
     const track = new Track(this.nextIdTrack, name, duration, genres);
@@ -113,15 +99,11 @@ class UNQfy {
   }
 
   getArtistById(id) {
-<<<<<<< HEAD
-    return(this.artists.find(artist =>artist.id ==id))   
-  }
-
-  getAlbumById(id) {
-    const artist = this.artists.find(artista => artista.buscarAlbum(id));
-    return(artist.buscarAlbum(id));
-=======
-    return this.listaDeArtistas.find(artist => artist.id == id) 
+    const artist = this.listaDeArtistas.find(artist => artist.id === id)
+    if(!artist) {
+      throw new ErrorArtistaInexistente;
+    } 
+    return artist 
   }
 
   getAlbumById(id) {
@@ -135,7 +117,6 @@ class UNQfy {
     } catch (e) {
       e.handle(new Handler())
     } 
->>>>>>> b1038b97bb6f89be0a1c21059a389f766f2d14d5
   }
 
   getTrackById(id) {
@@ -155,7 +136,7 @@ class UNQfy {
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
-    const albums = flatMap(this.listaDeArtistas, artist => artist.getAlbumsCreados());
+    const albums = flatMap(this.listaDeArtistas, artist => artist.getAlbums());
     const tracks = flatMap(albums, album => album.getTracks());
     const tracksFilteredByGenres = tracks.filter(track => track.getGenres().some(genre => genres.includes(genre)));
     console.log('Test getTracksMatchingGenres');
@@ -167,7 +148,7 @@ class UNQfy {
   // retorna: los tracks interpredatos por el artista con nombre artistName
   getTracksMatchingArtist(artistId) {
     const artist = this.getArtistById(artistId);
-    const tracks = flatMap(artist.getAlbumsCreados(), album => album.getTracks());
+    const tracks = flatMap(artist.getAlbums(), album => album.getTracks());
     console.log(`Test getTracksMatchingArtist: ${artistId}`);
     console.log(tracks);
     return tracks;
@@ -176,7 +157,7 @@ class UNQfy {
 
   // name: nombre de la playlist
   // genresToInclude: array de generos
-  // maxDuration: duración en segundos
+  // duration: duración en segundos
   // retorna: la nueva playlist creada
   /*** Crea una playlist y la agrega a unqfy. ***
     El objeto playlist creado debe soportar (al menos):
@@ -184,48 +165,45 @@ class UNQfy {
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-<<<<<<< HEAD
-    return undefined;
-  }
-
-  findAllArtistByName(name) {
-    return this.artists.filter(artist => artist.name.includes(name));
-  }
-
-  findAllAlbums() {
-    return this.artists.concat(artist => artist.getAlbumsCreados());
-  }
-
-  findAllAlbumsByName(name) {
-    //return this.artists.reduce( (acc, artist) => acc.conat(artist.albums.filter(album => album.name.includes(name))));
-    return this.findAllAlbums().filter(album => album.name.includes(name));
-  }
-
-
-  findAllTracksByName(name) {
-    return this.artists.reduce( (acc, artist) =>
-           acc.concat( artist.albums.reduce((acc2, album) => 
-              album.tracks.list( track => track.name.includes(name)) )));
-  }
-
-  findAllPlaylistsByName(name) {
-    return this.playlists.filter(playlist => playlist.name.includes(name));
-  }
-
-  searchByName(name) {
-    return {  artists: this.findAllArtistByName(name),
-              //albums: this.findAllAlbumsByName(name),
-              //tracks: this.findAllTracksByName(name),
-              //playlists: this.findAllPlaylistsByName(name),
-    }
-=======
-  createPlaylist(name, genresToInclude, maxDuration) {
-    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, maxDuration);
+ createPlaylist(name, genresToInclude, duration) {
+    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration);
     this.nextIdPlayList++;
     this.listaDePlayList.push(playlist);
     console.log(`Se ha creado playlist, id: ${playlist.id}, name: ${name}`)
     return playlist;
->>>>>>> b1038b97bb6f89be0a1c21059a389f766f2d14d5
+  }
+
+  findAllArtistByName(name) {
+    return this.listaDeArtistas.filter(artist => artist.name.includes(name));
+  }
+
+  findAllAlbums() {
+    return flatMap(this.listaDeArtistas, artist => artist.getAlbums());
+  }
+
+  findAllAlbumsByName(name) {
+    return this.findAllAlbums().filter(album => album.name.includes(name));
+  }
+
+  findAllTracksByName(name) {
+    //return this.artists.reduce( (acc, artist) =>
+    //       acc.concat( artist.albums.reduce((acc2, album) => 
+    //          album.tracks.list( track => track.name.includes(name)) )));
+
+    return flatMap(this.findAllAlbums(), album => album.getTracks()).filter(track => track.name.includes(name))
+  }
+
+  findAllPlaylistsByName(name) {
+    return this.listaDePlayList.filter(playlist => playlist.name.includes(name));
+  }
+
+  searchByName(name) {
+    return {  artists: this.findAllArtistByName(name),
+              albums: this.findAllAlbumsByName(name),
+              tracks: this.findAllTracksByName(name),
+              playlists: this.findAllPlaylistsByName(name),
+    }
+
   }
 
 

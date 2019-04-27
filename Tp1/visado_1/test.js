@@ -13,8 +13,8 @@ function createAndAddAlbum(unqfy, artistId, albumName, albumYear) {
   return unqfy.addAlbum(artistId, { name: albumName, year: albumYear });
 }
 
-function createAndAddTrack(unqfy, albumName, trackName, trackDuraction, trackGenres) {
-  return unqfy.addTrack(albumName, { name: trackName, duration: trackDuraction, genres: trackGenres });
+function createAndAddTrack(unqfy, albumId, trackName, trackDuraction, trackGenres) {
+  return unqfy.addTrack(albumId, { name: trackName, duration: trackDuraction, genres: trackGenres });
 }
 
 
@@ -53,18 +53,18 @@ describe('Add, remove and filter data', () => {
     assert.lengthOf(track.genres, 2);
   });
 
-  it.only('should find different things by name', () => {
+  it('should find different things by name', () => {
     const artist1 = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Roses Album', 1987);
     const track = createAndAddTrack(unqfy, album1.id, 'Roses track', 200, ['pop', 'movie']);
-    //const playlist = unqfy.createPlaylist('Roses playlist', ['pop'], 1400);
+    const playlist = unqfy.createPlaylist('Roses playlist', ['pop'], 1400);
 
     const results = unqfy.searchByName('Roses');
     assert.deepEqual(results, {
       artists: [artist1],
-      //albums: [album1],
-      //tracks: [track],
-      //playlists: [playlist],
+      albums: [album1],
+      tracks: [track],
+      playlists: [playlist],
     }); 
   });
 
@@ -106,7 +106,7 @@ describe('Add, remove and filter data', () => {
     createAndAddTrack(unqfy, album3.id, 'Another song', 500, ['classic']);
     createAndAddTrack(unqfy, album3.id, 'Another song II', 500, ['movie']);
 
-    const matchingTracks = unqfy.getTracksMatchingArtist(artist);
+    const matchingTracks = unqfy.getTracksMatchingArtist(artist.id);
 
     assert.isArray(matchingTracks);
     assert.lengthOf(matchingTracks, 3);
@@ -137,8 +137,13 @@ describe('Playlist Creation and properties', () => {
 
     const playlist = unqfy.createPlaylist('my playlist', ['pop', 'rock'], 1400);
 
+    playlist.addTrack(t1)    
+    playlist.addTrack(t2)
+    playlist.addTrack(t3)
+    playlist.addTrack(t4)
+
     assert.equal(playlist.name, 'my playlist');
-    assert.isAtMost(playlist.duration(), 1400);
+    assert.isAtMost(playlist.duration, 1400);
     assert.isTrue(playlist.hasTrack(t1));
     assert.isTrue(playlist.hasTrack(t2));
     assert.isTrue(playlist.hasTrack(t3));
