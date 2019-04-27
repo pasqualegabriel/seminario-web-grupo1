@@ -98,7 +98,7 @@ class UNQfy {
   }
 
   getArtistById(id) {
-    return this.listaDeArtistas.find(artist =>artist.id ==id) 
+    return this.listaDeArtistas.find(artist => artist.id == id) 
   }
 
   getAlbumById(id) {
@@ -141,10 +141,10 @@ class UNQfy {
 
   // artistName: nombre de artista(string)
   // retorna: los tracks interpredatos por el artista con nombre artistName
-  getTracksMatchingArtist(artistName) {
-    const artist = this.listaDeArtistas.find(artista => artista.name === artistName);
+  getTracksMatchingArtist(artistId) {
+    const artist = this.getArtistById(artistId);
     const tracks = flatMap(artist.getAlbumsCreados(), album => album.getTracks());
-    console.log(`Test getTracksMatchingArtist: ${artistName}`);
+    console.log(`Test getTracksMatchingArtist: ${artistId}`);
     console.log(tracks);
     return tracks;
   }
