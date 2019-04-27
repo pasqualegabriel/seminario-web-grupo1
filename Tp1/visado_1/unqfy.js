@@ -3,6 +3,7 @@ const fs = require('fs'); // para cargar/guarfar unqfy
 const {Artista} = require('./Models/Artista');
 const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
+const {Playlist} = require('./Models/Playlist');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
 
 class Handler{
@@ -18,6 +19,8 @@ class UNQfy {
     this.listaDeArtistas = [];
     this.listaDePlayList = [];
     this.nextIdArtist   = 1;
+    this.nextIdAlbum = 1;
+    this.nextIdTrack = 1;
     this.nextIdPlayList = 1;
   }
   // artistData: objeto JS con los datos necesarios para crear un artista
@@ -53,6 +56,7 @@ class UNQfy {
     const artist = this.getArtistById(artistId);
     const album = new Album(albumData,artistId);
     artist.addAlbum(album);
+    this.nextIdAlbum++;
     return album;
   }
 
@@ -72,6 +76,7 @@ class UNQfy {
     const album = this.getAlbumById(albumId);
     const track = new Track(trackData);
     album.agregarTrack(track);
+    this.nextIdTrack++;
     return track;
   }
 
@@ -87,7 +92,8 @@ class UNQfy {
   }
 
   deleteTrack(id){
-    this.listaDeArtistas.forEach(artist => artist.buscarYBorrarTracks(id))
+    this.listaDeArtistas.forEach(artist => artist.buscarYBorrarTracks(id));
+    console.log(`Se borro el track ${id}`)
   }
 
   getArtistById(id) {
@@ -115,8 +121,10 @@ class UNQfy {
   }
 
   getPlaylistById(id) {
-    console.log('Test getPlaylistById');
-    console.log(id);
+    const playlist = this.listaDePlayList.find(playlist => playlist.id === id);
+    console.log(`get playlist ${id}`);
+    console.log(playlist);
+    return playlist;
   }
 
   // genres: array de generos(strings)
@@ -138,17 +146,18 @@ class UNQfy {
   // genresToInclude: array de generos
   // maxDuration: duración en segundos
   // retorna: la nueva playlist creada
-  createPlaylist(name, genresToInclude, maxDuration) {
   /*** Crea una playlist y la agrega a unqfy. ***
     El objeto playlist creado debe soportar (al menos):
       * una propiedad name (string)
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-    console.log('Test createPlaylist');
-    console.log(name);
-    console.log(genresToInclude);
-    console.log(maxDuration);
+  createPlaylist(name, genresToInclude, maxDuration) {
+    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, maxDuration);
+    this.nextIdPlayList++;
+    this.listaDePlayList.push(playlist);
+    console.log(`Se ha creado playlist, id: ${playlist.id}, name: ${name}`)
+    return playlist;
   }
 
   save(filename) {
@@ -164,7 +173,7 @@ class UNQfy {
   static load(filename) {
     const serializedData = fs.readFileSync(filename, {encoding: 'utf-8'});
     //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
-    const classes = [UNQfy, Artista, Album,Track];
+    const classes = [UNQfy, Artista, Album, Track, Playlist];
     return picklify.unpicklify(JSON.parse(serializedData), classes);
   }
 }
@@ -175,5 +184,6 @@ module.exports = {
   Artista,
   Album,
   Track,
+  Playlist
 };
 
