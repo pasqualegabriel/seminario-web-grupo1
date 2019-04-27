@@ -53,6 +53,8 @@ class UNQfy {
     const artist = this.getArtistById(artistId);
     const album = new Album(albumData,artistId);
     artist.addAlbum(album);
+    console.log("Se Agrego el album "+album.name+" al Artista "+artist.name);
+    
     return album;
   }
 
@@ -72,14 +74,14 @@ class UNQfy {
     const album = this.getAlbumById(albumId);
     const track = new Track(trackData);
     album.agregarTrack(track);
+    console.log("Se Registro Exitosamente");
     return track;
   }
 
 
   deleteArtist(id){
    this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id != id)   
-   console.log(this.listaDeArtistas);
-   
+
   }
 
   deleteAlbum(id){
