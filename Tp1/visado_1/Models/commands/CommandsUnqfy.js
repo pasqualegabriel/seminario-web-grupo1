@@ -108,18 +108,17 @@ class DeleteArtistCommand{
 
 class DeleteAlbumCommand{
     invoke(args,unqfy){
-        const nombreDeAlbum = unqfy.getAlbumById(args).name
+
         unqfy.deleteAlbum(args)
-        console.log("Se ha Borrado a "+nombreDeAlbum+" exitosamente");
+        console.log("Se ha Borrado a exitosamente");
         
     }
 }
 
 class DeleteTrackCommand{
     invoke(args,unqfy){
-        const nombreDeTrack = unqfy.getTrackById(args).name
         unqfy.deleteTrack(args)
-        console.log("Se ha Borrado a "+nombreDeTrack+" exitosamente");
+        console.log("Se ha Borrado a exitosamente");
         
     }
 }

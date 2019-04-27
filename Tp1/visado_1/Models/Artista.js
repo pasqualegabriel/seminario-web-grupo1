@@ -23,7 +23,7 @@ class Artista {
     }
 
     deleteAlbum(id){
-        this.albumsCreados = this.albumsCreados.filter(album => album.id !==id);
+        this.albumsCreados = this.albumsCreados.filter(album => album.id != id);
     }
 }
 
