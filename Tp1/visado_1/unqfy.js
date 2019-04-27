@@ -4,10 +4,11 @@ const {Artista} = require('./Models/Artista');
 const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
+const {ArtistDAO} = require('./Models/ArtistRepository')
 
 class Handler{
   handleAlbumError(){
-    console.log("El Artista no existe")
+    console.log("El Artista no exi|ste")
   }
 }
 
@@ -16,8 +17,8 @@ class UNQfy {
   
   constructor(){
     this.handler =new Handler()
-    this.listaDeArtistas = [];
-    this.listaDePlayList = [];
+    this.artists = [];
+    this.playlists = [];
   }
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
@@ -29,11 +30,9 @@ class UNQfy {
     - una propiedad country (string)
   */
   addArtist(artistData) {
-    let nuevoArtista =new Artista(artistData,this.listaDeArtistas.length);
-    this.listaDeArtistas.push(nuevoArtista);
-    console.log(this.getArtistById(this.listaDeArtistas.length-1));
-    
-    return(this.getArtistById(this.listaDeArtistas.length-1))
+    let nuevoArtista = new Artista(artistData,this.artists.length);
+    this.artists.push(nuevoArtista);
+    return(nuevoArtista);
   }
 
 
@@ -73,22 +72,12 @@ class UNQfy {
   }
 
   getArtistById(id) {
-    return(this.listaDeArtistas.find(artist =>artist.id ==id))   
+    return(this.artists.find(artist =>artist.id ==id))   
   }
 
   getAlbumById(id) {
-    const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
-    try {
-      if (artistaDeAlbum==undefined) {
-       throw new ErrorArtistaInexistente;
-      } else {
-        return(artistaDeAlbum.buscarAlbum(id) );
-      }
-    } catch (e) {
-      e.handle(this.handler)
-    }
-   
-    
+    const artist = this.artists.find(artista => artista.buscarAlbum(id));
+    return(artist.buscarAlbum(id));
   }
 
   getTrackById(id) {
@@ -124,8 +113,41 @@ class UNQfy {
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-
+    return undefined;
   }
+
+  findAllArtistByName(name) {
+    return this.artists.filter(artist => artist.name.includes(name));
+  }
+
+  findAllAlbums() {
+    return this.artists.concat(artist => artist.getAlbumsCreados());
+  }
+
+  findAllAlbumsByName(name) {
+    //return this.artists.reduce( (acc, artist) => acc.conat(artist.albums.filter(album => album.name.includes(name))));
+    return this.findAllAlbums().filter(album => album.name.includes(name));
+  }
+
+
+  findAllTracksByName(name) {
+    return this.artists.reduce( (acc, artist) =>
+           acc.concat( artist.albums.reduce((acc2, album) => 
+              album.tracks.list( track => track.name.includes(name)) )));
+  }
+
+  findAllPlaylistsByName(name) {
+    return this.playlists.filter(playlist => playlist.name.includes(name));
+  }
+
+  searchByName(name) {
+    return {  artists: this.findAllArtistByName(name),
+              //albums: this.findAllAlbumsByName(name),
+              //tracks: this.findAllTracksByName(name),
+              //playlists: this.findAllPlaylistsByName(name),
+    }
+  }
+
 
   save(filename) {
     const listenersBkp = this.listeners;
@@ -144,6 +166,7 @@ class UNQfy {
     return picklify.unpicklify(JSON.parse(serializedData), classes);
   }
 }
+
 
 // COMPLETAR POR EL ALUMNO: exportar todas las clases que necesiten ser utilizadas desde un modulo cliente
 module.exports = {
