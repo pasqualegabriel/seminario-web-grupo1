@@ -1,5 +1,5 @@
 class Artista {
-    constructor({name,country},id){
+    constructor(name,country,id){
         this.id=id;
         this.name=name;
         this.country=country;
@@ -18,8 +18,12 @@ class Artista {
         return this.albumsCreados.find(album => album.id === id)
     }
 
-    deleteAlbum(album){
-        this.albumsCreados.pop(album);
+    buscarYBorrarTracks(id){
+        this.albumsCreados.forEach(albums => albums.deleteTrack(id));
+    }
+
+    deleteAlbum(id){
+        this.albumsCreados = this.albumsCreados.filter(album => album.id != id);
     }
 }
 

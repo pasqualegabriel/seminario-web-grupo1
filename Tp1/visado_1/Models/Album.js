@@ -1,6 +1,7 @@
 class Album{
-    constructor({id,name,year}){
+    constructor(id,artistId,name,year){
         this.id=id;
+        this.artistId=artistId;
         this.name=name;
         this.year=year;
         this.tracks=[]
@@ -10,12 +11,16 @@ class Album{
         this.tracks.push(track);
     }
 
+    getTracks(){
+        return this.tracks;
+    }
+
     buscarTrack(id){
         return (this.tracks.find(track =>track.id ===id))
     }
 
-    deleteTrack(track){
-        this.tracks.pop(track);
+    deleteTrack(id){
+        this.tracks = this.tracks.filter(track => track.id != id);
     }
 }
 
