@@ -1,25 +1,25 @@
 class Artista {
-    constructor(name,country,id){
+    constructor(id, name, country){
         this.id=id;
         this.name=name;
         this.country=country;
-        this.albumsCreados =[];
+        this.albums =[];
     }
 
     addAlbum(album){
-        this.albumsCreados.push(album);
+        this.albums.push(album);
     }
 
-    getAlbumsCreados(){
-        return this.albumsCreados
+    getAlbums(){
+        return this.albums
     }
 
     buscarAlbum(id){
-        return this.albumsCreados.find(album => album.id === id)
+        return this.albums.find(album => album.id === id)
     }
 
     buscarYBorrarTracks(id){
-        this.albumsCreados.forEach(albums => albums.deleteTrack(id));
+        this.albums.forEach(albums => albums.deleteTrack(id));
     }
 
     buscarTracks(id){
@@ -27,7 +27,7 @@ class Artista {
     }
 
     deleteAlbum(id){
-        this.albumsCreados = this.albumsCreados.filter(album => album.id != id);
+        this.albums = this.albums.filter(album => album.id != id);
     }
 }
 

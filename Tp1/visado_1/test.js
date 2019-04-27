@@ -13,8 +13,8 @@ function createAndAddAlbum(unqfy, artistId, albumName, albumYear) {
   return unqfy.addAlbum(artistId, { name: albumName, year: albumYear });
 }
 
-function createAndAddTrack(unqfy, albumName, trackName, trackDuraction, trackGenres) {
-  return unqfy.addTrack(albumName, { name: trackName, duration: trackDuraction, genres: trackGenres });
+function createAndAddTrack(unqfy, albumId, trackName, trackDuraction, trackGenres) {
+  return unqfy.addTrack(albumId, { name: trackName, duration: trackDuraction, genres: trackGenres });
 }
 
 
@@ -65,7 +65,7 @@ describe('Add, remove and filter data', () => {
       albums: [album1],
       tracks: [track],
       playlists: [playlist],
-    });
+    }); 
   });
 
   it('should get all tracks matching genres', () => {
@@ -106,7 +106,7 @@ describe('Add, remove and filter data', () => {
     createAndAddTrack(unqfy, album3.id, 'Another song', 500, ['classic']);
     createAndAddTrack(unqfy, album3.id, 'Another song II', 500, ['movie']);
 
-    const matchingTracks = unqfy.getTracksMatchingArtist(artist);
+    const matchingTracks = unqfy.getTracksMatchingArtist(artist.id);
 
     assert.isArray(matchingTracks);
     assert.lengthOf(matchingTracks, 3);
@@ -137,8 +137,13 @@ describe('Playlist Creation and properties', () => {
 
     const playlist = unqfy.createPlaylist('my playlist', ['pop', 'rock'], 1400);
 
+    playlist.addTrack(t1)    
+    playlist.addTrack(t2)
+    playlist.addTrack(t3)
+    playlist.addTrack(t4)
+
     assert.equal(playlist.name, 'my playlist');
-    assert.isAtMost(playlist.duration(), 1400);
+    assert.isAtMost(playlist.duration, 1400);
     assert.isTrue(playlist.hasTrack(t1));
     assert.isTrue(playlist.hasTrack(t2));
     assert.isTrue(playlist.hasTrack(t3));

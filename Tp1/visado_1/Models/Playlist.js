@@ -1,9 +1,9 @@
 class Playlist {
-  constructor(id, name, genresToInclude, maxDuration){
+  constructor(id, name, genresToInclude, duration){
     this.id = id;
     this.name = name;
     this.genresToInclude = genresToInclude;
-    this.maxDuration = maxDuration;
+    this.duration = duration;
     this.tracks = [];
   }
 
