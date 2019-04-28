@@ -6,19 +6,17 @@ const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {Usuario} = require('./Models/Usuario');
 const {ErrorArtistaInexistente} = require('./Models/Errores');
-const {flatMap} = require('lodash');
+const {ErrorAlbumInexistente} = require('./Models/Errores');
 
-class Handler{
-  handleAlbumError(){
-    console.log("El Artista no exi|ste")
-  }
-}
+const {flatMap} = require('lodash');
+//const {Handler} = require('.Models/Handler/Handler');
+
+
 
 
 class UNQfy {
   
   constructor(){
-    this.handler =new Handler()
     this.listaDeArtistas = [];
     this.listaDePlayList = [];
     this.nextIdArtist   = 1;
@@ -79,10 +77,15 @@ class UNQfy {
   */
   addAlbum(artistId, {name, year}) {
     const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum, artistId, name, year);
-    artist.addAlbum(album);
-    this.nextIdAlbum++;
-    return album;
+    if (artist) {
+      const album = new Album(this.nextIdAlbum, artistId, name, year);
+      artist.addAlbum(album);
+      this.nextIdAlbum++;
+      return album;
+    }else {
+      throw new ErrorArtistaInexistente()
+    }
+    
   }
 
 
@@ -131,15 +134,12 @@ class UNQfy {
 
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
-    try {
-      if (artistaDeAlbum==undefined) {
-       throw new ErrorArtistaInexistente;
-      } else {
-        return(artistaDeAlbum.buscarAlbum(id) );
-      }
-    } catch (e) {
-      e.handle(new Handler())
+    if(!artistaDeAlbum) {
+      throw new ErrorAlbumInexistente;
     } 
+    return(artistaDeAlbum.buscarAlbum(id) );
+    
+   
   }
 
   getTrackById(id) {
@@ -241,7 +241,7 @@ class UNQfy {
   static load(filename) {
     const serializedData = fs.readFileSync(filename, {encoding: 'utf-8'});
     //COMPLETAR POR EL ALUMNO: Agregar a la lista todas las clases que necesitan ser instanciadas
-    const classes = [UNQfy, Artista, Album, Track, Playlist,Usuario];
+    const classes = [UNQfy, Artista, Album, Track, Playlist,Usuario,];
     return picklify.unpicklify(JSON.parse(serializedData), classes);
   }
 }
