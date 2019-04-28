@@ -1,9 +1,17 @@
+  
+
+  const {Handler} = require('../Handler/Handler');
+  
+  
+  
+  
+ 
+  
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
   //   artistData.country (string)
 class AddArtistCommand{
     invoke(args,unqfy){
-        console.log(args)
         const artistData = {
             name       : args[0],
             country    : args[1],
@@ -17,12 +25,19 @@ class AddArtistCommand{
   //   albumData.year (number)
 class AddAlbumCommand{
     invoke(args,unqfy){
-        const artistId = Number(args[0]);
-        const albumData = {
-            name       : args[1],
-            year       : Number(args[2]),
+       const handler = new Handler();
+        try {
+            const artistId = Number(args[0]);
+            const albumData = {
+                name       : args[1],
+                year       : Number(args[2]),
+            }
+            unqfy.addAlbum(artistId,albumData)
+        } catch (error) {
+            error.handle(handler);
+            
         }
-        unqfy.addAlbum(artistId,albumData)
+      
     }
 }
 
@@ -32,16 +47,22 @@ class AddAlbumCommand{
   //   trackData.genres (lista de strings)
 class AddTrackCommand{
     invoke(args,unqfy){
-        const albumId  = Number(args.shift());
-        const name = args.shift();
-        const duration = Number(args.shift());
+        const handler = new Handler();
+        try {
+            const albumId  = Number(args.shift());
+            const name = args.shift();
+            const duration = Number(args.shift());
         
-        const trackData = {
-            name      : name,
-            duration  : duration,
-            genres    : args,
-        }
-        unqfy.addTrack(albumId,trackData);
+            const trackData = {
+                name      : name,
+                duration  : duration,
+                genres    : args,
+            }
+            unqfy.addTrack(albumId,trackData);
+        }catch (error) {
+            error.handle(handler);
+        
+    }
     }
 }
 
