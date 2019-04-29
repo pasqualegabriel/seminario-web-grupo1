@@ -18,7 +18,10 @@ const {
   DeleteTrackCommand,
   AddUsuario,
   Escuchar,
+  TopTrackCommand,
 } = require('./Models/commands/CommandsUnqfy')
+const {Handler} = require('./Models/Handler/Handler.js');
+
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -80,6 +83,7 @@ class HandleCommand{
         deleteTrack:              new DeleteTrackCommand(),
         addUsuario:               new AddUsuario(),
         escuchar:                 new Escuchar(),
+        topTrack:                 new TopTrackCommand(),
     }
   }
   get(key) { 
@@ -93,13 +97,17 @@ function main() {
   
   const nameFunction = process.argv[2];
   const args         = process.argv.splice(3);
-
+  const handler      = new Handler();    
   const operation    = new HandleCommand();
-  const command      = operation.get(nameFunction);
-  console.log(command);
-  command.invoke(args,unqFy)  
-  
-  saveUNQfy(unqFy);
+  try{
+    const command      = operation.get(nameFunction);
+    console.log(command);
+    command.invoke(args,unqFy)
+    saveUNQfy(unqFy);
+  }catch (error) {
+    //console.log(error);
+    error.handle(handler); 
+  }   
 }
 
 main();

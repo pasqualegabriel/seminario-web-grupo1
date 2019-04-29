@@ -26,18 +26,12 @@ class AddArtistCommand{
 class AddAlbumCommand{
     invoke(args,unqfy){
        const handler = new Handler();
-        try {
             const artistId = Number(args[0]);
             const albumData = {
                 name       : args[1],
                 year       : Number(args[2]),
             }
             unqfy.addAlbum(artistId,albumData)
-        } catch (error) {
-            error.handle(handler);
-            
-        }
-      
     }
 }
 
@@ -47,22 +41,16 @@ class AddAlbumCommand{
   //   trackData.genres (lista de strings)
 class AddTrackCommand{
     invoke(args,unqfy){
-        const handler = new Handler();
-        try {
             const albumId  = Number(args.shift());
             const name = args.shift();
             const duration = Number(args.shift());
-        
+            console.log('caca')
             const trackData = {
                 name      : name,
                 duration  : duration,
                 genres    : args,
             }
             unqfy.addTrack(albumId,trackData);
-        }catch (error) {
-            error.handle(handler);
-        
-    }
     }
 }
 
@@ -84,9 +72,7 @@ class GetAlbumByIdCommand{
 class GetTrackByIdCommand{
     invoke(args,unqfy){
         const trackId  = Number(args[0]);
-        unqfy.getTrackById(trackId);
         console.log(unqfy.getTrackById(trackId));
-        
     }
 }
 
@@ -131,10 +117,8 @@ class DeleteArtistCommand{
 
 class DeleteAlbumCommand{
     invoke(args,unqfy){
-
         unqfy.deleteAlbum(args)
         console.log("Se ha Borrado a exitosamente");
-        
     }
 }
 
@@ -162,6 +146,13 @@ class Escuchar{
         
     }
 }
+class TopTrackCommand{
+    invoke(args,unqfy){
+        const top = unqfy.topTrack();
+        console.log('Nuestro top track');
+        console.log(top);
+    }
+}
 
 module.exports = {
     AddArtistCommand,
@@ -179,4 +170,5 @@ module.exports = {
     DeleteTrackCommand,
     AddUsuario,
     Escuchar,
+    TopTrackCommand,
 };

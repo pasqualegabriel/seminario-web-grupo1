@@ -10,7 +10,40 @@ class ErrorAlbumInexistente extends Error {
     }
 }
 
+class ErrorTrackInexistente extends Error {
+    handle(x){
+        x.handleTrackInexistenteError()
+    }
+}
+
+class ErrorArtistaRepetido extends Error {
+    handle(x){
+        x.handleArtistaRepetido()
+    }
+}
+class ErrorTrackRepetido extends Error {
+    handle(x){
+        x.handleTrackRepetido()
+    }
+}
+
+class ErrorUsuarioRepetido extends Error{
+    handle(x){
+        x.handleUserRepetido()
+    }
+}
+class ErrorAlbumRepetido extends Error{
+    handle(x){
+        x.handleAlbumRepetido()
+    }
+}
+
 module.exports = {
     ErrorArtistaInexistente,
-    ErrorAlbumInexistente
+    ErrorAlbumInexistente,
+    ErrorTrackInexistente,
+    ErrorArtistaRepetido,
+    ErrorTrackRepetido,
+    ErrorUsuarioRepetido,
+    ErrorAlbumRepetido,
   };

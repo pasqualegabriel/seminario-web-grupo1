@@ -5,14 +5,16 @@ const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {Usuario} = require('./Models/Usuario');
-const {ErrorArtistaInexistente} = require('./Models/Errores');
-const {ErrorAlbumInexistente} = require('./Models/Errores');
-
+const {
+  ErrorArtistaInexistente,
+  ErrorAlbumInexistente,
+  ErrorTrackInexistente,
+  ErrorArtistaRepetido,
+  ErrorTrackRepetido,
+  ErrorUsuarioRepetido,
+  ErrorAlbumRepetido,
+} = require('./Models/Errores');
 const {flatMap} = require('lodash');
-//const {Handler} = require('.Models/Handler/Handler');
-
-
-
 
 class UNQfy {
   
@@ -27,8 +29,13 @@ class UNQfy {
     this.listaDeUsuarios =[];
   }
 
-  addUsuario(args){
-    let nuevoUsuario = new Usuario(this.nextIdUsuario,args);
+  addUsuario(name){
+    const checkUser = this.listaDeUsuarios.find(usuario => usuario.name === name)
+    if(checkUser){
+      throw new ErrorUsuarioRepetido()
+    }
+
+    const nuevoUsuario = new Usuario(this.nextIdUsuario,name);
     this.listaDeUsuarios.push(nuevoUsuario);
     this.nextIdUsuario ++;
   }
@@ -38,11 +45,23 @@ class UNQfy {
     const usuarioEncontrado = this.listaDeUsuarios.find(usuario => usuario.id === userId)
     
     const track = this.getTrackById(trackId); 
-    usuarioEncontrado.escucharTrack(track);
+    usuarioEncontrado.escucharTrack(track.name);
+  }
+  sumTrackEscuchado(nameTrack){
+    const sum =this.listaDeUsuarios.reduce(
+      (acum,usuario,index) =>  acum += usuario.vecesEscuchado(nameTrack) ? usuario.vecesEscuchado(nameTrack): 0
+    ,0)
+    return sum;
   }
 
-  imprimirThisIs(){
-
+  topTrack(){
+    const tracks = flatMap(this.findAllAlbums(), album => album.getTracks());
+    const  object ={};
+    tracks.forEach(
+      (track) =>  object[track.name] = this.sumTrackEscuchado(track.name)
+    );
+    const topTrack = Object.keys(object).sort((a,b) => object[a] < object[b]).splice(0,3);
+    return topTrack;
   }
 
 
@@ -55,9 +74,12 @@ class UNQfy {
     - una propiedad name (string)
     - una propiedad country (string)
   */
-  addArtist(artistData) {
-    const nuevoArtista =new Artista(this.nextIdArtist, artistData.name, artistData.country);
-    console.log(nuevoArtista);
+  addArtist({name, country}) {
+    const checkArtist = this.listaDeArtistas.find(artist => artist.name ===name)
+    if(checkArtist){
+      throw new ErrorArtistaRepetido()
+    }
+    const nuevoArtista =new Artista(this.nextIdArtist, name, country);
     
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist ++;
@@ -76,16 +98,16 @@ class UNQfy {
      - una propiedad year (number)
   */
   addAlbum(artistId, {name, year}) {
-    const artist = this.getArtistById(artistId);
-    if (artist) {
-      const album = new Album(this.nextIdAlbum, artistId, name, year);
-      artist.addAlbum(album);
-      this.nextIdAlbum++;
-      return album;
-    }else {
-      throw new ErrorArtistaInexistente()
+    const checkAlbum = this.findAllAlbums().find( album => album.name === name);
+    if(checkAlbum){
+      throw new ErrorAlbumRepetido()
     }
-    
+
+    const artist = this.getArtistById(artistId);
+    const album = new Album(this.nextIdAlbum, artistId, name, year);
+    artist.addAlbum(album);
+    this.nextIdAlbum++;
+    return album;
   }
 
 
@@ -100,8 +122,12 @@ class UNQfy {
       - una propiedad duration (number),
       - una propiedad genres (lista de strings)
   */
+  addTrack(albumId, { name, duration, genres }) {   
+    const checkTrack = flatMap(this.findAllAlbums(), album => album.getTracks()).find(track => track.name === name);
+    if(checkTrack){
+      throw new ErrorTrackRepetido()
+    }
 
-  addTrack(albumId, { name, duration, genres }) {
     const album = this.getAlbumById(albumId);
     const track = new Track(this.nextIdTrack, name, duration, genres);
     album.agregarTrack(track);
@@ -111,7 +137,7 @@ class UNQfy {
 
 
   deleteArtist(id){
-   this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id != id)   
+   this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id !== id)   
 
   }
 
@@ -134,16 +160,20 @@ class UNQfy {
 
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
-    if(!artistaDeAlbum) {
+    const album = artistaDeAlbum.buscarAlbum(id);
+    if(!album) {
       throw new ErrorAlbumInexistente;
     } 
-    return(artistaDeAlbum.buscarAlbum(id) );
-    
-   
+    return album;
   }
 
   getTrackById(id) {
-    const track = this.listaDeArtistas.find(artista => artista.buscarTracks(id));
+    const artist = this.listaDeArtistas.find(artista => artista.buscarTracks(id));
+    const album = artist.buscarTracks(id);
+    const track = album.buscarTrack(id);
+    if(!track) {
+      throw new ErrorTrackInexistente;
+    } 
     return track;
   }
 
