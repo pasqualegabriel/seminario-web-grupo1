@@ -110,8 +110,8 @@ function main() {
     command.invoke(args,unqFy)
     saveUNQfy(unqFy);
   }catch (error) {
-    //console.log(error);
-    error.handle(handler); 
+    console.log(error);
+    //error.handle(handler); 
   }   
 }
 

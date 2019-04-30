@@ -191,19 +191,14 @@ class UNQfy {
 
   getPlaylistById(id) {
     const playlist = this.listaDePlayList.find(playlist => playlist.id === id);
-    console.log(`get playlist ${id}`);
-    console.log(playlist);
     return playlist;
   }
 
   // genres: array de generos(strings)
   // retorna: los tracks que contenga alguno de los generos en el parametro genres
   getTracksMatchingGenres(genres) {
-    const albums = flatMap(this.listaDeArtistas, artist => artist.getAlbums());
-    const tracks = flatMap(albums, album => album.getTracks());
+    const tracks = this.getAllTrack();
     const tracksFilteredByGenres = tracks.filter(track => track.getGenres().some(genre => genres.includes(genre)));
-    console.log('Test getTracksMatchingGenres');
-    console.log(tracksFilteredByGenres);
     return tracksFilteredByGenres;
   }
 
@@ -212,8 +207,6 @@ class UNQfy {
   getTracksMatchingArtist(artistId) {
     const artist = this.getArtistById(artistId);
     const tracks = flatMap(artist.getAlbums(), album => album.getTracks());
-    console.log(`Test getTracksMatchingArtist: ${artistId}`);
-    console.log(tracks);
     return tracks;
   }
 
@@ -229,11 +222,23 @@ class UNQfy {
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
  createPlaylist(name, genresToInclude, duration) {
-    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration);
+    const tracks           = this.getTracksMatchingGenres(genresToInclude);
+    let   checkDuration    = 0 ;
+
+    const newTrack= tracks.filter( 
+      elem =>{ 
+              checkDuration += elem.duration;
+              return duration >=  checkDuration 
+             } 
+    )
+    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration,newTrack);
     this.nextIdPlayList++;
     this.listaDePlayList.push(playlist);
-    console.log(`Se ha creado playlist, id: ${playlist.id}, name: ${name}`)
     return playlist;
+  }
+
+  getAllTrack(){
+    return flatMap(this.findAllAlbums(), album => album.getTracks());
   }
 
   findAllArtistByName(name) {
@@ -253,7 +258,7 @@ class UNQfy {
     //       acc.concat( artist.albums.reduce((acc2, album) => 
     //          album.tracks.list( track => track.name.includes(name)) )));
 
-    return flatMap(this.findAllAlbums(), album => album.getTracks()).filter(track => track.name.includes(name))
+    return this.getAllTrack().filter(track => track.name.includes(name))
   }
 
   findAllPlaylistsByName(name) {

@@ -1,10 +1,10 @@
 class Playlist {
-  constructor(id, name, genresToInclude, duration){
+  constructor(id, name, genresToInclude, duration,someTracks){
     this.id = id;
     this.name = name;
     this.genresToInclude = genresToInclude;
     this.duration = duration;
-    this.tracks = [];
+    this.tracks = someTracks;
   }
 
   addTrack(track){

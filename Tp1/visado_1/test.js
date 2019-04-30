@@ -127,8 +127,7 @@ describe('Playlist Creation and properties', () => {
     const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
     const t1 = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, ['rock', 'hard rock', 'movie']);
-    createAndAddTrack(unqfy, album.id, 'Sweet Child o\' Mine', 1500, ['rock', 'hard rock', 'pop', 'movie']);
-
+    
     const artist2 = createAndAddArtist(unqfy, 'Michael Jackson', 'USA');
     const album2 = createAndAddAlbum(unqfy, artist2.id, 'Thriller', 1987);
     const t2 = createAndAddTrack(unqfy, album2.id, 'Thriller', 200, ['pop', 'movie']);
@@ -137,10 +136,6 @@ describe('Playlist Creation and properties', () => {
 
     const playlist = unqfy.createPlaylist('my playlist', ['pop', 'rock'], 1400);
 
-    playlist.addTrack(t1)    
-    playlist.addTrack(t2)
-    playlist.addTrack(t3)
-    playlist.addTrack(t4)
 
     assert.equal(playlist.name, 'my playlist');
     assert.isAtMost(playlist.duration, 1400);
