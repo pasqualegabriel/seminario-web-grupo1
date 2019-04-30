@@ -202,8 +202,6 @@ class UNQfy {
     const albums = flatMap(this.listaDeArtistas, artist => artist.getAlbums());
     const tracks = flatMap(albums, album => album.getTracks());
     const tracksFilteredByGenres = tracks.filter(track => track.getGenres().some(genre => genres.includes(genre)));
-    console.log('Test getTracksMatchingGenres');
-    console.log(tracksFilteredByGenres);
     return tracksFilteredByGenres;
   }
 
@@ -212,8 +210,7 @@ class UNQfy {
   getTracksMatchingArtist(artistId) {
     const artist = this.getArtistById(artistId);
     const tracks = flatMap(artist.getAlbums(), album => album.getTracks());
-    console.log(`Test getTracksMatchingArtist: ${artistId}`);
-    console.log(tracks);
+
     return tracks;
   }
 
