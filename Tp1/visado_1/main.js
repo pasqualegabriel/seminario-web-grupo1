@@ -19,6 +19,9 @@ const {
   AddUsuario,
   Escuchar,
   TopTrackCommand,
+  TemasEscuchadosCommand,
+  VecesEscuchadosCommand,
+  
 } = require('./Models/commands/CommandsUnqfy')
 const {Handler} = require('./Models/Handler/Handler.js');
 
@@ -84,6 +87,8 @@ class HandleCommand{
         addUsuario:               new AddUsuario(),
         escuchar:                 new Escuchar(),
         topTrack:                 new TopTrackCommand(),
+        temasEscuchados:          new TemasEscuchadosCommand(),
+        vecesEscuchado:           new VecesEscuchadosCommand(),
     }
   }
   get(key) { 

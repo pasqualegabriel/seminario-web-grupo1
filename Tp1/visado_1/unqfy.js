@@ -40,6 +40,18 @@ class UNQfy {
     this.nextIdUsuario ++;
   }
 
+  temasEscuchados(userId){
+    const usuarioEncontrado = this.listaDeUsuarios.find(usuario => usuario.id === userId)
+    return usuarioEncontrado.temasEscuchados()
+  }
+
+  vecesEscuchado(trackId,userId){
+    const usuarioEncontrado = this.listaDeUsuarios.find(usuario => usuario.id === userId)
+    const track = this.getTrackById(trackId); 
+
+    return usuarioEncontrado.vecesEscuchado(track.name)
+  }
+
   escuchar(trackId,userId){
 
     const usuarioEncontrado = this.listaDeUsuarios.find(usuario => usuario.id === userId)

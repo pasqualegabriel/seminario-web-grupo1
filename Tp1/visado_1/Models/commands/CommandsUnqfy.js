@@ -138,6 +138,8 @@ class AddUsuario{
 }
 
 
+
+
 class Escuchar{
     invoke(args,unqfy){       
         unqfy.escuchar(Number(args[0]),Number(args[1]));
@@ -145,6 +147,20 @@ class Escuchar{
         
     }
 }
+
+class TemasEscuchadosCommand{
+    invoke(args,unqfy){       
+        console.log(unqfy.temasEscuchados(Number(args[0])));  
+    }
+}
+
+class VecesEscuchadosCommand{
+    invoke(args,unqfy){       
+        console.log(unqfy.vecesEscuchado(Number(args[0]),Number(args[1])));  
+    }
+}
+
+
 class TopTrackCommand{
     invoke(args,unqfy){
         const top = unqfy.topTrack();
@@ -170,4 +186,6 @@ module.exports = {
     AddUsuario,
     Escuchar,
     TopTrackCommand,
+    TemasEscuchadosCommand,
+    VecesEscuchadosCommand,
 };
