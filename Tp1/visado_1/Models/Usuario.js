@@ -6,15 +6,10 @@ class Usuario {
     }
 
     escucharTrack(track){
-      const temaAEscuchar = this.tracksEscuchados[track]
-        if(temaAEscuchar){
-            this.tracksEscuchados[track]++
-        }else{
-            this.tracksEscuchados[track]=1;
-        }
+      const checkTemaaEscuchar = this.tracksEscuchados[track];
+      this.tracksEscuchados[track] = checkTemaaEscuchar ? checkTemaaEscuchar + 1  : 1 ;
     }
 
-    
     temasEscuchados(){
         return Object.keys(this.tracksEscuchados)
       }
