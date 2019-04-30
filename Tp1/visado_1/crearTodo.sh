@@ -1,6 +1,9 @@
-#!bin/bash
+#!/bin/bash
 
 echo "Creando set de datos inicial"
+echo
+echo "---------------------------"
+echo
 node main.js addArtist MaroonV
 node main.js addAlbum 1 V 2005
 node main.js addTrack 1 Maps 3 Pop
@@ -28,5 +31,7 @@ node main.js addUsuario Tobias
 node main.js addUsuario Mauro
 node main.js addUsuario Gabi
 node main.js addUsuario Nahuel
-
+echo
+echo "------------------------------"
+echo
 echo "Datos ingresados correctamente"
