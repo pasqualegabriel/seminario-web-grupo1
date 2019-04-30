@@ -163,7 +163,7 @@ class VecesEscuchadosCommand{
 
 class TopTrackCommand{
     invoke(args,unqfy){
-        const top = unqfy.topTrack();
+        const top = unqfy.topTrack(Number(args[0]));
         console.log('Nuestro top track');
         console.log(top);
     }

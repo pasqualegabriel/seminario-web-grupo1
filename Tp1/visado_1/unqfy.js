@@ -66,8 +66,8 @@ class UNQfy {
     return sum;
   }
 
-  topTrack(){
-    const tracks = flatMap(this.findAllAlbums(), album => album.getTracks());
+  topTrack(artistId){
+    const tracks = this.getTracksMatchingArtist(artistId);
     const  object ={};
     tracks.forEach(
       (track) =>  object[track.name] = this.sumTrackEscuchado(track.name)
