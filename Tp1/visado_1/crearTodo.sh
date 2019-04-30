@@ -31,6 +31,27 @@ node main.js addUsuario Tobias
 node main.js addUsuario Mauro
 node main.js addUsuario Gabi
 node main.js addUsuario Nahuel
+
+node main.js escuchar 2 1
+node main.js escuchar 2 1
+node main.js escuchar 2 1
+node main.js escuchar 2 1
+node main.js escuchar 3 1
+node main.js escuchar 3 1
+node main.js escuchar 3 1
+node main.js escuchar 4 1
+node main.js escuchar 4 1
+node main.js escuchar 5 1
+
+node main.js escuchar 13 2
+node main.js escuchar 13 2
+node main.js escuchar 13 2
+node main.js escuchar 13 2
+node main.js escuchar 14 2
+node main.js escuchar 14 2
+node main.js escuchar 14 2
+node main.js escuchar 12 2
+
 echo
 echo "------------------------------"
 echo
