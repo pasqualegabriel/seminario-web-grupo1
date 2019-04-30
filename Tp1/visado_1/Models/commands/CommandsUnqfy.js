@@ -44,7 +44,6 @@ class AddTrackCommand{
             const albumId  = Number(args.shift());
             const name = args.shift();
             const duration = Number(args.shift());
-            console.log('caca')
             const trackData = {
                 name      : name,
                 duration  : duration,
