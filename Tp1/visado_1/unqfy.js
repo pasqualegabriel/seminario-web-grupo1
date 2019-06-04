@@ -99,6 +99,19 @@ class UNQfy {
     return this.getArtistById(nuevoArtista.id);
   }
 
+  updateArtist(id,{name, country}){
+    const artists= this.getArtistById(id);
+    console.log(artists);
+    if(!artists){
+      //TODO:TIPAR ERRO DE FORMA CORRECTA 
+      throw new ErrorArtistaRepetido();
+    }
+    artists.name    = name;
+    artists.country = country;
+    return artists;
+    
+  }
+
 
   // albumData: objeto JS con los datos necesarios para crear un album
   //   albumData.name (string)
@@ -211,6 +224,8 @@ class UNQfy {
   }
 
 
+
+
   // name: nombre de la playlist
   // genresToInclude: array de generos
   // duration: duración en segundos
@@ -237,6 +252,9 @@ class UNQfy {
     return playlist;
   }
 
+  getAllArtist(){
+    return this.listaDeArtistas;
+  }
   getAllTrack(){
     return flatMap(this.findAllAlbums(), album => album.getTracks());
   }

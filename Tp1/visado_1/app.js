@@ -13,5 +13,4 @@ app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
 
 
 app.use('/api', api);
-
 module.exports = app;
