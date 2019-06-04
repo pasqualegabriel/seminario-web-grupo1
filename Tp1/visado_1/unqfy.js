@@ -170,6 +170,15 @@ class UNQfy {
     return artist; 
   }
 
+  populateAlbumsForArtist(arstistId, spotifyClient) {
+    const artistName = this.getArtistById(artistId).name
+    spotifyClient.getArtistByName(artistName).then( r =>
+     spotifyClient.populateAlbumsForArtist(r.id).then( albums =>
+        albums.forEach(({name, release_date: year}) => this.addAlbum(artistId, {name, year}))
+      )
+    ).catch(console.log("SE ROMPIO TODO"))
+  }
+
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
     const album = artistaDeAlbum.buscarAlbum(id);

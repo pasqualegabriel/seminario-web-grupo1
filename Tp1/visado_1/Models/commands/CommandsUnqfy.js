@@ -164,6 +164,14 @@ class TopTrackCommand{
     }
 }
 
+class PopulateAlbumsForArtist {
+    invoke(args,unqfy){
+        const top = unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
+        console.log('Cargando albums del artista');
+        console.log(top);
+    }
+}
+
 module.exports = {
     AddArtistCommand,
     AddAlbumCommand,
@@ -183,4 +191,5 @@ module.exports = {
     TopTrackCommand,
     TemasEscuchadosCommand,
     VecesEscuchadosCommand,
+    PopulateAlbumsForArtist,
 };

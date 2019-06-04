@@ -21,6 +21,7 @@ const {
   TopTrackCommand,
   TemasEscuchadosCommand,
   VecesEscuchadosCommand,
+  PopulateAlbumsForArtist,
   
 } = require('./Models/commands/CommandsUnqfy');
 const {Handler} = require('./Models/Handler/Handler.js');
@@ -89,6 +90,7 @@ class HandleCommand{
       topTrack:                 new TopTrackCommand(),
       temasEscuchados:          new TemasEscuchadosCommand(),
       vecesEscuchado:           new VecesEscuchadosCommand(),
+      populateAlbumsForArtist:  new PopulateAlbumsForArtist(),
     };
   }
   get(key) { 
