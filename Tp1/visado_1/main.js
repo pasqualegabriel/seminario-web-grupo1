@@ -22,7 +22,7 @@ const {
   TemasEscuchadosCommand,
   VecesEscuchadosCommand,
   
-} = require('./Models/commands/CommandsUnqfy')
+} = require('./Models/commands/CommandsUnqfy');
 const {Handler} = require('./Models/Handler/Handler.js');
 
 
@@ -71,29 +71,29 @@ function saveUNQfy(unqfy, filename = 'data.json') {
 class HandleCommand{
   constructor(){
     this.commands = {
-        addArtist :               new AddArtistCommand(),
-        addAlbum  :               new AddAlbumCommand(),
-        addTrack  :               new AddTrackCommand(),
-        getArtistById :           new GetArtistByIdCommand(),
-        getAlbumById :            new GetAlbumByIdCommand(),
-        getTrackById :            new GetTrackByIdCommand(),
-        getPlaylistById :         new GetPlaylistByIdCommand(),
-        getTracksMatchingGenres : new GetTracksMatchingGenresCommand(),
-        getTracksMatchingArtist : new GetTracksMatchingArtistCommand(),
-        createPlaylist :          new CreatePlaylistCommand(),
-        deleteArtist :            new DeleteArtistCommand(), 
-        deleteAlbum :             new DeleteAlbumCommand(), 
-        deleteTrack:              new DeleteTrackCommand(),
-        addUsuario:               new AddUsuarioCommand(),
-        escuchar:                 new EscucharCommand(),
-        topTrack:                 new TopTrackCommand(),
-        temasEscuchados:          new TemasEscuchadosCommand(),
-        vecesEscuchado:           new VecesEscuchadosCommand(),
-    }
+      addArtist :               new AddArtistCommand(),
+      addAlbum  :               new AddAlbumCommand(),
+      addTrack  :               new AddTrackCommand(),
+      getArtistById :           new GetArtistByIdCommand(),
+      getAlbumById :            new GetAlbumByIdCommand(),
+      getTrackById :            new GetTrackByIdCommand(),
+      getPlaylistById :         new GetPlaylistByIdCommand(),
+      getTracksMatchingGenres : new GetTracksMatchingGenresCommand(),
+      getTracksMatchingArtist : new GetTracksMatchingArtistCommand(),
+      createPlaylist :          new CreatePlaylistCommand(),
+      deleteArtist :            new DeleteArtistCommand(), 
+      deleteAlbum :             new DeleteAlbumCommand(), 
+      deleteTrack:              new DeleteTrackCommand(),
+      addUsuario:               new AddUsuarioCommand(),
+      escuchar:                 new EscucharCommand(),
+      topTrack:                 new TopTrackCommand(),
+      temasEscuchados:          new TemasEscuchadosCommand(),
+      vecesEscuchado:           new VecesEscuchadosCommand(),
+    };
   }
   get(key) { 
     return this.commands[key];
-   }
+  }
   
 }
 function main() {
@@ -107,7 +107,7 @@ function main() {
   try{
     const command      = operation.get(nameFunction);
     console.log(command);
-    command.invoke(args,unqFy)
+    command.invoke(args,unqFy);
     saveUNQfy(unqFy);
   }catch (error) {
     console.log(error);
