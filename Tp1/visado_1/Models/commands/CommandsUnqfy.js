@@ -1,6 +1,7 @@
   
-
+    const util = require('util');
   const {Handler} = require('../Handler/Handler');
+  const {SpotifyClient} = require('../../clients/Spotify')
   
   // artistData: objeto JS con los datos necesarios para crear un artista
   //   artistData.name (string)
@@ -166,9 +167,8 @@ class TopTrackCommand{
 
 class PopulateAlbumsForArtist {
     invoke(args,unqfy){
-        const top = unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
+        unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
         console.log('Cargando albums del artista');
-        console.log(top);
     }
 }
 

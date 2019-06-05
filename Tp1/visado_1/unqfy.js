@@ -5,6 +5,7 @@ const {Album} = require('./Models/Album');
 const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {Usuario} = require('./Models/Usuario');
+const util = require('util');
 const {
   ErrorArtistaInexistente,
   ErrorAlbumInexistente,
@@ -122,6 +123,20 @@ class UNQfy {
     return album;
   }
 
+  addAlbumSinObjeto(artistId, name, year) {
+    
+    
+    const checkAlbum = this.findAllAlbums().find( album => album.name === name);
+    const artist = this.getArtistById(artistId);
+    const album = new Album(this.nextIdAlbum, artistId, name, year);
+    
+    artist.addAlbum(album);
+    
+    this.nextIdAlbum++;
+    return album
+    
+  }
+
 
   // trackData: objeto JS con los datos necesarios para crear un track
   //   trackData.name (string)
@@ -170,13 +185,23 @@ class UNQfy {
     return artist; 
   }
 
-  populateAlbumsForArtist(arstistId, spotifyClient) {
+  populateAlbumsForArtist(artistId, spotifyClient) {
     const artistName = this.getArtistById(artistId).name
-    spotifyClient.getArtistByName(artistName).then( r =>
-     spotifyClient.populateAlbumsForArtist(r.id).then( albums =>
-        albums.forEach(({name, release_date: year}) => this.addAlbum(artistId, {name, year}))
+
+    return spotifyClient.getArtistByName(artistName).then( r =>
+
+     spotifyClient.populateAlbumsForArtist(r).then( albums =>
+
+        this.agregarVariosAlbums(albums,artistId)
       )
-    ).catch(console.log("SE ROMPIO TODO"))
+    ).catch(error =>console.log(error))
+  }
+
+  agregarVariosAlbums(albums,artistId){
+
+    albums.forEach(element => {
+      this.addAlbumSinObjeto(artistId,element.name,element.release_date)
+    });
   }
 
   getAlbumById(id) {

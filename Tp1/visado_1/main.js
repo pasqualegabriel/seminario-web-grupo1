@@ -1,5 +1,5 @@
 
-
+const util = require('util');
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
 const {    
@@ -37,6 +37,7 @@ function getUNQfy(filename = 'data.json') {
 }
 
 function saveUNQfy(unqfy, filename = 'data.json') {
+  
   unqfy.save(filename);
 }
 
@@ -106,15 +107,15 @@ function main() {
   const args         = process.argv.splice(3);
   const handler      = new Handler();    
   const operation    = new HandleCommand();
-  try{
+ 
     const command      = operation.get(nameFunction);
     console.log(command);
-    command.invoke(args,unqFy);
-    saveUNQfy(unqFy);
-  }catch (error) {
-    console.log(error);
-    //error.handle(handler); 
-  }   
+    command.invoke(args,unqFy)
+
+    setTimeout(() => saveUNQfy(unqFy) , 1000);
+    
+     
+    
 }
 
 main();
