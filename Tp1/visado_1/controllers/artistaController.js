@@ -29,6 +29,7 @@ const update = (req, res) => {
 const all = (req, res) => {
 
   try{
+    console.log(req.query.name);
     const unqfy = getUNQfy();
     const artists= req.query.name ? unqfy.findAllArtistByName(req.query.name): unqfy.getAllArtist();  
     saveUNQfy(unqfy);
@@ -55,7 +56,7 @@ const addAlbum = (req, res) => {
 const deleteA = (req, res) => {
   try{
     const unqfy = getUNQfy();
-    const artists=unqfy.deleteArtist(parseInt(req.params.id));  
+    unqfy.deleteArtist(parseInt(req.params.id));  
     saveUNQfy(unqfy);
     res.status(204).send();
   }catch (error) {

@@ -260,7 +260,7 @@ class UNQfy {
   }
 
   findAllArtistByName(name) {
-    return this.listaDeArtistas.filter(artist => artist.name.includes(name));
+    return this.listaDeArtistas.filter(artist => artist.name.toLowerCase().includes(name));
   }
 
   findAllAlbums() {
@@ -268,7 +268,7 @@ class UNQfy {
   }
 
   findAllAlbumsByName(name) {
-    return this.findAllAlbums().filter(album => album.name.includes(name));
+    return this.findAllAlbums().filter(album => album.name.toLowerCase().includes(name));
   }
 
   findAllTracksByName(name) {
@@ -276,11 +276,11 @@ class UNQfy {
     //       acc.concat( artist.albums.reduce((acc2, album) => 
     //          album.tracks.list( track => track.name.includes(name)) )));
 
-    return this.getAllTrack().filter(track => track.name.includes(name));
+    return this.getAllTrack().filter(track => track.name.toLowerCase().includes(name));
   }
 
   findAllPlaylistsByName(name) {
-    return this.listaDePlayList.filter(playlist => playlist.name.includes(name));
+    return this.listaDePlayList.filter(playlist => playlist.name.toLowerCase().includes(name));
   }
 
   searchByName(name) {

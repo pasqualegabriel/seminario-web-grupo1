@@ -164,6 +164,14 @@ class TopTrackCommand{
   }
 }
 
+class AllAlbumByNameCommand{
+  invoke(args,unqfy){
+    const top = unqfy.findAllArtistByName(args[0]);
+    console.log('All Album by name');
+    console.log(top);
+  }
+}
+
 module.exports = {
   AddArtistCommand,
   AddAlbumCommand,
@@ -183,4 +191,5 @@ module.exports = {
   TopTrackCommand,
   TemasEscuchadosCommand,
   VecesEscuchadosCommand,
+  AllAlbumByNameCommand,
 };

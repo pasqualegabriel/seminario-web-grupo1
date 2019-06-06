@@ -6,9 +6,11 @@
   "dependencies": {
     "chai": "^4.1.2",
     "dotenv": "^8.0.0",
+    "express": "^4.17.1",
     "lodash": "^4.17.11",
     "nodemon": "^1.19.1",
-    "picklify": "github:lwoites/picklify"
+    "picklify": "github:lwoites/picklify",
+    "request-promise": "^4.2.4"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
