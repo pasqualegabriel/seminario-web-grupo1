@@ -2,7 +2,7 @@
 
 const express = require('express');
 const artists = require('../controllers/artistaController');  
-
+const albums  = require('../controllers/albumController');
 const api = express.Router();
 
 api.get('/artists',artists.all);
@@ -14,4 +14,15 @@ api.post('/artists/:id',artists.addAlbum);
 
 api.delete('/artists/:id',artists.deleteA);
 api.put('/artists/:id',artists.update);
+
+api.get('/albums',albums.all);
+api.get('/albums/:id',albums.findBy);
+
+api.post('/albums',albums.save);
+
+api.put('/albums/:id',albums.updateYear);
+
+api.delete('/albums/:id',albums.deleteA);
+
+
 module.exports = api;

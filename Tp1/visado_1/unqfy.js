@@ -61,7 +61,7 @@ class UNQfy {
   }
   sumTrackEscuchado(nameTrack){
     const sum =this.listaDeUsuarios.reduce(
-      (acum,usuario,index) =>  acum += usuario.vecesEscuchado(nameTrack) ? usuario.vecesEscuchado(nameTrack): 0
+      (acum,usuario) =>  acum += usuario.vecesEscuchado(nameTrack) ? usuario.vecesEscuchado(nameTrack): 0
       ,0);
     return sum;
   }
@@ -129,10 +129,16 @@ class UNQfy {
     }
 
     const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum, artistId, name, year);
+    const album = new Album(this.nextIdAlbum,name,year);
     artist.addAlbum(album);
     this.nextIdAlbum++;
     return album;
+  }
+
+  updateYear(albumId,{year}){
+    const albums = this.getAlbumById(albumId);
+    albums.year = year;
+    return albums;
   }
 
 
@@ -264,7 +270,7 @@ class UNQfy {
   }
 
   findAllAlbums() {
-    return flatMap(this.listaDeArtistas, artist => artist.getAlbums());
+    return flatMap(this.listaDeArtistas, artist => artist.albums);
   }
 
   findAllAlbumsByName(name) {
