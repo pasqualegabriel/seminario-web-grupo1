@@ -242,7 +242,7 @@ class UNQfy {
       * un metodo duration() que retorne la duración de la playlist.
       * un metodo hasTrack(aTrack) que retorna true si aTrack se encuentra en la playlist.
   */
-  createPlaylist(name, genresToInclude, duration) {
+  createPlaylist({name, genresToInclude, duration}) {
     const tracks           = this.getTracksMatchingGenres(genresToInclude);
     let   checkDuration    = 0 ;
 
@@ -257,6 +257,21 @@ class UNQfy {
     this.listaDePlayList.push(playlist);
     return playlist;
   }
+  createPlaylistByTracks({name,tracks}){
+    const traksConcret     = tracks.map( idTrack => this.getTrackById(idTrack));
+    const genresToInclude = traksConcret.map( track => track.genres );
+    const duration =traksConcret.reduce(
+      (acum,track) =>  acum += track.duration
+      ,0);
+    const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration,traksConcret);
+    this.nextIdPlayList++;
+    this.listaDePlayList.push(playlist);
+    return playlist;  
+  }
+
+
+
+
 
   getAllArtist(){
     return this.listaDeArtistas;

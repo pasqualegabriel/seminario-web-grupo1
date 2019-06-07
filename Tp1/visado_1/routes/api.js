@@ -1,8 +1,9 @@
 'use strict';
 
-const express = require('express');
-const artists = require('../controllers/artistaController');  
-const albums  = require('../controllers/albumController');
+const express   = require('express');
+const artists   = require('../controllers/artistaController');  
+const albums    = require('../controllers/albumController');
+const playList  = require('../controllers/playListController');
 const api = express.Router();
 
 api.get('/artists',artists.all);
@@ -23,6 +24,9 @@ api.post('/albums',albums.save);
 api.put('/albums/:id',albums.updateYear);
 
 api.delete('/albums/:id',albums.deleteA);
+
+
+api.put('/playlists',playList.create);
 
 
 module.exports = api;
