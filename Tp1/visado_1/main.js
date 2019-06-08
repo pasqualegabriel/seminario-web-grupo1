@@ -2,7 +2,7 @@
 const util = require('util');
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
-const {    
+const {
   AddArtistCommand,
   AddAlbumCommand,
   AddTrackCommand,
@@ -21,11 +21,11 @@ const {
   TopTrackCommand,
   TemasEscuchadosCommand,
   VecesEscuchadosCommand,
+  AllAlbumByNameCommand,
+  AllArtistByNameCommand,
   PopulateAlbumsForArtist,
-  
 } = require('./Models/commands/CommandsUnqfy');
-const {Handler} = require('./Models/Handler/Handler.js');
-
+const { Handler } = require('./Models/Handler/Handler.js');
 
 // Retorna una instancia de UNQfy. Si existe filename, recupera la instancia desde el archivo.
 function getUNQfy(filename = 'data.json') {
@@ -70,39 +70,39 @@ function saveUNQfy(unqfy, filename = 'data.json') {
    4. Guardar el estado de UNQfy (saveUNQfy)
 
 */
-class HandleCommand{
-  constructor(){
+class HandleCommand {
+  constructor() {
     this.commands = {
-      addArtist :               new AddArtistCommand(),
-      addAlbum  :               new AddAlbumCommand(),
-      addTrack  :               new AddTrackCommand(),
-      getArtistById :           new GetArtistByIdCommand(),
-      getAlbumById :            new GetAlbumByIdCommand(),
-      getTrackById :            new GetTrackByIdCommand(),
-      getPlaylistById :         new GetPlaylistByIdCommand(),
-      getTracksMatchingGenres : new GetTracksMatchingGenresCommand(),
-      getTracksMatchingArtist : new GetTracksMatchingArtistCommand(),
-      createPlaylist :          new CreatePlaylistCommand(),
-      deleteArtist :            new DeleteArtistCommand(), 
-      deleteAlbum :             new DeleteAlbumCommand(), 
-      deleteTrack:              new DeleteTrackCommand(),
-      addUsuario:               new AddUsuarioCommand(),
-      escuchar:                 new EscucharCommand(),
-      topTrack:                 new TopTrackCommand(),
-      temasEscuchados:          new TemasEscuchadosCommand(),
-      vecesEscuchado:           new VecesEscuchadosCommand(),
+      addArtist: new AddArtistCommand(),
+      addAlbum: new AddAlbumCommand(),
+      addTrack: new AddTrackCommand(),
+      getArtistById: new GetArtistByIdCommand(),
+      getAlbumById: new GetAlbumByIdCommand(),
+      getTrackById: new GetTrackByIdCommand(),
+      getPlaylistById: new GetPlaylistByIdCommand(),
+      getTracksMatchingGenres: new GetTracksMatchingGenresCommand(),
+      getTracksMatchingArtist: new GetTracksMatchingArtistCommand(),
+      createPlaylist: new CreatePlaylistCommand(),
+      deleteArtist: new DeleteArtistCommand(),
+      deleteAlbum: new DeleteAlbumCommand(),
+      deleteTrack: new DeleteTrackCommand(),
+      addUsuario: new AddUsuarioCommand(),
+      escuchar: new EscucharCommand(),
+      topTrack: new TopTrackCommand(),
+      temasEscuchados: new TemasEscuchadosCommand(),
+      vecesEscuchado: new VecesEscuchadosCommand(),
+      allArtistByName: new AllArtistByNameCommand(),
+      allAlbumByName: new AllAlbumByNameCommand(),
       populateAlbumsForArtist:  new PopulateAlbumsForArtist(),
     };
   }
-  get(key) { 
+  get(key) {
     return this.commands[key];
   }
-  
 }
 function main() {
+  const unqFy = getUNQfy();
 
-  const unqFy        = getUNQfy();
-  
   const nameFunction = process.argv[2];
   const args         = process.argv.splice(3);
   const handler      = new Handler();    

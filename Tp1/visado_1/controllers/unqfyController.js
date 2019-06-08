@@ -1,8 +1,3 @@
-const {getUNQfy, saveUNQfy} = require('../config/db');
+const { getUNQfy, saveUNQfy } = require('../config/db');
 
-
-
-const save = (req, res) => {
-    
-
-};
+const save = (req, res) => {};
