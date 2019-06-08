@@ -1,5 +1,5 @@
 class Playlist {
-  constructor(id, name, genresToInclude, duration,someTracks){
+  constructor(id, name, genresToInclude, duration, someTracks) {
     this.id = id;
     this.name = name;
     this.genresToInclude = genresToInclude;
@@ -7,21 +7,19 @@ class Playlist {
     this.tracks = someTracks;
   }
 
-  addTrack(track){
+  addTrack(track) {
     this.tracks.push(track);
   }
 
-  getTracks(){
+  getTracks() {
     return this.tracks;
   }
 
-  hasTrack(track){
+  hasTrack(track) {
     return this.tracks.some(aTrack => aTrack.id === track.id);
   }
-
 }
 
-
 module.exports = {
-  Playlist,
+  Playlist
 };

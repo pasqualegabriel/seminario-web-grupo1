@@ -1,39 +1,40 @@
+/* eslint-disable class-methods-use-this */
 class ErrorArtistaInexistente extends Error {
-  handle(x){
+  handle(x) {
     x.handleArtistaInexistenceError();
   }
 }
 
 class ErrorAlbumInexistente extends Error {
-  handle(x){
+  handle(x) {
     x.handleAlbumError();
   }
 }
 
 class ErrorTrackInexistente extends Error {
-  handle(x){
+  handle(x) {
     x.handleTrackInexistenteError();
   }
 }
 
 class ErrorArtistaRepetido extends Error {
-  handle(x){
+  handle(x) {
     x.handleArtistaRepetido();
   }
 }
 class ErrorTrackRepetido extends Error {
-  handle(x){
+  handle(x) {
     x.handleTrackRepetido();
   }
 }
 
-class ErrorUsuarioRepetido extends Error{
-  handle(x){
+class ErrorUsuarioRepetido extends Error {
+  handle(x) {
     x.handleUserRepetido();
   }
 }
-class ErrorAlbumRepetido extends Error{
-  handle(x){
+class ErrorAlbumRepetido extends Error {
+  handle(x) {
     x.handleAlbumRepetido();
   }
 }
@@ -45,5 +46,5 @@ module.exports = {
   ErrorArtistaRepetido,
   ErrorTrackRepetido,
   ErrorUsuarioRepetido,
-  ErrorAlbumRepetido,
+  ErrorAlbumRepetido
 };

@@ -1,16 +1,16 @@
-class Track{
-  constructor(id,name,duration,genres){
-    this.id=id;
-    this.name=name;
-    this.duration=duration;
-    this.genres=genres;
+class Track {
+  constructor(id, name, duration, genres) {
+    this.id = id;
+    this.name = name;
+    this.duration = duration;
+    this.genres = genres;
   }
 
-  getGenres(){
+  getGenres() {
     return this.genres;
   }
 }
 
 module.exports = {
-  Track,
+  Track
 };

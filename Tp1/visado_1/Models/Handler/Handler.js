@@ -1,32 +1,32 @@
-class Handler{
-  handleAlbumError(){
+/* eslint-disable class-methods-use-this */
+class Handler {
+  handleAlbumError() {
     console.log('El Album no existe');
   }
 
-  handleArtistaInexistenceError(){
-    console.log('El artista no existe');  
+  handleArtistaInexistenceError() {
+    console.log('El artista no existe');
   }
 
-  handleTrackInexistenteError(){
+  handleTrackInexistenteError() {
     console.log('El Track no existe');
   }
 
-  handleArtistaRepetido(){
+  handleArtistaRepetido() {
     console.log('Ya existe un artista con ese nombre');
   }
 
-  handleTrackRepetido(){
+  handleTrackRepetido() {
     console.log('ya existe un track con ese nombre');
   }
-  handleUserRepetido(){
+  handleUserRepetido() {
     console.log('ya existe un user con ese nombre');
   }
-  handleAlbumRepetido(){
+  handleAlbumRepetido() {
     console.log('ya existe un album con ese nombre');
   }
 }
 
-  
 module.exports = {
-  Handler,
+  Handler
 };
