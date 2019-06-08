@@ -1,4 +1,5 @@
 const { getUNQfy, saveUNQfy } = require('../config/db');
+const errors = require('../errors');
 
 const save = (req, res, next) => {
   try {
@@ -7,7 +8,7 @@ const save = (req, res, next) => {
     saveUNQfy(unqfy);
     return res.status(201).send(artists);
   } catch (error) {
-    return next(error);
+    return next(errors[error.message]());
   }
 };
 
@@ -74,7 +75,7 @@ const findBy = (req, res, next) => {
     saveUNQfy(unqfy);
     return res.status(200).send(artists);
   } catch (error) {
-    return next(error);
+    return res.status(409).send('artists');
   }
 };
 
