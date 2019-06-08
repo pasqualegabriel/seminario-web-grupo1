@@ -13,14 +13,21 @@
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.10.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-config-prettier": "^2.3.1",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-prettier": "^2.1.1",
+    "babel-eslint": "^8.2.2",
+    "prettier-eslint": "^8.2.1",
     "mocha": "^5.0.5"
   },
   "scripts": {
     "test": "mocha",
-    "eslint": "node_modules/.bin/eslint *.js",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint": "eslint app migrations config test",
+    "lint-diff": "git diff --name-only --cached --relative | grep \\\\.js$ | xargs ./node_modules/eslint/bin/eslint.js",
+    "lint-fix": "eslint app migrations config test --fix",
     "start": "nodemon index.js"
   },
   "author": "",

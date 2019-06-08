@@ -12,7 +12,7 @@ class Playlist {
   }
 
   getTracks(){
-    return this.tracks
+    return this.tracks;
   }
 
   hasTrack(track){
