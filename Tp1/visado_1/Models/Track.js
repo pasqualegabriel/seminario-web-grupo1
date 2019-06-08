@@ -4,7 +4,7 @@ class Track{
         this.name=name;
         this.duration=duration;
         this.genres=genres;
-        this.lyrics=''
+        this.lyrics='';
     }
 
     getGenres(){
@@ -12,6 +12,7 @@ class Track{
     }
 
     setLyrics(lyrics_){
+    console.log(lyrics_)    
     this.lyrics = lyrics_;
     }
 

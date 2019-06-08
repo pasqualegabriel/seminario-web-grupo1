@@ -24,6 +24,7 @@ const {
   AllAlbumByNameCommand,
   AllArtistByNameCommand,
   PopulateAlbumsForArtist,
+  GetLyricsCommand,
 } = require('./Models/commands/CommandsUnqfy');
 const { Handler } = require('./Models/Handler/Handler.js');
 
@@ -94,6 +95,7 @@ class HandleCommand {
       allArtistByName: new AllArtistByNameCommand(),
       allAlbumByName: new AllAlbumByNameCommand(),
       populateAlbumsForArtist:  new PopulateAlbumsForArtist(),
+      getLyricsCommand: new GetLyricsCommand(),
     };
   }
   get(key) {
@@ -112,7 +114,7 @@ function main() {
     console.log(command);
     command.invoke(args,unqFy)
 
-    setTimeout(() => saveUNQfy(unqFy) , 1000);
+    setTimeout(() => saveUNQfy(unqFy) , 10000);
     
      
     

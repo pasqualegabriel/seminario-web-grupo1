@@ -139,7 +139,7 @@ class UNQfy {
     
     const checkAlbum = this.findAllAlbums().find( album => album.name === name);
     const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum, artistId, name, year);
+    const album = new Album(this.nextIdAlbum,name, year);
     
     artist.addAlbum(album);
     
@@ -339,13 +339,15 @@ class UNQfy {
    const tema = this.getTrackById(trackId);
    
 
-   if(tema.getLyrics().lenght()==0){
+   if(tema.lyrics){
+    
      
     return musicMatchClient.searchTrackId(tema.name)
     .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
-    .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics)) 
-    
+    .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics))
    }else{
+    
+     
      return tema.lyrics
    }
 
