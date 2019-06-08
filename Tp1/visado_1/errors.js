@@ -1,9 +1,10 @@
-const internalError = (message, internalCode) => ({
-  message,
-  internalCode
+const internalError = (status, errorCode) => ({
+  status,
+  errorCode
 });
 
-const DEFAULT_ERROR = 'default_error';
-const defaultError = message => internalError(message, exports.DEFAULT_ERROR);
+exports.DEFAULT_ERROR = 'defaultError';
+exports.defaultError = () => internalError(500, exports.DEFAULT_ERROR);
 
-module.exports = { DEFAULT_ERROR, defaultError };
+exports.ARTISTA_REPETIDO_ERROR = 'artistaRepetidoError';
+exports.artistaRepetidoError = () => internalError(409, 'RESOURCE_ALREADY_EXISTS');

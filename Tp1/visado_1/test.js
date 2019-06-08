@@ -3,7 +3,6 @@
 const assert = require('chai').assert;
 const libunqfy = require('./unqfy');
 
-
 function createAndAddArtist(unqfy, artistName, country) {
   const artist = unqfy.addArtist({ name: artistName, country });
   return artist;
@@ -17,7 +16,6 @@ function createAndAddTrack(unqfy, albumId, trackName, trackDuraction, trackGenre
   return unqfy.addTrack(albumId, { name: trackName, duration: trackDuraction, genres: trackGenres });
 }
 
-
 describe('Add, remove and filter data', () => {
   let unqfy = null;
 
@@ -26,15 +24,14 @@ describe('Add, remove and filter data', () => {
   });
 
   it('should add an artist', () => {
-    const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
 
-    assert.equal(artist.name, 'Guns n\' Roses');
+    assert.equal(artist.name, "Guns n' Roses");
     assert.equal(artist.country, 'USA');
-
   });
 
   it('should add an album to an artist', () => {
-    const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
 
     assert.equal(album.name, 'Appetite for Destruction');
@@ -42,7 +39,7 @@ describe('Add, remove and filter data', () => {
   });
 
   it('should add a track to an album', () => {
-    const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
     const track = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, ['rock', 'hard rock']);
 
@@ -54,7 +51,7 @@ describe('Add, remove and filter data', () => {
   });
 
   it('should find different things by name', () => {
-    const artist1 = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist1 = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Roses Album', 1987);
     const track = createAndAddTrack(unqfy, album1.id, 'Roses track', 200, ['pop', 'movie']);
     const playlist = unqfy.createPlaylist('Roses playlist', ['pop'], 1400);
@@ -64,15 +61,24 @@ describe('Add, remove and filter data', () => {
       artists: [artist1],
       albums: [album1],
       tracks: [track],
-      playlists: [playlist],
-    }); 
+      playlists: [playlist]
+    });
   });
 
   it('should get all tracks matching genres', () => {
-    const artist1 = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist1 = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Appetite for Destruction', 1987);
-    const t0 = createAndAddTrack(unqfy, album1.id, 'Welcome to the jungle', 200, ['rock', 'hard rock', 'movie']);
-    const t1 = createAndAddTrack(unqfy, album1.id, 'Sweet Child o\' Mine', 500, ['rock', 'hard rock', 'pop', 'movie']);
+    const t0 = createAndAddTrack(unqfy, album1.id, 'Welcome to the jungle', 200, [
+      'rock',
+      'hard rock',
+      'movie'
+    ]);
+    const t1 = createAndAddTrack(unqfy, album1.id, "Sweet Child o' Mine", 500, [
+      'rock',
+      'hard rock',
+      'pop',
+      'movie'
+    ]);
 
     const artist2 = createAndAddArtist(unqfy, 'Michael Jackson', 'USA');
     const album2 = createAndAddAlbum(unqfy, artist2.id, 'Thriller', 1987);
@@ -91,13 +97,13 @@ describe('Add, remove and filter data', () => {
   });
 
   it('should get all tracks matching artist', () => {
-    const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
     const t1 = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, ['rock', 'hard rock']);
-    const t2 = createAndAddTrack(unqfy, album.id, 'It\'s so easy', 200, ['rock', 'hard rock']);
+    const t2 = createAndAddTrack(unqfy, album.id, "It's so easy", 200, ['rock', 'hard rock']);
 
     const album2 = createAndAddAlbum(unqfy, artist.id, 'Use Your Illusion I', 1992);
-    const t3 = createAndAddTrack(unqfy, album2.id, 'Don\'t Cry', 500, ['rock', 'hard rock']);
+    const t3 = createAndAddTrack(unqfy, album2.id, "Don't Cry", 500, ['rock', 'hard rock']);
 
     const artist2 = createAndAddArtist(unqfy, 'Michael Jackson', 'USA');
     const album3 = createAndAddAlbum(unqfy, artist2.id, 'Thriller', 1987);
@@ -123,10 +129,14 @@ describe('Playlist Creation and properties', () => {
   });
 
   it('should create a playlist as requested', () => {
-    const artist = createAndAddArtist(unqfy, 'Guns n\' Roses', 'USA');
+    const artist = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album = createAndAddAlbum(unqfy, artist.id, 'Appetite for Destruction', 1987);
-    const t1 = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, ['rock', 'hard rock', 'movie']);
-    
+    const t1 = createAndAddTrack(unqfy, album.id, 'Welcome to the jungle', 200, [
+      'rock',
+      'hard rock',
+      'movie'
+    ]);
+
     const artist2 = createAndAddArtist(unqfy, 'Michael Jackson', 'USA');
     const album2 = createAndAddAlbum(unqfy, artist2.id, 'Thriller', 1987);
     const t2 = createAndAddTrack(unqfy, album2.id, 'Thriller', 200, ['pop', 'movie']);
@@ -134,7 +144,6 @@ describe('Playlist Creation and properties', () => {
     const t4 = createAndAddTrack(unqfy, album2.id, 'Another song II', 500, ['pop']);
 
     const playlist = unqfy.createPlaylist('my playlist', ['pop', 'rock'], 1400);
-
 
     assert.equal(playlist.name, 'my playlist');
     assert.isAtMost(playlist.duration, 1400);

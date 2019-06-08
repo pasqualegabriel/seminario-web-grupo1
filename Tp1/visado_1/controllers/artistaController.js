@@ -74,7 +74,7 @@ const findBy = (req, res, next) => {
     saveUNQfy(unqfy);
     return res.status(200).send(artists);
   } catch (error) {
-    return next(error);
+    return res.status(409).send('artists');
   }
 };
 

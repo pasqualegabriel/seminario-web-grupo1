@@ -18,6 +18,7 @@ const {
   ErrorAlbumRepetido
 } = require('./Models/Errores');
 const { flatMap } = require('lodash');
+const errors = require('./errors');
 
 class UNQfy {
   constructor() {
@@ -92,7 +93,7 @@ class UNQfy {
   addArtist({ name, country }) {
     const checkArtist = this.listaDeArtistas.find(artist => artist.name === name);
     if (checkArtist) {
-      throw new ErrorArtistaRepetido();
+      throw new ErrorArtistaRepetido(errors.ARTISTA_REPETIDO_ERROR);
     }
     const nuevoArtista = new Artista(this.nextIdArtist, name, country);
 
