@@ -6,6 +6,8 @@ const {Track} = require('./Models/Track');
 const {Playlist} = require('./Models/Playlist');
 const {Usuario} = require('./Models/Usuario');
 const util = require('util');
+const saveUNQfy   = require('./config/db');
+
 const {
   ErrorArtistaInexistente,
   ErrorAlbumInexistente,
@@ -134,19 +136,7 @@ class UNQfy {
     return album;
   }
 
-  addAlbumSinObjeto(artistId, name, year) {
-    
-    
-    const checkAlbum = this.findAllAlbums().find( album => album.name === name);
-    const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum,name, year);
-    
-    artist.addAlbum(album);
-    
-    this.nextIdAlbum++;
-    return album
-    
-  }
+  
 
   updateYear(albumId, { year }) {
     const albums = this.getAlbumById(albumId);
@@ -166,6 +156,7 @@ class UNQfy {
       - una propiedad genres (lista de strings)
   */
   addTrack(albumId, { name, duration, genres }) {
+    console.log(this.findAllAlbums());
     const checkTrack = flatMap(this.findAllAlbums(), album => album.getTracks()).find(
       track => track.name === name
     );
@@ -197,6 +188,8 @@ class UNQfy {
     console.log(`Se borro el track ${id}`);
   }
 
+  
+
   getArtistById(id) {
     const artist = this.listaDeArtistas.find(anArtist => anArtist.id === id);
     if (!artist) {
@@ -206,22 +199,33 @@ class UNQfy {
   }
 
   populateAlbumsForArtist(artistId, spotifyClient) {
-    const artistName = this.getArtistById(artistId).name
 
-    return spotifyClient.getArtistByName(artistName).then( r =>
+    const artistName = this.getArtistById(artistId).name;
 
-     spotifyClient.populateAlbumsForArtist(r).then( albums =>
-
-        this.agregarVariosAlbums(albums,artistId)
-      )
-    ).catch(error =>console.log(error))
+    return spotifyClient.getArtistByName(artistName)
+      .then(idArtistSpotify => spotifyClient.populateAlbumsForArtist(idArtistSpotify))
+      .then(albums => this.agregarVariosAlbums(albums, artistId))
+      .then(res => this.save('data.json'))
+      .catch(error => console.log(error)); 
   }
 
   agregarVariosAlbums(albums,artistId){
 
     albums.forEach(element => {
-      this.addAlbumSinObjeto(artistId,element.name,element.release_date)
+      this.addAlbumSinObjeto(artistId,element.name,element.release_date);
     });
+  }
+
+  addAlbumSinObjeto(artistId, name, year) {
+    const artist = this.getArtistById(artistId);
+    const album = new Album(this.nextIdAlbum,name, year);
+    console.log(this.nextIdAlbum);
+    artist.addAlbum(album);
+    
+    this.nextIdAlbum++;
+    console.log(this.nextIdAlbum);
+    return album;
+    
   }
 
   getAlbumById(id) {
@@ -339,26 +343,25 @@ class UNQfy {
   }
 
   getLyrics(trackId,musicMatchClient){
-   const tema = this.getTrackById(trackId);
+    const tema = this.getTrackById(trackId);
    
 
-   if(tema.lyrics){
-    
-     
-    return musicMatchClient.searchTrackId(tema.name)
-    .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
-    .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics))
-   }else{
-    
-     
-     return tema.lyrics
-   }
+    if(! tema.lyrics.length){
+      return musicMatchClient.searchTrackId(tema.name)
+        .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
+        .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics))
+        .then(res => this.save('data.json'));
+    }else{
+      return tema.lyrics;
+    }
 
   }
 
 
 
   save(filename) {
+    console.log('caca');
+    console.log('save');
     const listenersBkp = this.listeners;
     this.listeners = [];
 
