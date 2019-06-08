@@ -313,16 +313,18 @@ class UNQfy {
    const tema = this.getTrackById(trackId);
    
 
-   if(tema.lyrics.lenght()==0){
-    const idTemaEnMusicMatch = musicMatchClient.searchTrackId(tema.name);
-    const lyrics = musicMatchClient.getTrackLyrics(idTemaEnMusicMatch);
-    tema.setLyrics(lyrics);
-    return tema.lyrics
+   if(tema.getLyrics().lenght()==0){
+     
+    return musicMatchClient.searchTrackId(tema.name)
+    .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
+    .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics)) 
+    
    }else{
      return tema.lyrics
    }
 
   }
+
 
 
   save(filename) {

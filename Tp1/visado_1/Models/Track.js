@@ -14,6 +14,10 @@ class Track{
     setLyrics(lyrics_){
     this.lyrics = lyrics_;
     }
+
+    getLyrics(){
+        return this.lyrics;
+    }
 }
 
 module.exports = {
