@@ -1,102 +1,80 @@
 const { getUNQfy, saveUNQfy } = require('../config/db');
 
-const save = (req, res) => {
+const save = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const artists = unqfy.addArtist(req.body);
     saveUNQfy(unqfy);
-    res.status(201).send(artists);
+    return res.status(201).send(artists);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const update = (req, res) => {
+const update = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const artists = unqfy.updateArtist(parseInt(req.params.id), req.body);
     saveUNQfy(unqfy);
-    res.status(200).send(artists);
+    return res.status(200).send(artists);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const all = (req, res) => {
+const all = (req, res, next) => {
   try {
     console.log(req.query.name);
     const unqfy = getUNQfy();
     const artists = req.query.name ? unqfy.findAllArtistByName(req.query.name) : unqfy.getAllArtist();
     saveUNQfy(unqfy);
-    res.status(200).send(artists);
+    return res.status(200).send(artists);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const addAlbum = (req, res) => {
+const addAlbum = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const artists = unqfy.addAlbum(parseInt(req.params.id), req.body);
     saveUNQfy(unqfy);
-    res.status(200).send(artists);
+    return res.status(200).send(artists);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const deleteA = (req, res) => {
+const deleteA = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     unqfy.deleteArtist(parseInt(req.params.id));
     saveUNQfy(unqfy);
-    res.status(204).send();
+    return res.status(204).send();
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const findByName = (req, res) => {
+const findByName = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const artists = unqfy.findAllArtistByName(req.query.name);
     saveUNQfy(unqfy);
-    res.status(200).send(artists);
+    return res.status(200).send(artists);
   } catch (error) {
-    // REVISAR
-    res.status(500).send(error);
+    return next(error);
   }
 };
 
-const findBy = (req, res) => {
+const findBy = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const artists = unqfy.getArtistById(parseInt(req.params.id));
     saveUNQfy(unqfy);
-    res.status(200).send(artists);
+    return res.status(200).send(artists);
   } catch (error) {
-    // REVISAR
-    res.status(500).send(error);
+    return next(error);
   }
 };
 

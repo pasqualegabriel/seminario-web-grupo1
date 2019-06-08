@@ -1,32 +1,24 @@
 const { getUNQfy, saveUNQfy } = require('../config/db');
 
-const create = (req, res) => {
+const create = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const playList = unqfy.createPlaylist(req.body);
     saveUNQfy(unqfy);
-    res.status(201).send(playList);
+    return res.status(201).send(playList);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
-const createByTracks = (req, res) => {
+const createByTracks = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const playList = unqfy.createPlaylistByTracks(req.body);
     saveUNQfy(unqfy);
-    res.status(201).send(playList);
+    return res.status(201).send(playList);
   } catch (error) {
-    // REVISAR
-    res
-      .status(500)
-      .send(error)
-      .end();
+    return next(error);
   }
 };
 
