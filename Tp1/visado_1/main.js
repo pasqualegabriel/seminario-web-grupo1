@@ -1,3 +1,5 @@
+
+const util = require('util');
 const fs = require('fs'); // necesitado para guardar/cargar unqfy
 const unqmod = require('./unqfy'); // importamos el modulo unqfy
 const {
@@ -20,7 +22,9 @@ const {
   TemasEscuchadosCommand,
   VecesEscuchadosCommand,
   AllAlbumByNameCommand,
-  AllArtistByNameCommand
+  AllArtistByNameCommand,
+  PopulateAlbumsForArtist,
+  GetLyricsCommand,
 } = require('./Models/commands/CommandsUnqfy');
 const { Handler } = require('./Models/Handler/Handler.js');
 
@@ -34,6 +38,7 @@ function getUNQfy(filename = 'data.json') {
 }
 
 function saveUNQfy(unqfy, filename = 'data.json') {
+  
   unqfy.save(filename);
 }
 
@@ -88,7 +93,9 @@ class HandleCommand {
       temasEscuchados: new TemasEscuchadosCommand(),
       vecesEscuchado: new VecesEscuchadosCommand(),
       allArtistByName: new AllArtistByNameCommand(),
-      allAlbumByName: new AllAlbumByNameCommand()
+      allAlbumByName: new AllAlbumByNameCommand(),
+      populateAlbumsForArtist:  new PopulateAlbumsForArtist(),
+      getLyricsCommand: new GetLyricsCommand(),
     };
   }
   get(key) {
@@ -99,18 +106,18 @@ function main() {
   const unqFy = getUNQfy();
 
   const nameFunction = process.argv[2];
-  const args = process.argv.splice(3);
-  const handler = new Handler();
-  const operation = new HandleCommand();
-  try {
-    const command = operation.get(nameFunction);
+  const args         = process.argv.splice(3);
+  const handler      = new Handler();    
+  const operation    = new HandleCommand();
+ 
+    const command      = operation.get(nameFunction);
     console.log(command);
-    command.invoke(args, unqFy);
-    saveUNQfy(unqFy);
-  } catch (error) {
-    console.log(error);
-    // error.handle(handler);
-  }
+    command.invoke(args,unqFy)
+
+    setTimeout(() => saveUNQfy(unqFy) , 10000);
+    
+     
+    
 }
 
 main();
