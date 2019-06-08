@@ -26,6 +26,12 @@ api.put('/albums/:id', albums.updateYear);
 
 api.delete('/albums/:id', albums.deleteA);
 
-api.put('/playlists', playList.create);
+api.post('/playlists', playList.create);
+api.post('/playlists', playList.createByTracks);
+
+api.get('/playlists', playList.filter);
+api.get('/playlists/:id', playList.findBy);
+
+api.delete('/playlists', playList.deleteP);
 
 module.exports = api;

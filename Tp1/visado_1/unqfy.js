@@ -169,6 +169,10 @@ class UNQfy {
     this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id !== id);
   }
 
+  deletePlayList(id) {
+    this.listaDeArtistas = this.listaDePlayList.filter(artist => artist.id !== id);
+  }
+
   deleteAlbum(id) {
     this.listaDeArtistas.forEach(artist => artist.deleteAlbum(id));
   }
@@ -251,10 +255,9 @@ class UNQfy {
     this.listaDePlayList.push(playlist);
     return playlist;
   }
-  createPlaylistByTracks({ name, tracks }) {
+  createPlaylistByTracks({ name, tracks,duration }) {
     const traksConcret = tracks.map(idTrack => this.getTrackById(idTrack));
     const genresToInclude = traksConcret.map(track => track.genres);
-    const duration = traksConcret.reduce((acum, track) => acum + track.duration, 0);
     const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration, traksConcret);
     this.nextIdPlayList++;
     this.listaDePlayList.push(playlist);
