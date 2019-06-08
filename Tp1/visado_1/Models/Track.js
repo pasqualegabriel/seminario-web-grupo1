@@ -4,10 +4,15 @@ class Track{
         this.name=name;
         this.duration=duration;
         this.genres=genres;
+        this.lyrics=''
     }
 
     getGenres(){
         return this.genres;
+    }
+
+    setLyrics(lyrics_){
+    this.lyrics = lyrics_;
     }
 }
 

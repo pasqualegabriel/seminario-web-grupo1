@@ -60,6 +60,7 @@ class UNQfy {
     const track = this.getTrackById(trackId); 
     usuarioEncontrado.escucharTrack(track.name);
   }
+
   sumTrackEscuchado(nameTrack){
     const sum =this.listaDeUsuarios.reduce(
       (acum,usuario,index) =>  acum += usuario.vecesEscuchado(nameTrack) ? usuario.vecesEscuchado(nameTrack): 0
@@ -305,6 +306,21 @@ class UNQfy {
       tracks: this.findAllTracksByName(name),
       playlists: this.findAllPlaylistsByName(name),
     };
+
+  }
+
+  getLyrics(trackId,musicMatchClient){
+   const tema = this.getTrackById(trackId);
+   
+
+   if(tema.lyrics.lenght()==0){
+    const idTemaEnMusicMatch = musicMatchClient.searchTrackId(tema.name);
+    const lyrics = musicMatchClient.getTrackLyrics(idTemaEnMusicMatch);
+    tema.setLyrics(lyrics);
+    return tema.lyrics
+   }else{
+     return tema.lyrics
+   }
 
   }
 
