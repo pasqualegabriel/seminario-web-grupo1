@@ -200,31 +200,29 @@ class UNQfy {
   }
 
   populateAlbumsForArtist(artistId, spotifyClient) {
-
+    
     const artistName = this.getArtistById(artistId).name;
 
     return spotifyClient.getArtistByName(artistName)
       .then(idArtistSpotify => spotifyClient.populateAlbumsForArtist(idArtistSpotify))
-      .then(albums => this.agregarVariosAlbums(albums, artistId))
-      .then(res => this.save('data.json'))
+      .then(albums =>{
+        
+        albums.forEach(element => {
+          this.addAlbumSinObjeto(artistId,element.name,element.release_date);
+        })
+        
+      })
       .catch(error => console.log(error)); 
   }
 
-  agregarVariosAlbums(albums,artistId){
-
-    albums.forEach(element => {
-      this.addAlbumSinObjeto(artistId,element.name,element.release_date);
-    });
-  }
 
   addAlbumSinObjeto(artistId, name, year) {
+    
     const artist = this.getArtistById(artistId);
     const album = new Album(this.nextIdAlbum,name, year);
-    console.log(this.nextIdAlbum);
     artist.addAlbum(album);
     
     this.nextIdAlbum++;
-    console.log(this.nextIdAlbum);
     return album;
     
   }
@@ -232,6 +230,8 @@ class UNQfy {
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
     const album = artistaDeAlbum.buscarAlbum(id);
+    
+    
     if (!album) {
       throw new ErrorAlbumInexistente();
     }
@@ -351,7 +351,6 @@ class UNQfy {
       return musicMatchClient.searchTrackId(tema.name)
         .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
         .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics))
-        .then(res => this.save('data.json'));
     }else{
       return tema.lyrics;
     }
@@ -361,8 +360,6 @@ class UNQfy {
 
 
   save(filename) {
-    console.log('caca');
-    console.log('save');
     const listenersBkp = this.listeners;
     this.listeners = [];
 

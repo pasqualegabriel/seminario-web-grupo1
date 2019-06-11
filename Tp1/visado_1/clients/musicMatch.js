@@ -25,6 +25,7 @@ class MusicMatchClient {
   }
 
   getTrackLyrics(trackID) {
+    
     const options = {
       uri: this.baseURL + '/track.lyrics.get',
       qs: {
@@ -33,7 +34,14 @@ class MusicMatchClient {
       },
       json: true
     }
-      return rp.get(options).then((response) =>response.message.body.lyrics.lyrics_body).catch(error =>console.log(error));
+
+    
+      return rp.get(options).then((response) =>{
+
+        const lyricsBody = response.message.body.lyrics.lyrics_body;
+        return  lyricsBody!=='' ? lyricsBody: 'No tiene Letra'
+
+      }).catch(error =>console.log(error));
   }
 
 

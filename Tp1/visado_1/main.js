@@ -37,7 +37,8 @@ function getUNQfy(filename = 'data.json') {
 }
 
 function saveUNQfy(unqfy, filename = 'data.json') {
-  console.log('caca save');
+  console.log('Termine');
+  
   unqfy.save(filename);
 }
 
@@ -101,7 +102,8 @@ class HandleCommand {
     return this.commands[key];
   }
 }
-function main() {
+
+const main  = async () => {
   const unqFy = getUNQfy();
 
   const nameFunction = process.argv[2];
@@ -111,8 +113,15 @@ function main() {
  
   const command      = operation.get(nameFunction);
   console.log(command);
-  command.invoke(args,unqFy);
-  saveUNQfy(unqFy);
+
+  //const promesaInvoke = util.promisify(command.invoke)
+
+  const algo = await command.invoke(args,unqFy);
+  saveUNQfy(unqFy)
+
+  
+  
+  
 }
 
 main();

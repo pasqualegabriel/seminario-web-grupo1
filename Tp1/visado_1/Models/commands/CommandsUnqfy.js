@@ -13,6 +13,7 @@ class AddArtistCommand {
       name: args[0],
       country: args[1]
     };
+    
     console.log(unqfy.addArtist(artistData));
     console.log('Se agrego el artista de forma correcta.');
   }
@@ -63,7 +64,7 @@ class GetArtistByIdCommand {
 class GetAlbumByIdCommand {
   invoke(args, unqfy) {
     const albumId = Number(args[0]);
-    console.log(unqfy.getAlbumById(albumId));
+    unqfy.getAlbumById(albumId);
   }
 }
 
@@ -179,15 +180,13 @@ class AllAlbumByNameCommand {
 class PopulateAlbumsForArtist {
   invoke(args,unqfy){
     
-    unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
-    console.log('Cargando albums del artista');
+    return unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
   }
 }
 
 class GetLyricsCommand {
   invoke(args,unqfy){
-    unqfy.getLyrics(Number(args[0]), new MusicMatchClient());
-    console.log('Buscando');
+    return unqfy.getLyrics(Number(args[0]), new MusicMatchClient());
   }
 }
 
