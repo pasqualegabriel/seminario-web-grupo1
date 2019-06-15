@@ -194,7 +194,7 @@ class UNQfy {
   getArtistById(id) {
     const artist = this.listaDeArtistas.find(anArtist => anArtist.id === id);
     if (!artist) {
-      throw new ErrorArtistaInexistente();
+      throw new ErrorArtistaInexistente(errors.ARTISTA_INEXISTENTE_ERROR);
     }
     return artist;
   }
