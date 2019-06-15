@@ -125,13 +125,14 @@ class UNQfy {
      - una propiedad year (number)
   */
   addAlbum(artistId, { name, year }) {
+    const artist = this.getArtistById(artistId);
+    const album = new Album(this.nextIdAlbum, name, year);
+
     const checkAlbum = this.findAllAlbums().find(album => album.name === name);
     if (checkAlbum) {
       throw new ErrorAlbumRepetido();
     }
 
-    const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum, name, year);
     artist.addAlbum(album);
     this.nextIdAlbum++;
     return album;
@@ -173,7 +174,8 @@ class UNQfy {
   }
 
   deleteArtist(id) {
-    this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist.id !== id);
+    const artistToDelete = this.getArtistById(id);
+    this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist !== artistToDelete);
   }
 
   deletePlayList(id) {
@@ -233,7 +235,7 @@ class UNQfy {
     if (!artistaDeAlbum) {
       throw new ErrorAlbumInexistente(errors.ALBUM_INEXISTENTE_ERROR);
     }
-    
+
     return artistaDeAlbum.buscarAlbum(id);
   }
 
