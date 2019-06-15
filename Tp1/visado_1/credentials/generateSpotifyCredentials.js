@@ -1,3 +1,5 @@
+/* eslint-disable no-buffer-constructor */
+/* eslint-disable camelcase */
 /**
  * This is an example of a basic node.js script that performs
  * the Authorization Code oAuth2 flow to authenticate against
@@ -39,25 +41,22 @@ let currentState = null;
 const app = express();
 
 function login() {
-
   currentState = generateRandomString(16);
 
   // your application requests authorization
   const scope = 'user-read-private user-read-email';
-  const url = 'https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: CLIENT_ID,
-      scope: scope,
-      redirect_uri: REDIRECT_URI,
-      state: currentState,
-    });
+  const url = `https://accounts.spotify.com/authorize?${querystring.stringify({
+    response_type: 'code',
+    client_id: CLIENT_ID,
+    scope,
+    redirect_uri: REDIRECT_URI,
+    state: currentState
+  })}`;
   console.log('Ingrese a la siguiente URL e ingrese a su cuenta de spotify');
   console.log(url);
 }
 
 app.get('/spotify_cb', (req, res) => {
-
   // your application requests refresh and access tokens
   // after checking the state parameter
 
@@ -73,27 +72,23 @@ app.get('/spotify_cb', (req, res) => {
     const authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
-        code: code,
+        code,
         redirect_uri: REDIRECT_URI,
         grant_type: 'authorization_code'
       },
       headers: {
-        //'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-        Authorization: 'Basic ' + Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')
+        // 'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+        Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`
       },
       json: true
     };
 
     request.post(authOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-
         const access_token = body.access_token;
         const refresh_token = body.refresh_token;
 
-        fs.writeFileSync(CREDENTIALS_FILENAME, JSON.stringify(
-          body,
-          null, 2
-        ));
+        fs.writeFileSync(CREDENTIALS_FILENAME, JSON.stringify(body, null, 2));
         console.log('-------------------------------------------');
         console.log(`Credenciales guardadas en ${CREDENTIALS_FILENAME}.`);
         console.log('access_token: ', access_token);
@@ -101,15 +96,15 @@ app.get('/spotify_cb', (req, res) => {
 
         const options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { Authorization: 'Bearer ' + access_token },
+          headers: { Authorization: `Bearer ${access_token}` },
           json: true
         };
 
         // use the access token to access the Spotify Web API
         console.log('-------------------------------------------');
         console.log('Haciendo un request de prueba con los tokens adquiridos ...');
-        request.get(options, (error, response, body) => {
-          if (!error && response.statusCode === 200) {
+        request.get(options, (err, aResponse, aBody) => {
+          if (!err && aResponse.statusCode === 200) {
             console.log('Request de prueba funcionó OK');
           } else {
             console.error('Request de prueba NO FUNCIONÓ :(');
@@ -127,15 +122,14 @@ app.get('/spotify_cb', (req, res) => {
 });
 
 app.get('/refresh_token', (req, res) => {
-
   // requesting access token from refresh token
   const refresh_token = req.query.refresh_token;
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { Authorization: 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')) },
+    headers: { Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}` },
     form: {
       grant_type: 'refresh_token',
-      refresh_token: refresh_token
+      refresh_token
     },
     json: true
   };
@@ -144,7 +138,7 @@ app.get('/refresh_token', (req, res) => {
     if (!error && response.statusCode === 200) {
       const access_token = body.access_token;
       res.send({
-        access_token: access_token
+        access_token
       });
     }
   });

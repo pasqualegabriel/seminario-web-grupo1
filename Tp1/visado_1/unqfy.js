@@ -1,12 +1,12 @@
 const picklify = require('picklify'); // para cargar/guarfar unqfy
 const fs = require('fs'); // para cargar/guarfar unqfy
-const {Artista} = require('./Models/Artista');
-const {Album} = require('./Models/Album');
-const {Track} = require('./Models/Track');
-const {Playlist} = require('./Models/Playlist');
-const {Usuario} = require('./Models/Usuario');
+const { Artista } = require('./Models/Artista');
+const { Album } = require('./Models/Album');
+const { Track } = require('./Models/Track');
+const { Playlist } = require('./Models/Playlist');
+const { Usuario } = require('./Models/Usuario');
 const util = require('util');
-const saveUNQfy   = require('./config/db');
+const saveUNQfy = require('./config/db');
 
 const {
   ErrorArtistaInexistente,
@@ -18,7 +18,7 @@ const {
   ErrorAlbumRepetido
 } = require('./Models/Errores');
 const { flatMap } = require('lodash');
-const errors = require('./errors');
+const { errors } = require('./errors');
 
 class UNQfy {
   constructor() {
@@ -128,7 +128,7 @@ class UNQfy {
     const artist = this.getArtistById(artistId);
     const album = new Album(this.nextIdAlbum, name, year);
 
-    const checkAlbum = this.findAllAlbums().find(album => album.name === name);
+    const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
     if (checkAlbum) {
       throw new ErrorAlbumRepetido();
     }
@@ -137,8 +137,6 @@ class UNQfy {
     this.nextIdAlbum++;
     return album;
   }
-
-  
 
   updateYear(albumId, { year }) {
     const albums = this.getAlbumById(albumId);
@@ -191,8 +189,6 @@ class UNQfy {
     console.log(`Se borro el track ${id}`);
   }
 
-  
-
   getArtistById(id) {
     const artist = this.listaDeArtistas.find(anArtist => anArtist.id === id);
     if (!artist) {
@@ -202,36 +198,31 @@ class UNQfy {
   }
 
   populateAlbumsForArtist(artistId, spotifyClient) {
-    
     const artistName = this.getArtistById(artistId).name;
 
-    return spotifyClient.getArtistByName(artistName)
+    return spotifyClient
+      .getArtistByName(artistName)
       .then(idArtistSpotify => spotifyClient.populateAlbumsForArtist(idArtistSpotify))
-      .then(albums =>{
-        
+      .then(albums => {
         albums.forEach(element => {
-          this.addAlbumSinObjeto(artistId,element.name,element.release_date);
-        })
-        
+          this.addAlbumSinObjeto(artistId, element.name, element.release_date);
+        });
       })
-      .catch(error => console.log(error)); 
+      .catch(error => console.log(error));
   }
 
-
   addAlbumSinObjeto(artistId, name, year) {
-    
     const artist = this.getArtistById(artistId);
-    const album = new Album(this.nextIdAlbum,name, year);
+    const album = new Album(this.nextIdAlbum, name, year);
     artist.addAlbum(album);
-    
+
     this.nextIdAlbum++;
     return album;
-    
   }
 
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
-    
+
     if (!artistaDeAlbum) {
       throw new ErrorAlbumInexistente(errors.ALBUM_INEXISTENTE_ERROR);
     }
@@ -295,7 +286,7 @@ class UNQfy {
     this.listaDePlayList.push(playlist);
     return playlist;
   }
-  createPlaylistByTracks({ name, tracks,duration }) {
+  createPlaylistByTracks({ name, tracks, duration }) {
     const traksConcret = tracks.map(idTrack => this.getTrackById(idTrack));
     const genresToInclude = traksConcret.map(track => track.genres);
     const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration, traksConcret);
@@ -344,21 +335,18 @@ class UNQfy {
     };
   }
 
-  getLyrics(trackId,musicMatchClient){
+  getLyrics(trackId, musicMatchClient) {
     const tema = this.getTrackById(trackId);
-   
 
-    if(! tema.lyrics.length){
-      return musicMatchClient.searchTrackId(tema.name)
-        .then(respuestaID =>musicMatchClient.getTrackLyrics(respuestaID))
-        .then(respuestaLyrics =>tema.setLyrics(respuestaLyrics))
-    }else{
+    if (!tema.lyrics.length) {
+      return musicMatchClient
+        .searchTrackId(tema.name)
+        .then(respuestaID => musicMatchClient.getTrackLyrics(respuestaID))
+        .then(respuestaLyrics => tema.setLyrics(respuestaLyrics));
+    } else {
       return tema.lyrics;
     }
-
   }
-
-
 
   save(filename) {
     const listenersBkp = this.listeners;

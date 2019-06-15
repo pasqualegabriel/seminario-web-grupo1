@@ -3,14 +3,18 @@ const internalError = (status, errorCode) => ({
   errorCode
 });
 
-exports.DEFAULT_ERROR = 'defaultError';
-exports.defaultError = () => internalError(500, exports.DEFAULT_ERROR);
+const errors = {
+  DEFAULT_ERROR: 'defaultError',
+  ARTISTA_REPETIDO_ERROR: 'artistaRepetidoError',
+  ARTISTA_INEXISTENTE_ERROR: 'artistaInexistenteError',
+  ALBUM_INEXISTENTE_ERROR: 'albumInexistenteError'
+};
 
-exports.ARTISTA_REPETIDO_ERROR = 'artistaRepetidoError';
-exports.artistaRepetidoError = () => internalError(409, 'RESOURCE_ALREADY_EXISTS');
+const errorsCode = {
+  [errors.DEFAULT_ERROR]: () => internalError(500, errors.DEFAULT_ERROR),
+  [errors.ARTISTA_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS'),
+  [errors.ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND'),
+  [errors.ALBUM_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND')
+};
 
-exports.ARTISTA_INEXISTENTE_ERROR = 'artistaInexistenteError';
-exports.artistaInexistenteError = () => internalError(404, 'RESOURCE_NOT_FOUND');
-
-exports.ALBUM_INEXISTENTE_ERROR = 'albumInexistenteError';
-exports.albumInexistenteError = () => internalError(404, 'RESOURCE_NOT_FOUND');
+module.exports = { errors, errorsCode };

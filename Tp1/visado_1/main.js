@@ -23,7 +23,7 @@ const {
   AllAlbumByNameCommand,
   AllArtistByNameCommand,
   PopulateAlbumsForArtist,
-  GetLyricsCommand,
+  GetLyricsCommand
 } = require('./Models/commands/CommandsUnqfy');
 const { Handler } = require('./Models/Handler/Handler.js');
 
@@ -38,7 +38,7 @@ function getUNQfy(filename = 'data.json') {
 
 function saveUNQfy(unqfy, filename = 'data.json') {
   console.log('Termine');
-  
+
   unqfy.save(filename);
 }
 
@@ -94,8 +94,8 @@ class HandleCommand {
       vecesEscuchado: new VecesEscuchadosCommand(),
       allArtistByName: new AllArtistByNameCommand(),
       allAlbumByName: new AllAlbumByNameCommand(),
-      populateAlbumsForArtist:  new PopulateAlbumsForArtist(),
-      getLyricsCommand: new GetLyricsCommand(),
+      populateAlbumsForArtist: new PopulateAlbumsForArtist(),
+      getLyricsCommand: new GetLyricsCommand()
     };
   }
   get(key) {
@@ -103,25 +103,18 @@ class HandleCommand {
   }
 }
 
-const main  = async () => {
+const main = async () => {
   const unqFy = getUNQfy();
 
   const nameFunction = process.argv[2];
-  const args         = process.argv.splice(3);
-  const handler      = new Handler();    
-  const operation    = new HandleCommand();
- 
-  const command      = operation.get(nameFunction);
+  const args = process.argv.splice(3);
+  const operation = new HandleCommand();
+
+  const command = operation.get(nameFunction);
   console.log(command);
 
-  //const promesaInvoke = util.promisify(command.invoke)
-
-  const algo = await command.invoke(args,unqFy);
-  saveUNQfy(unqFy)
-
-  
-  
-  
-}
+  await command.invoke(args, unqFy);
+  saveUNQfy(unqFy);
+};
 
 main();
