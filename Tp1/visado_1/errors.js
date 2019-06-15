@@ -11,3 +11,6 @@ exports.artistaRepetidoError = () => internalError(409, 'RESOURCE_ALREADY_EXISTS
 
 exports.ARTISTA_INEXISTENTE_ERROR = 'artistaInexistenteError';
 exports.artistaInexistenteError = () => internalError(404, 'RESOURCE_NOT_FOUND');
+
+exports.ALBUM_INEXISTENTE_ERROR = 'albumInexistenteError';
+exports.albumInexistenteError = () => internalError(404, 'RESOURCE_NOT_FOUND');

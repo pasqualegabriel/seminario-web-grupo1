@@ -229,13 +229,12 @@ class UNQfy {
 
   getAlbumById(id) {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
-    const album = artistaDeAlbum.buscarAlbum(id);
     
-    
-    if (!album) {
-      throw new ErrorAlbumInexistente();
+    if (!artistaDeAlbum) {
+      throw new ErrorAlbumInexistente(errors.ALBUM_INEXISTENTE_ERROR);
     }
-    return album;
+    
+    return artistaDeAlbum.buscarAlbum(id);
   }
 
   getTrackById(id) {
