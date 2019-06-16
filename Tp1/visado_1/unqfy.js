@@ -100,6 +100,7 @@ class UNQfy {
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist++;
     console.log('Se Registro Exitosamente');
+    console.log(`artistaId: ${this.nextIdArtist - 1}`);
     return this.getArtistById(nuevoArtista.id);
   }
 
