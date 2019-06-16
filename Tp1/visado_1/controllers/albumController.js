@@ -47,7 +47,7 @@ exports.deleteA = (req, res, next) => {
 exports.all = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
-    const albums = req.query.name ? unqfy.findAllAlbums() : unqfy.findAllAlbumsByName(req.query.name);
+    const albums = req.query.name ? unqfy.findAllAlbumsByName(req.query.name) : unqfy.findAllAlbums();
     saveUNQfy(unqfy);
     return res.status(200).send(albums);
   } catch (error) {

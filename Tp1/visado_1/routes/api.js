@@ -5,7 +5,7 @@ const artists = require('../controllers/artistaController');
 const albums = require('../controllers/albumController');
 const playList = require('../controllers/playListController');
 const { Validator } = require('express-json-validator-middleware');
-const { artistSchema } = require('../middlewares/artistSchema');
+const { artistSchema, albumSchema } = require('../middlewares/schemas');
 
 const validator = new Validator({ allErrors: true });
 const validate = validator.validate;
@@ -25,7 +25,7 @@ api.put('/artists/:id', artists.update);
 api.get('/albums', albums.all);
 api.get('/albums/:id', albums.findBy);
 
-api.post('/albums', albums.save);
+api.post('/albums', validate({ body: albumSchema }), albums.save);
 
 api.put('/albums/:id', albums.updateYear);
 
