@@ -6,9 +6,8 @@ exports.getUnqfy = (req, res, next) => {
 };
 
 exports.unqfyResponse = (response, req, res, next) => {
-  if (response.data) {
+  if (response.data && req.method !== 'GET') {
     saveUNQfy(res.locals.unqfy);
-    return res.status(response.status).send(response.data);
   }
-  return next(response);
+  return response.data ? res.status(response.status).send(response.data) : next(response);
 };
