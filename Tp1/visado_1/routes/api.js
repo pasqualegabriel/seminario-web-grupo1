@@ -27,7 +27,7 @@ api.get('/albums/:id', albums.findBy);
 
 api.post('/albums', validate({ body: albumSchema }), albums.save);
 
-api.put('/albums/:id', albums.updateYear);
+api.patch('/albums/:id', albums.updateYear);
 
 api.delete('/albums/:id', albums.deleteA);
 

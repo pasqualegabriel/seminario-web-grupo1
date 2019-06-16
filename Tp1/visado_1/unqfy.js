@@ -138,9 +138,9 @@ class UNQfy {
   }
 
   updateYear(albumId, { year }) {
-    const albums = this.getAlbumById(albumId);
-    albums.year = year;
-    return albums;
+    const album = this.getAlbumById(albumId);
+    album.year = year;
+    return album;
   }
 
   // trackData: objeto JS con los datos necesarios para crear un track
@@ -180,8 +180,8 @@ class UNQfy {
   }
 
   deleteAlbum(id) {
-    const album = this.getAlbumById(id);
-    this.listaDeArtistas.forEach(artist => artist.deleteAlbum(album));
+    this.getAlbumById(id);
+    this.listaDeArtistas.forEach(artist => artist.deleteAlbum(id));
   }
 
   deleteTrack(id) {

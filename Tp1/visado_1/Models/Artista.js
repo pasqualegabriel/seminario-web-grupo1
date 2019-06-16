@@ -25,8 +25,8 @@ class Artista {
   buscarTracks(id) {
     return this.albums.find(albums => albums.buscarTrack(id));
   }
-  deleteAlbum(albumToDelete) {
-    this.albums = this.albums.filter(album => album !== albumToDelete);
+  deleteAlbum(albumId) {
+    this.albums = this.albums.filter(album => album.id !== albumId);
   }
 }
 
