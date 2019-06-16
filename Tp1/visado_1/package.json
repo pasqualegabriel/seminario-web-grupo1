@@ -7,6 +7,7 @@
     "chai": "^4.1.2",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-json-validator-middleware": "^2.0.0",
     "lodash": "^4.17.11",
     "nodemon": "^1.19.1",
     "picklify": "github:lwoites/picklify",

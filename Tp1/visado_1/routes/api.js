@@ -4,6 +4,11 @@ const express = require('express');
 const artists = require('../controllers/artistaController');
 const albums = require('../controllers/albumController');
 const playList = require('../controllers/playListController');
+const { Validator } = require('express-json-validator-middleware');
+const { artistSchema } = require('../middlewares/artistSchema');
+
+const validator = new Validator({ allErrors: true });
+const validate = validator.validate;
 
 const api = express.Router();
 
@@ -11,7 +16,7 @@ api.get('/artists', artists.all);
 api.get('/artists', artists.findByName);
 api.get('/artists/:id', artists.findBy);
 
-api.post('/artists', artists.save);
+api.post('/artists', validate({ body: artistSchema }), artists.save);
 api.post('/artists/:id', artists.addAlbum);
 
 api.delete('/artists/:id', artists.deleteA);
