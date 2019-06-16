@@ -10,7 +10,8 @@ const errors = {
   ARTISTA_REPETIDO_ERROR: 'artistaRepetidoError',
   ARTISTA_INEXISTENTE_ERROR: 'artistaInexistenteError',
   ALBUM_INEXISTENTE_ERROR: 'albumInexistenteError',
-  AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR: 'agregarAlbumAArtistaInexistenteError'
+  AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR: 'agregarAlbumAArtistaInexistenteError',
+  ALBUM_REPETIDO_ERROR: 'albumRepetidoError'
 };
 
 const errorsCode = {
@@ -20,7 +21,8 @@ const errorsCode = {
   [errors.ARTISTA_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS'),
   [errors.ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND'),
   [errors.ALBUM_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND'),
-  [errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RELATED_RESOURCE_NOT_FOUND')
+  [errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RELATED_RESOURCE_NOT_FOUND'),
+  [errors.ALBUM_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS')
 };
 
 module.exports = { errors, errorsCode };

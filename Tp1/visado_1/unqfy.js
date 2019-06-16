@@ -129,7 +129,7 @@ class UNQfy {
 
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
     if (checkAlbum) {
-      throw new ErrorAlbumRepetido();
+      throw new ErrorAlbumRepetido(errors.ALBUM_REPETIDO_ERROR);
     }
 
     artist.addAlbum(album);
