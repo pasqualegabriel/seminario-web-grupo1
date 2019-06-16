@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this */
 
 const util = require('util');
-const {Handler} = require('../Handler/Handler');
-const {SpotifyClient} = require('../../clients/Spotify');
-const {MusicMatchClient} = require('../../clients/musicMatch');
+const { Handler } = require('../Handler/Handler');
+const { SpotifyClient } = require('../../clients/Spotify');
+const { MusicMatchClient } = require('../../clients/musicMatch');
 // artistData: objeto JS con los datos necesarios para crear un artista
 //   artistData.name (string)
 //   artistData.country (string)
@@ -13,7 +13,7 @@ class AddArtistCommand {
       name: args[0],
       country: args[1]
     };
-    
+
     console.log(unqfy.addArtist(artistData));
     console.log('Se agrego el artista de forma correcta.');
   }
@@ -178,14 +178,13 @@ class AllAlbumByNameCommand {
 }
 
 class PopulateAlbumsForArtist {
-  invoke(args,unqfy){
-    
+  invoke(args, unqfy) {
     return unqfy.populateAlbumsForArtist(Number(args[0]), new SpotifyClient());
   }
 }
 
 class GetLyricsCommand {
-  invoke(args,unqfy){
+  invoke(args, unqfy) {
     return unqfy.getLyrics(Number(args[0]), new MusicMatchClient());
   }
 }
@@ -212,5 +211,5 @@ module.exports = {
   AllAlbumByNameCommand,
   AllArtistByNameCommand,
   PopulateAlbumsForArtist,
-  GetLyricsCommand,
+  GetLyricsCommand
 };

@@ -1,6 +1,6 @@
 const { getUNQfy, saveUNQfy } = require('../config/db');
 
-const create = (req, res, next) => {
+exports.create = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const playList = unqfy.createPlaylist(req.body);
@@ -11,7 +11,7 @@ const create = (req, res, next) => {
   }
 };
 
-const createByTracks = (req, res, next) => {
+exports.createByTracks = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const playList = unqfy.createPlaylistByTracks(req.body);
@@ -22,7 +22,7 @@ const createByTracks = (req, res, next) => {
   }
 };
 
-const findBy = (req, res, next) => {
+exports.findBy = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const playList = unqfy.getPlaylistById(parseInt(req.params.id));
@@ -33,7 +33,7 @@ const findBy = (req, res, next) => {
   }
 };
 
-const deleteP = (req, res, next) => {
+exports.deleteP = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     unqfy.deletePlayList(parseInt(req.params.id));
@@ -44,15 +44,13 @@ const deleteP = (req, res, next) => {
   }
 };
 
-const filter = (req, res, next) => {
+exports.filter = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
-    unqfy.playListListFilter(req.query.name, parseInt(req.query.durationLT),parseInt(req.query.durationGT));
+    unqfy.playListListFilter(req.query.name, parseInt(req.query.durationLT), parseInt(req.query.durationGT));
     saveUNQfy(unqfy);
     return res.status(204).send();
   } catch (error) {
     return next(error);
   }
 };
-
-module.exports = { create, createByTracks ,findBy,deleteP,filter};

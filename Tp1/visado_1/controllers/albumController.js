@@ -1,6 +1,6 @@
 const { getUNQfy, saveUNQfy } = require('../config/db');
 
-const save = (req, res, next) => {
+exports.save = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const albums = unqfy.addAlbum(parseInt(req.body.artistId), req.body);
@@ -11,7 +11,7 @@ const save = (req, res, next) => {
   }
 };
 
-const findBy = (req, res, next) => {
+exports.findBy = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const albums = unqfy.getAlbumById(parseInt(req.params.id));
@@ -22,7 +22,7 @@ const findBy = (req, res, next) => {
   }
 };
 
-const updateYear = (req, res, next) => {
+exports.updateYear = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const albums = unqfy.updateYear(parseInt(req.params.id), req.body);
@@ -33,7 +33,7 @@ const updateYear = (req, res, next) => {
   }
 };
 
-const deleteA = (req, res, next) => {
+exports.deleteA = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     unqfy.deleteAlbum(parseInt(req.params.id));
@@ -44,7 +44,7 @@ const deleteA = (req, res, next) => {
   }
 };
 
-const all = (req, res, next) => {
+exports.all = (req, res, next) => {
   try {
     const unqfy = getUNQfy();
     const albums = req.query.name ? unqfy.findAllAlbums() : unqfy.findAllAlbumsByName(req.query.name);
@@ -54,5 +54,3 @@ const all = (req, res, next) => {
     return next(error);
   }
 };
-
-module.exports = { save, findBy, updateYear, deleteA, all };

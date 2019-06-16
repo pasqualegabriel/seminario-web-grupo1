@@ -5,8 +5,6 @@ const { Album } = require('./Models/Album');
 const { Track } = require('./Models/Track');
 const { Playlist } = require('./Models/Playlist');
 const { Usuario } = require('./Models/Usuario');
-const util = require('util');
-const saveUNQfy = require('./config/db');
 
 const {
   ErrorArtistaInexistente,
@@ -126,7 +124,7 @@ class UNQfy {
      - una propiedad year (number)
   */
   addAlbum(artistId, { name, year }) {
-    const artist = this.getArtistById(artistId);
+    const artist = this.getArtistById(artistId, errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR);
     const album = new Album(this.nextIdAlbum, name, year);
 
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
@@ -190,10 +188,10 @@ class UNQfy {
     console.log(`Se borro el track ${id}`);
   }
 
-  getArtistById(id) {
+  getArtistById(id, error) {
     const artist = this.listaDeArtistas.find(anArtist => anArtist.id === id);
     if (!artist) {
-      throw new ErrorArtistaInexistente(errors.ARTISTA_INEXISTENTE_ERROR);
+      throw new ErrorArtistaInexistente(error || errors.ARTISTA_INEXISTENTE_ERROR);
     }
     return artist;
   }
