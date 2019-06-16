@@ -1,56 +1,26 @@
-const { getUNQfy, saveUNQfy } = require('../config/db');
-
 exports.save = (req, res, next) => {
-  try {
-    const unqfy = getUNQfy();
-    const albums = unqfy.addAlbum(parseInt(req.body.artistId), req.body);
-    saveUNQfy(unqfy);
-    return res.status(201).send(albums);
-  } catch (error) {
-    return next(error);
-  }
+  const albums = res.locals.unqfy.addAlbum(parseInt(req.body.artistId), req.body);
+  return next({ status: 201, data: albums });
 };
 
 exports.findBy = (req, res, next) => {
-  try {
-    const unqfy = getUNQfy();
-    const albums = unqfy.getAlbumById(parseInt(req.params.id));
-    saveUNQfy(unqfy);
-    return res.status(200).send(albums);
-  } catch (error) {
-    return next(error);
-  }
+  const albums = res.locals.unqfy.getAlbumById(parseInt(req.params.id));
+  return next({ status: 200, data: albums });
 };
 
 exports.updateYear = (req, res, next) => {
-  try {
-    const unqfy = getUNQfy();
-    const albums = unqfy.updateYear(parseInt(req.params.id), req.body);
-    saveUNQfy(unqfy);
-    return res.status(200).send(albums);
-  } catch (error) {
-    return next(error);
-  }
+  const albums = res.locals.unqfy.updateYear(parseInt(req.params.id), req.body);
+  return next({ status: 200, data: albums });
 };
 
 exports.deleteA = (req, res, next) => {
-  try {
-    const unqfy = getUNQfy();
-    unqfy.deleteAlbum(parseInt(req.params.id));
-    saveUNQfy(unqfy);
-    return res.status(204).send();
-  } catch (error) {
-    return next(error);
-  }
+  res.locals.unqfy.deleteAlbum(parseInt(req.params.id));
+  return next({ status: 204, data: 'ok' });
 };
 
 exports.all = (req, res, next) => {
-  try {
-    const unqfy = getUNQfy();
-    const albums = req.query.name ? unqfy.findAllAlbumsByName(req.query.name) : unqfy.findAllAlbums();
-    saveUNQfy(unqfy);
-    return res.status(200).send(albums);
-  } catch (error) {
-    return next(error);
-  }
+  const albums = req.query.name
+    ? res.locals.unqfy.findAllAlbumsByName(req.query.name)
+    : res.locals.unqfy.findAllAlbums();
+  return next({ status: 200, data: albums });
 };
