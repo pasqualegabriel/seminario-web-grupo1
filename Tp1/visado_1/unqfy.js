@@ -180,7 +180,8 @@ class UNQfy {
   }
 
   deleteAlbum(id) {
-    this.listaDeArtistas.forEach(artist => artist.deleteAlbum(id));
+    const album = this.getAlbumById(id);
+    this.listaDeArtistas.forEach(artist => artist.deleteAlbum(album));
   }
 
   deleteTrack(id) {
