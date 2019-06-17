@@ -147,7 +147,11 @@ describe('Playlist Creation and properties', () => {
     const t3 = createAndAddTrack(unqfy, album2.id, 'Another song', 500, ['pop']);
     const t4 = createAndAddTrack(unqfy, album2.id, 'Another song II', 500, ['pop']);
 
-    const playlist = unqfy.createPlaylist('my playlist', ['pop', 'rock'], 1400);
+    const playlist = unqfy.createPlaylist({
+      name: 'my playlist',
+      genresToInclude: ['pop', 'rock'],
+      duration: 1400
+    });
 
     assert.equal(playlist.name, 'my playlist');
     assert.isAtMost(playlist.duration, 1400);
