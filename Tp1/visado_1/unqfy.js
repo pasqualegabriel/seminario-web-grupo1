@@ -252,6 +252,7 @@ class UNQfy {
     const tracksFilteredByGenres = tracks.filter(track =>
       track.getGenres().some(genre => genres.includes(genre))
     );
+ 
     return tracksFilteredByGenres;
   }
 
@@ -281,6 +282,8 @@ class UNQfy {
       checkDuration += elem.duration;
       return duration >= checkDuration;
     });
+    
+    
     const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration, newTrack);
     this.nextIdPlayList++;
     this.listaDePlayList.push(playlist);
@@ -302,8 +305,8 @@ class UNQfy {
     return flatMap(this.findAllAlbums(), album => album.getTracks());
   }
 
-  findAllArtistByName(name) {
-    return this.listaDeArtistas.filter(artist => artist.name.toLowerCase().includes(name));
+  findAllArtistByName(name) {   
+    return this.listaDeArtistas.filter(artist => artist.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   findAllAlbums() {
@@ -311,7 +314,7 @@ class UNQfy {
   }
 
   findAllAlbumsByName(name) {
-    return this.findAllAlbums().filter(album => album.name.toLowerCase().includes(name));
+    return this.findAllAlbums().filter(album => album.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   findAllTracksByName(name) {
@@ -319,11 +322,11 @@ class UNQfy {
     //       acc.concat( artist.albums.reduce((acc2, album) =>
     //          album.tracks.list( track => track.name.includes(name)) )));
 
-    return this.getAllTrack().filter(track => track.name.toLowerCase().includes(name));
+    return this.getAllTrack().filter(track => track.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   findAllPlaylistsByName(name) {
-    return this.listaDePlayList.filter(playlist => playlist.name.toLowerCase().includes(name));
+    return this.listaDePlayList.filter(playlist => playlist.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   searchByName(name) {

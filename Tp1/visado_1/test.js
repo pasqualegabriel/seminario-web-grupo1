@@ -54,7 +54,11 @@ describe('Add, remove and filter data', () => {
     const artist1 = createAndAddArtist(unqfy, "Guns n' Roses", 'USA');
     const album1 = createAndAddAlbum(unqfy, artist1.id, 'Roses Album', 1987);
     const track = createAndAddTrack(unqfy, album1.id, 'Roses track', 200, ['pop', 'movie']);
-    const playlist = unqfy.createPlaylist('Roses playlist', ['pop'], 1400);
+    const playlist = unqfy.createPlaylist({
+      name: 'Roses playlist',
+      genresToInclude: ['pop'],
+      duration: 1400
+    });
 
     const results = unqfy.searchByName('Roses');
     assert.deepEqual(results, {
