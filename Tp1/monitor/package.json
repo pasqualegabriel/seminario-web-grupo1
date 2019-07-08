@@ -1,0 +1,37 @@
+{
+  "name": "notify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-json-validator-middleware": "^2.0.0",
+    "lodash": "^4.17.11",
+    "nodemon": "^1.19.1",
+    "picklify": "github:lwoites/picklify",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-config-prettier": "^2.3.1",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-prettier": "^2.1.1",
+    "babel-eslint": "^8.2.2",
+    "prettier-eslint": "^8.2.1",
+    "mocha": "^5.0.5"
+  },
+  "scripts": {
+    "test": "mocha",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint": "eslint app migrations config test",
+    "lint-diff": "git diff --name-only --cached --relative | grep \\\\.js$ | xargs ./node_modules/eslint/bin/eslint.js",
+    "lint-fix": "eslint app migrations config test --fix",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
