@@ -30,6 +30,32 @@ class UNQfy {
     this.listaDeUsuarios = [];
   }
 
+  notify(artist,album){
+    //TODO:realizar logica cuando se tenga el clienteNotify
+  }
+
+  suscribe(artistId, email){
+    const artist = this.getArtistById(artistId);
+    if(! artist.isSuscritor(email)){
+      const user = this.listaDeUsuarios.find(usuario => usuario.name === email);
+      artist.addSuscriptor(user);
+    } 
+  }
+  
+
+  unsubscribe(artistId,email){
+    const artist = this.getArtistById(artistId);
+    if(artist.isSuscritor(email)){
+      artist.unsubscribe(email);
+    } 
+  }
+
+  subscriptors(artistId){
+    const artist = this.getArtistById(artistId);
+    const suscritoresEmail = artist.getSuscriptores().map(suscriptores => suscriptores.name);
+    return suscritoresEmail;
+  }
+
   addUsuario(name) {
     const checkUser = this.listaDeUsuarios.find(usuario => usuario.name === name);
     if (checkUser) {
@@ -126,7 +152,6 @@ class UNQfy {
   addAlbum(artistId, { name, year }) {
     const artist = this.getArtistById(artistId, errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR);
     const album = new Album(this.nextIdAlbum, name, year);
-
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
     if (checkAlbum) {
       throw new ErrorAlbumRepetido(errors.ALBUM_REPETIDO_ERROR);
@@ -134,6 +159,8 @@ class UNQfy {
 
     artist.addAlbum(album);
     this.nextIdAlbum++;
+
+    this.notify(artist,album);
     return album;
   }
 

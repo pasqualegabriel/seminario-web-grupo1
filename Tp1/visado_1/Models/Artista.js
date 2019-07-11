@@ -4,6 +4,19 @@ class Artista {
     this.name = name;
     this.country = country;
     this.albums = [];
+    this.suscriptores= [];
+  }
+
+  addSuscriptor(suscriptor){
+    this.suscriptores.push(suscriptor)
+  }
+
+  isSuscritor(suscriptor){
+    this.suscriptores.find(aSuscriptor => aSuscriptor.name === suscriptor);
+  }
+
+  unsubscribe(emailSuscriptor){
+    this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor);
   }
 
   addAlbum(album) {
@@ -12,6 +25,10 @@ class Artista {
 
   getAlbums() {
     return this.albums;
+  }
+
+  getSuscriptores(){
+    return this.suscriptores;
   }
 
   buscarAlbum(id) {

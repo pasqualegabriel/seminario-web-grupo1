@@ -5,6 +5,8 @@ const artists = require('../controllers/artistaController');
 const albums = require('../controllers/albumController');
 const playList = require('../controllers/playListController');
 const lyrics = require('../controllers/lyricsController');
+const subscribe = require('../controllers/suscriptorController');
+
 const { Validator } = require('express-json-validator-middleware');
 const { artistSchema, albumSchema } = require('../middlewares/schemas');
 const { getUnqfy } = require('../config/unqfy');
@@ -42,5 +44,12 @@ api.get('/playlists/:id', getUnqfy, playList.findBy);
 api.delete('/playlists', getUnqfy, playList.deleteP);
 
 api.get('tracks/:id/lyrics', getUnqfy, lyrics.getLyrics);
+
+api.post('/subscribe',getUnqfy,subscribe.suscribe);
+
+
+api.post('/unsubscribe',getUnqfy,subscribe.unsubscribe);
+
+api.get('/subscriptions/:artitsId',getUnqfy,subscribe.subscriptors);
 
 module.exports = api;
