@@ -1,21 +1,9 @@
-'use strict';
+const express = require('express'),
+  api = express.Router(),
+  { activate, deactivate } = require('../controllers/monitor');
 
-const express = require('express');
+api.post('/activate', activate);
 
-const api = express.Router();
-
-const monitoring = () => setInterval(() => console.log('AAAAAAAAAAA'), 1500);
-
-let interval;
-
-api.post('/set', (req, res, next) => {
-  interval = monitoring();
-  return res.status(200).send({});
-});
-
-api.post('/clear', (req, res, next) => {
-  clearInterval(interval);
-  return res.status(200).send({});
-});
+api.post('/deactivate', deactivate);
 
 module.exports = api;
