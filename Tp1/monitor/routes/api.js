@@ -4,6 +4,6 @@ const express = require('express'),
 
 api.post('/activate', activate);
 api.post('/deactivate', deactivate);
-api.post('/deactivate', status);
+api.get('/status', status);
 
 module.exports = api;

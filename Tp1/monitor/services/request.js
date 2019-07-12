@@ -1,17 +1,30 @@
-const request = require('request');
+const request = require('request'),
+  { slackUrl } = require('../constants');
 
-exports.request = (options, logRequest) =>
+const requestToApi = options =>
   new Promise((resolve, reject) => {
-    request[options.method](options, (error, response) => {
-      if (error) {
-        console.log(`Error to send request: ${logRequest}`);
-        console.log(error);
-        return reject(error);
-      } else {
-        if (response.statusCode >= 500)
-          return reject({ status: response.statusCode, message: 'Server error' });
-        if (response.statusCode >= 400) return reject({ body: response.body, status: response.statusCode });
-        return resolve(response);
-      }
-    });
+    request[options.method](options, (error, response) => (error ? reject(error) : resolve(response)));
   });
+
+exports.getStatus = url =>
+  requestToApi({
+    url,
+    method: 'get',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(() => 'Connected')
+    .catch(() => 'Disconnected');
+
+exports.notifyToSlack = text =>
+  requestToApi({
+    url: slackUrl,
+    method: 'post',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: { text }
+  }).catch(err => console.log(err.message));

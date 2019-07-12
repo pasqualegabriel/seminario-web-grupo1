@@ -1,10 +1,33 @@
-const request = require('../services/request');
+const { getStatus, notifyToSlack } = require('../services/request'),
+  { logsUrl, notifyUrl } = require('../constants');
 
-const verifyLogsApiStatus = () => 1;
+const apiStatus = () =>
+  getStatus(logsUrl).then(logsApiStatus =>
+    getStatus(notifyUrl).then(notifyApiStatus => ({
+      logsApiStatus,
+      notifyApiStatus
+    }))
+  );
 
-const verifyNotifyApiStatus = () => 1;
+let logsStatus = '';
 
-const monitoring = () => setInterval(() => console.log('AAAAAAAAAAA'), 1500);
+let logsNotify = '';
+
+const notifySlack = () => {
+  console.log('checking apis');
+  return apiStatus().then(({ logsApiStatus, notifyApiStatus }) => {
+    if (logsApiStatus !== logsStatus) {
+      logsStatus = logsApiStatus;
+      notifyToSlack(`logs api ${logsApiStatus}`);
+    }
+    if (notifyApiStatus !== logsNotify) {
+      logsNotify = notifyApiStatus;
+      notifyToSlack(`notify api ${notifyApiStatus}`);
+    }
+  });
+};
+
+const monitoring = () => setInterval(notifySlack, 2500);
 
 let interval;
 
@@ -19,11 +42,7 @@ exports.deactivate = (req, res, next) => {
 };
 
 exports.status = (req, res, next) =>
-  verifyLogsApiStatus().then(({ body: logsApiStatus }) =>
-    verifyNotifyApiStatus().then(({ body: notifyApiStatus }) =>
-      res.status(200).send({
-        logsApiStatus,
-        notifyApiStatus
-      })
-    )
-  );
+  apiStatus().then(status => {
+    console.log(status);
+    res.status(200).send(status);
+  });
