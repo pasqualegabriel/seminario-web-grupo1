@@ -4,16 +4,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const api = require('./routes/api');
 const { handleError, notFoundError } = require('./middlewares/errors');
-const { unqfyResponse } = require('./config/unqfy');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, useNewUrlParser: true }));
 
-app.use('/api', api);
+app.use('/', api);
 app.use('/*', notFoundError);
-app.use(unqfyResponse);
 app.use(handleError);
 
 module.exports = app;

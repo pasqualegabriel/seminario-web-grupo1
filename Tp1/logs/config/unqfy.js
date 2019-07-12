@@ -1,3 +1,4 @@
+/*
 const { getUNQfy, saveUNQfy } = require('./db');
 
 exports.getUnqfy = (req, res, next) => {
@@ -11,3 +12,4 @@ exports.unqfyResponse = (response, req, res, next) => {
   }
   return response.data ? res.status(response.status).send(response.data) : next(response);
 };
+*/
