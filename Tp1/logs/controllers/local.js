@@ -12,7 +12,7 @@ const localLogger = winston.createLogger({
 
 exports.save = (req, res, next) => {
     localLogger.log({
-        level: req.body.level,
-        message: req.body.message
+        level: req.query.level,
+        message: req.query.message
     })
 };

@@ -2,16 +2,66 @@ const rp = require('request-promise');
 
 class LogsClient {
 
-    save(level, message) {
+    constructor() {
+        this.url = "http://127.0.0.1",
+        this.port = "8003"
+    }
+
+    createOptions(level, message) {
         const options = {
-            url: '127.0.0.1:8003/save',
+            url: `${this.url}:${this.port}/save`,
             qs: {
                 level: level,
                 message: message
             }
-        }
+        };
+
+        return options;
+    }
+
+    registerError(message) {
+        const options = this.createOptions("error", message)
 
         rp.post(options)
     }
 
+    registerAddArtist(artistName) {
+        const options = this.createOptions("info", `Se agrego al artista ${artistName}.`)
+
+        rp.post(options)
+    }
+
+    registerDeleteArtist(artistName) {
+        const options = this.createOptions("info", `Se elimino al artista ${artistName}.`)
+
+        rp.post(options)
+    }
+
+    registerAddAlbum(albumName, artistName) {
+        const options = this.createOptions("info", `Se agrego el album ${albumName} al artista ${artistName}.`)
+
+        rp.post(options)
+    }
+
+    registerDeleteAlbum(albumName, artistName) {
+        const options = this.createOptions("info", `Se elimino el album ${albumName} del artista ${artistName}.`)
+
+        rp.post(options)
+    }
+
+    registerAddTrack(trackName, albumName) {
+        const options = this.createOptions("info", `Se agrego el track ${trackName} al album ${albumName}.`)
+
+        rp.post(options)
+    }
+
+    registerDeleteTrack(trackName, albumName) {
+        const options = this.createOptions("info", `Se elimo el track ${trackName} del album ${albumName}.`)
+
+        rp.post(options)
+    }
 }
+
+module.exports = {
+    LogsClient,
+};

@@ -9,6 +9,7 @@
     "express": "^4.17.1",
     "express-json-validator-middleware": "^2.0.0",
     "lodash": "^4.17.11",
+    "loggly": "^1.1.1",
     "node-loggly-bulk": "^2.2.4",
     "nodemon": "^1.19.1",
     "picklify": "github:lwoites/picklify",

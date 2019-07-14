@@ -1,27 +1,23 @@
-var winston = require('winston');
-var loggly = require('node-loggly-bulk');
-
-var client = loggly.createClient({
-    token: "ddbf6d70-e12c-4ce8-a3d6-791ddd589c71",
-    subdomain: "seminarioweb",
-    auth: {
-      username: "seminario",
-      password: "12345678"
-    },
-    tags: ['UNQFY']
-  });
+var loggly = require('loggly');
+ 
+const client = loggly.createClient({
+  token: "ddbf6d70-e12c-4ce8-a3d6-791ddd589c71",
+  subdomain: "seminarioweb",
+  auth: {
+    username: "seminario",
+    password: "12345678"
+  },
+  tags: ['UNQFY'],
+  json: true
+});
 
 exports.save = (req, res, next) => {
-    client.log("HOLA MUNDO")
+  let data = {
+    json: {
+      level: req.query.level,
+      message: req.query.message
+    }
+  }
+
+  client.log(data)
 }
-
-/*
-winston.add(new Loggly({
-    token: "ddbf6d70-e12c-4ce8-a3d6-791ddd589c71",
-    subdomain: "seminarioweb",
-    tags: ["UNQFY"],
-    json: true
-}));
-
-winston.log('info', "Hello World from Node.js!");
-*/
