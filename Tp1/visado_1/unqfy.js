@@ -114,15 +114,17 @@ class UNQfy {
     - una propiedad name (string)
     - una propiedad country (string)
   */
-  addArtist({ name, country }) {
+  addArtist({ name, country }, logger) {
     const checkArtist = this.listaDeArtistas.find(artist => artist.name === name);
     if (checkArtist) {
+      logger.registerError(errors.ARTISTA_REPETIDO_ERROR, name);
       throw new ErrorArtistaRepetido(errors.ARTISTA_REPETIDO_ERROR);
     }
     const nuevoArtista = new Artista(this.nextIdArtist, name, country);
 
     this.listaDeArtistas.push(nuevoArtista);
     this.nextIdArtist++;
+    logger.registerAddArtist(name);
     console.log('Se Registro Exitosamente');
     console.log(`artistaId: ${this.nextIdArtist - 1}`);
     return this.getArtistById(nuevoArtista.id);
@@ -149,17 +151,18 @@ class UNQfy {
      - una propiedad name (string)
      - una propiedad year (number)
   */
-  addAlbum(artistId, { name, year }) {
+  addAlbum(artistId, { name, year }, logger) {
     const artist = this.getArtistById(artistId, errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR);
     const album = new Album(this.nextIdAlbum, name, year);
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
     if (checkAlbum) {
+      logger.registerError(errors.ALBUM_REPETIDO_ERROR, name)
       throw new ErrorAlbumRepetido(errors.ALBUM_REPETIDO_ERROR);
     }
 
     artist.addAlbum(album);
     this.nextIdAlbum++;
-
+    logger.registerAddAlbum(name, artist.name);
     this.notify(artist,album);
     return album;
   }

@@ -4,6 +4,7 @@ const util = require('util');
 const { Handler } = require('../Handler/Handler');
 const { SpotifyClient } = require('../../clients/Spotify');
 const { MusicMatchClient } = require('../../clients/musicMatch');
+const { LogsClient } = require('../../clients/logsClient')
 // artistData: objeto JS con los datos necesarios para crear un artista
 //   artistData.name (string)
 //   artistData.country (string)
@@ -13,8 +14,8 @@ class AddArtistCommand {
       name: args[0],
       country: args[1]
     };
-
-    console.log(unqfy.addArtist(artistData));
+    const logger = new LogsClient();
+    console.log(unqfy.addArtist(artistData, logger));
     console.log('Se agrego el artista de forma correcta.');
   }
 }
@@ -30,7 +31,8 @@ class AddAlbumCommand {
       name: args[1],
       year: Number(args[2])
     };
-    console.log(unqfy.addAlbum(artistId, albumData));
+    const logger = new LogsClient();
+    console.log(unqfy.addAlbum(artistId, albumData, logger));
     console.log('Se agrego el album de forma correcta.');
   }
 }
@@ -49,7 +51,8 @@ class AddTrackCommand {
       duration,
       genres: args
     };
-    console.log(unqfy.addTrack(albumId, trackData));
+    const logger = new LogsClient();
+    console.log(unqfy.addTrack(albumId, trackData, logger));
     console.log('Se agrego el track de forma correcta.');
   }
 }

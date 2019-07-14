@@ -19,8 +19,8 @@ class LogsClient {
         return options;
     }
 
-    registerError(message) {
-        const options = this.createOptions("error", message)
+    registerError(message, value) {
+        const options = this.createOptions("error", `${message}: ${value}`)
 
         rp.post(options)
     }
