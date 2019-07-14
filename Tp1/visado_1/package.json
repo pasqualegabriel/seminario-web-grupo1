@@ -30,7 +30,7 @@
     "lint": "eslint app migrations config test",
     "lint-diff": "git diff --name-only --cached --relative | grep \\\\.js$ | xargs ./node_modules/eslint/bin/eslint.js",
     "lint-fix": "eslint app migrations config test --fix",
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC"

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  logs:
+    build: "./logs/"
+    ports:
+    - "8003:8003"
+  monitor:
+    build: "./monitor/"
+    ports:
+    - "8002:8002"
+  notify:
+    build: "./notify/"
+    ports:
+    - "8001:8001"
+  visado_1:
+    build: "./visado_1/"
+    ports:
+    - "8080:8080"
+  
+  
