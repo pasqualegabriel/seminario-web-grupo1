@@ -16,7 +16,9 @@ class Artista {
   }
 
   unsubscribe(emailSuscriptor){
-    this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor);
+    console.log(this.suscriptores = this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor));
+    
+    //this.suscriptores = this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor);
   }
 
   addAlbum(album) {
