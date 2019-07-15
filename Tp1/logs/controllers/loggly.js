@@ -13,10 +13,8 @@ const client = loggly.createClient({
 
 exports.save = (req, res, next) => {
   let data = {
-    json: {
       level: req.query.level,
       message: req.query.message
-    }
   }
 
   client.log(data)
