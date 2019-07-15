@@ -13,11 +13,12 @@ exports.unsubscribe = (req, res, next) => {
 };
 
 exports.subscriptors = (req,res,next) => {
-    const artistId = parseInt(req.params.artistId);
+    
+    const artistId = parseInt(req.params.artitsId);
     const subscriptors = res.locals.unqfy.subscriptors(artistId);
-    const _data = {
+    const datos = {
         'artistId': artistId,
         'subscriptors': subscriptors
     }
-    return next({ status: 200, data: _data});
+    return next({ status: 200, data: datos});
 };

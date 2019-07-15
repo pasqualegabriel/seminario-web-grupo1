@@ -48,7 +48,7 @@ api.get('tracks/:id/lyrics', getUnqfy, lyrics.getLyrics);
 api.post('/subscribe',getUnqfy,subscribe.suscribe);
 
 
-api.post('/unsubscribe',getUnqfy,subscribe.unsubscribe);
+api.post('/unsubscribe', getUnqfy, subscribe.unsubscribe);
 
 api.get('/subscriptions/:artitsId',getUnqfy,subscribe.subscriptors);
 

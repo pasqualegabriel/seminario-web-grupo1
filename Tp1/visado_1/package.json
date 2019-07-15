@@ -8,7 +8,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-json-validator-middleware": "^2.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "nodemon": "^1.19.1",
     "picklify": "github:lwoites/picklify",
     "request": "^2.88.0",

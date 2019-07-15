@@ -4,21 +4,19 @@ class Artista {
     this.name = name;
     this.country = country;
     this.albums = [];
-    this.suscriptores= [];
+    this.suscriptores = [];
   }
 
-  addSuscriptor(suscriptor){
-    this.suscriptores.push(suscriptor)
+  addSuscriptor(suscriptor) {
+    this.suscriptores.push(suscriptor);
   }
 
-  isSuscritor(suscriptor){
-    this.suscriptores.find(aSuscriptor => aSuscriptor.name === suscriptor);
+  isSuscritor(suscriptor) {
+    return this.suscriptores.find(aSuscriptor => aSuscriptor.name === suscriptor);
   }
 
-  unsubscribe(emailSuscriptor){
-    console.log(this.suscriptores = this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor));
-    
-    //this.suscriptores = this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor);
+  unsubscribe(emailSuscriptor) {
+    this.suscriptores = this.suscriptores.filter(aSuscriptor => aSuscriptor.name !== emailSuscriptor);
   }
 
   addAlbum(album) {
@@ -29,7 +27,7 @@ class Artista {
     return this.albums;
   }
 
-  getSuscriptores(){
+  getSuscriptores() {
     return this.suscriptores;
   }
 

@@ -5,7 +5,7 @@ const { Album } = require('./Models/Album');
 const { Track } = require('./Models/Track');
 const { Playlist } = require('./Models/Playlist');
 const { Usuario } = require('./Models/Usuario');
-const { LogsClient } = require('./clients/logsClient')
+const { LogsClient } = require('./clients/logsClient');
 
 const {
   ErrorArtistaInexistente,
@@ -31,29 +31,29 @@ class UNQfy {
     this.listaDeUsuarios = [];
   }
 
-  notify(artist,album){
-    //TODO:realizar logica cuando se tenga el clienteNotify
+  notify(artist, album) {
+    // TODO:realizar logica cuando se tenga el clienteNotify
   }
 
-  suscribe(artistId, email){
+  suscribe(artistId, email) {
     const artist = this.getArtistById(artistId);
-    if(! artist.isSuscritor(email)){
+    if (!artist.isSuscritor(email)) {
       const user = this.listaDeUsuarios.find(usuario => usuario.name === email);
       artist.addSuscriptor(user);
-    } 
-  }
-  
-
-  unsubscribe(artistId,email){
-    const artist = this.getArtistById(artistId);
-    if(artist.isSuscritor(email)){
-      artist.unsubscribe(email);
-    } 
+    }
   }
 
-  subscriptors(artistId){
+  unsubscribe(artistId, email) {
     const artist = this.getArtistById(artistId);
-    const suscritoresEmail = artist.getSuscriptores().map(suscriptores => suscriptores.name);
+    artist.unsubscribe(email);
+    return artist;
+  }
+
+  subscriptors(artistId) {
+    console.log(artistId);
+    const artist = this.getArtistById(artistId);
+    console.log(artist);
+    const suscritoresEmail = artist.suscriptores.map(suscriptores => suscriptores.name);
     return suscritoresEmail;
   }
 
@@ -159,14 +159,14 @@ class UNQfy {
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
     const logger = new LogsClient();
     if (checkAlbum) {
-      logger.registerError(errors.ALBUM_REPETIDO_ERROR, name)
+      logger.registerError(errors.ALBUM_REPETIDO_ERROR, name);
       throw new ErrorAlbumRepetido(errors.ALBUM_REPETIDO_ERROR);
     }
 
     artist.addAlbum(album);
     this.nextIdAlbum++;
     logger.registerAddAlbum(name, artist.name);
-    this.notify(artist,album);
+    this.notify(artist, album);
     return album;
   }
 
@@ -236,7 +236,7 @@ class UNQfy {
     const artist = this.listaDeArtistas.find(anArtist => anArtist.id == id);
     if (!artist) {
       const logger = new LogsClient();
-      logger.registerError(error || errors.ARTISTA_INEXISTENTE_ERROR, id)
+      logger.registerError(error || errors.ARTISTA_INEXISTENTE_ERROR, id);
       throw new ErrorArtistaInexistente(error || errors.ARTISTA_INEXISTENTE_ERROR);
     }
     return artist;
@@ -270,7 +270,7 @@ class UNQfy {
 
     if (!artistaDeAlbum) {
       const logger = new LogsClient();
-      logger.registerError(errors.ALBUM_INEXISTENTE_ERROR, id)
+      logger.registerError(errors.ALBUM_INEXISTENTE_ERROR, id);
       throw new ErrorAlbumInexistente(errors.ALBUM_INEXISTENTE_ERROR);
     }
 
@@ -283,7 +283,7 @@ class UNQfy {
     const track = album.buscarTrack(id);
     if (!track) {
       const logger = new LogsClient();
-      logger.registerError(errors.TRACK_INEXISTENTE_ERROR, id)
+      logger.registerError(errors.TRACK_INEXISTENTE_ERROR, id);
       throw new ErrorTrackInexistente(errors.TRACK_INEXISTENTE_ERROR);
     }
     return track;
@@ -301,7 +301,7 @@ class UNQfy {
     const tracksFilteredByGenres = tracks.filter(track =>
       track.getGenres().some(genre => genres.includes(genre))
     );
- 
+
     return tracksFilteredByGenres;
   }
 
@@ -331,8 +331,7 @@ class UNQfy {
       checkDuration += elem.duration;
       return duration >= checkDuration;
     });
-    
-    
+
     const playlist = new Playlist(this.nextIdPlayList, name, genresToInclude, duration, newTrack);
     this.nextIdPlayList++;
     this.listaDePlayList.push(playlist);
@@ -354,7 +353,7 @@ class UNQfy {
     return flatMap(this.findAllAlbums(), album => album.getTracks());
   }
 
-  findAllArtistByName(name) {   
+  findAllArtistByName(name) {
     return this.listaDeArtistas.filter(artist => artist.name.toLowerCase().includes(name.toLowerCase()));
   }
 
