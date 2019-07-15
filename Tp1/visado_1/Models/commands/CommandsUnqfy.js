@@ -4,7 +4,6 @@ const util = require('util');
 const { Handler } = require('../Handler/Handler');
 const { SpotifyClient } = require('../../clients/Spotify');
 const { MusicMatchClient } = require('../../clients/musicMatch');
-const { LogsClient } = require('../../clients/logsClient')
 // artistData: objeto JS con los datos necesarios para crear un artista
 //   artistData.name (string)
 //   artistData.country (string)
@@ -14,8 +13,7 @@ class AddArtistCommand {
       name: args[0],
       country: args[1]
     };
-    const logger = new LogsClient();
-    console.log(unqfy.addArtist(artistData, logger));
+    console.log(unqfy.addArtist(artistData));
     console.log('Se agrego el artista de forma correcta.');
   }
 }
@@ -31,8 +29,7 @@ class AddAlbumCommand {
       name: args[1],
       year: Number(args[2])
     };
-    const logger = new LogsClient();
-    console.log(unqfy.addAlbum(artistId, albumData, logger));
+    console.log(unqfy.addAlbum(artistId, albumData));
     console.log('Se agrego el album de forma correcta.');
   }
 }
@@ -51,8 +48,7 @@ class AddTrackCommand {
       duration,
       genres: args
     };
-    const logger = new LogsClient();
-    console.log(unqfy.addTrack(albumId, trackData, logger));
+    console.log(unqfy.addTrack(albumId, trackData));
     console.log('Se agrego el track de forma correcta.');
   }
 }
@@ -111,21 +107,21 @@ class CreatePlaylistCommand {
 class DeleteArtistCommand {
   invoke(args, unqfy) {
     const nombreDeArtista = unqfy.getArtistById(args).name;
-    unqfy.deleteArtist(args);
+    unqfy.deleteArtist(Number(args[0]));
     console.log(`Se ha Borrado a ${nombreDeArtista} exitosamente`);
   }
 }
 
 class DeleteAlbumCommand {
   invoke(args, unqfy) {
-    unqfy.deleteAlbum(args);
+    unqfy.deleteAlbum(Number(args[0]));
     console.log('Se ha Borrado a exitosamente');
   }
 }
 
 class DeleteTrackCommand {
   invoke(args, unqfy) {
-    unqfy.deleteTrack(args);
+    unqfy.deleteTrack(Number(args[0]));
     console.log('Se ha Borrado a exitosamente');
   }
 }

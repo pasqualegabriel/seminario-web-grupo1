@@ -5,6 +5,7 @@ const { Album } = require('./Models/Album');
 const { Track } = require('./Models/Track');
 const { Playlist } = require('./Models/Playlist');
 const { Usuario } = require('./Models/Usuario');
+const { LogsClient } = require('./clients/logsClient')
 
 const {
   ErrorArtistaInexistente,
@@ -114,8 +115,9 @@ class UNQfy {
     - una propiedad name (string)
     - una propiedad country (string)
   */
-  addArtist({ name, country }, logger) {
+  addArtist({ name, country }) {
     const checkArtist = this.listaDeArtistas.find(artist => artist.name === name);
+    const logger = new LogsClient();
     if (checkArtist) {
       logger.registerError(errors.ARTISTA_REPETIDO_ERROR, name);
       throw new ErrorArtistaRepetido(errors.ARTISTA_REPETIDO_ERROR);
@@ -151,10 +153,11 @@ class UNQfy {
      - una propiedad name (string)
      - una propiedad year (number)
   */
-  addAlbum(artistId, { name, year }, logger) {
+  addAlbum(artistId, { name, year }) {
     const artist = this.getArtistById(artistId, errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR);
     const album = new Album(this.nextIdAlbum, name, year);
     const checkAlbum = this.findAllAlbums().find(anAlbum => anAlbum.name === name);
+    const logger = new LogsClient();
     if (checkAlbum) {
       logger.registerError(errors.ALBUM_REPETIDO_ERROR, name)
       throw new ErrorAlbumRepetido(errors.ALBUM_REPETIDO_ERROR);
@@ -186,23 +189,28 @@ class UNQfy {
   */
   addTrack(albumId, { name, duration, genres }) {
     console.log(this.findAllAlbums());
+    const logger = new LogsClient();
     const checkTrack = flatMap(this.findAllAlbums(), album => album.getTracks()).find(
       track => track.name === name
     );
     if (checkTrack) {
-      throw new ErrorTrackRepetido();
+      logger.registerError(errors.TRACK_REPETIDO_ERROR, name);
+      throw new ErrorTrackRepetido(errors.TRACK_REPETIDO_ERROR);
     }
 
     const album = this.getAlbumById(albumId);
     const track = new Track(this.nextIdTrack, name, duration, genres);
     album.agregarTrack(track);
     this.nextIdTrack++;
+    logger.registerAddTrack(name, album.name);
     return track;
   }
 
   deleteArtist(id) {
     const artistToDelete = this.getArtistById(id);
     this.listaDeArtistas = this.listaDeArtistas.filter(artist => artist !== artistToDelete);
+    const logger = new LogsClient();
+    logger.registerDeleteArtist(artistToDelete.name);
   }
 
   deletePlayList(id) {
@@ -210,18 +218,25 @@ class UNQfy {
   }
 
   deleteAlbum(id) {
-    this.getAlbumById(id);
+    const albumToDelete = this.getAlbumById(id);
     this.listaDeArtistas.forEach(artist => artist.deleteAlbum(id));
+    const logger = new LogsClient();
+    logger.registerDeleteAlbum(albumToDelete.name);
   }
 
   deleteTrack(id) {
+    const trackToDelete = this.getTrackById(id);
     this.listaDeArtistas.forEach(artist => artist.buscarYBorrarTracks(id));
+    const logger = new LogsClient();
+    logger.registerDeleteTrack(trackToDelete.name);
     console.log(`Se borro el track ${id}`);
   }
 
   getArtistById(id, error) {
-    const artist = this.listaDeArtistas.find(anArtist => anArtist.id === id);
+    const artist = this.listaDeArtistas.find(anArtist => anArtist.id == id);
     if (!artist) {
+      const logger = new LogsClient();
+      logger.registerError(error || errors.ARTISTA_INEXISTENTE_ERROR, id)
       throw new ErrorArtistaInexistente(error || errors.ARTISTA_INEXISTENTE_ERROR);
     }
     return artist;
@@ -254,6 +269,8 @@ class UNQfy {
     const artistaDeAlbum = this.listaDeArtistas.find(artista => artista.buscarAlbum(id));
 
     if (!artistaDeAlbum) {
+      const logger = new LogsClient();
+      logger.registerError(errors.ALBUM_INEXISTENTE_ERROR, id)
       throw new ErrorAlbumInexistente(errors.ALBUM_INEXISTENTE_ERROR);
     }
 
@@ -265,7 +282,9 @@ class UNQfy {
     const album = artist.buscarTracks(id);
     const track = album.buscarTrack(id);
     if (!track) {
-      throw new ErrorTrackInexistente();
+      const logger = new LogsClient();
+      logger.registerError(errors.TRACK_INEXISTENTE_ERROR, id)
+      throw new ErrorTrackInexistente(errors.TRACK_INEXISTENTE_ERROR);
     }
     return track;
   }

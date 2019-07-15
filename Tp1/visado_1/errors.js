@@ -11,7 +11,9 @@ const errors = {
   ARTISTA_INEXISTENTE_ERROR: 'artistaInexistenteError',
   ALBUM_INEXISTENTE_ERROR: 'albumInexistenteError',
   AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR: 'agregarAlbumAArtistaInexistenteError',
-  ALBUM_REPETIDO_ERROR: 'albumRepetidoError'
+  ALBUM_REPETIDO_ERROR: 'albumRepetidoError',
+  TRACK_REPETIDO_ERROR: 'trackRepetidoError',
+  TRACK_INEXISTENTE_ERROR: 'trackInexistenteError'
 };
 
 const errorsCode = {
@@ -22,7 +24,9 @@ const errorsCode = {
   [errors.ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND'),
   [errors.ALBUM_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND'),
   [errors.AGREGAR_ALBUM_A_ARTISTA_INEXISTENTE_ERROR]: () => internalError(404, 'RELATED_RESOURCE_NOT_FOUND'),
-  [errors.ALBUM_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS')
+  [errors.ALBUM_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS'),
+  [errors.TRACK_REPETIDO_ERROR]: () => internalError(409, 'RESOURCE_ALREADY_EXISTS'),
+  [errors.TRACK_INEXISTENTE_ERROR]: () => internalError(404, 'RESOURCE_NOT_FOUND')
 };
 
 module.exports = { errors, errorsCode };

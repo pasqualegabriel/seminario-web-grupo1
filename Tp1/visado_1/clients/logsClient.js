@@ -43,8 +43,8 @@ class LogsClient {
         rp.post(options)
     }
 
-    registerDeleteAlbum(albumName, artistName) {
-        const options = this.createOptions("info", `Se elimino el album ${albumName} del artista ${artistName}.`)
+    registerDeleteAlbum(albumName) {
+        const options = this.createOptions("info", `Se elimino el album ${albumName}.`)
 
         rp.post(options)
     }
@@ -55,8 +55,8 @@ class LogsClient {
         rp.post(options)
     }
 
-    registerDeleteTrack(trackName, albumName) {
-        const options = this.createOptions("info", `Se elimo el track ${trackName} del album ${albumName}.`)
+    registerDeleteTrack(trackName) {
+        const options = this.createOptions("info", `Se elimo el track ${trackName}.`)
 
         rp.post(options)
     }
