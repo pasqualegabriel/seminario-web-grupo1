@@ -22,10 +22,8 @@ node main.js addTrack 3 GetLucky 6 Funk
 node main.js addTrack 3 Beyond 5 Funk
 
 
-node main.js addUsuario Tobias
-node main.js addUsuario Mauro
-node main.js addUsuario Gabi
-node main.js addUsuario Nahuel
+node main.js addUsuario tobiascalvento@hotmail.com
+node main.js addUsuario n.autalan@gmail.com
 
 
 node main.js escuchar 2 1
