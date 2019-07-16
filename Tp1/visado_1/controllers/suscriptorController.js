@@ -11,6 +11,12 @@ exports.unsubscribe = (req, res, next) => {
   return next({ status: 200, data: { artista } });
 };
 
+exports.borrarSubscriptors = (req, res, next) => {
+  res.locals.unqfy.borrarSubscriptors(parseInt(req.body.artistId));
+
+  return next({ status: 200, data: {} });
+};
+
 exports.subscriptors = (req, res, next) => {
   const artistId = parseInt(req.params.artitsId);
   const subscriptors = res.locals.unqfy.subscriptors(artistId);

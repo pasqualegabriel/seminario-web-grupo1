@@ -6,6 +6,7 @@ const { Track } = require('./Models/Track');
 const { Playlist } = require('./Models/Playlist');
 const { Usuario } = require('./Models/Usuario');
 const { LogsClient } = require('./clients/logsClient');
+const { NotifyClient } = require('./clients/notifyClient');
 
 const {
   ErrorArtistaInexistente,
@@ -31,8 +32,13 @@ class UNQfy {
     this.listaDeUsuarios = [];
   }
 
+  // eslint-disable-next-line class-methods-use-this
   notify(artist, album) {
-    // TODO:realizar logica cuando se tenga el clienteNotify
+    const subject = `Nuevo Album para artsta ${artist.name} `;
+    const message = `Se ha agregado el album ${album.name} al artista ${artist.name}`;
+    const suscritoresEmail = artist.suscriptores.map(suscriptores => suscriptores.name);
+    const notifyClient = new NotifyClient();
+    notifyClient.enviar(suscritoresEmail, subject, message);
   }
 
   suscribe(artistId, email) {
@@ -55,6 +61,14 @@ class UNQfy {
     console.log(artist);
     const suscritoresEmail = artist.suscriptores.map(suscriptores => suscriptores.name);
     return suscritoresEmail;
+  }
+
+  borrarSubscriptors(artistId) {
+    console.log(artistId);
+    const artist = this.getArtistById(artistId);
+    console.log(artist);
+    artist.clearSubscriptors();
+    return artist;
   }
 
   addUsuario(name) {

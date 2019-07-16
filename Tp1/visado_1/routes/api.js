@@ -45,11 +45,12 @@ api.delete('/playlists', getUnqfy, playList.deleteP);
 
 api.get('tracks/:id/lyrics', getUnqfy, lyrics.getLyrics);
 
-api.post('/subscribe',getUnqfy,subscribe.suscribe);
-
+api.post('/subscribe', getUnqfy, subscribe.suscribe);
 
 api.post('/unsubscribe', getUnqfy, subscribe.unsubscribe);
 
-api.get('/subscriptions/:artitsId',getUnqfy,subscribe.subscriptors);
+api.get('/subscriptions/:artitsId', getUnqfy, subscribe.subscriptors);
+
+api.delete('/subscriptions', getUnqfy, subscribe.borrarSubscriptors);
 
 module.exports = api;

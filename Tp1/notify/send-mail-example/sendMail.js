@@ -7,6 +7,9 @@ const getGmailClient = require('./gmailClient');
 const gmailClient = getGmailClient();
 
 exports.notificarSuscriptor = (listaMail, sujeto, mensaje) => {
+  console.log(listaMail);
+  console.log(sujeto);
+  console.log(mensaje);
   listaMail.forEach(mail => {
     gmailClient.users.messages.send({
       userId: 'me',

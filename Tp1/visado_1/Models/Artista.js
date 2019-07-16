@@ -7,6 +7,10 @@ class Artista {
     this.suscriptores = [];
   }
 
+  clearSubscriptors() {
+    this.suscriptores = [];
+  }
+
   addSuscriptor(suscriptor) {
     this.suscriptores.push(suscriptor);
   }

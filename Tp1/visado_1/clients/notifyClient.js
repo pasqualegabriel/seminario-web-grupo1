@@ -1,23 +1,22 @@
 const rp = require('request-promise');
 
 class NotifyClient {
-
-    constructor() {
-        this.url = "http://127.0.0.1",
-        this.port = "8001"
-    }
-
-    send(listaDeMails) {
-        const options = {
-            url: `${this.url}:${this.port}/notify`,
-            qs: {
-                mails: listaDeMails,
-            }
-        };
-
-        return options;
-    }
+  // eslint-disable-next-line class-methods-use-this
+  enviar(listaDeMails, _subject, _message) {
+    const url = 'http://localhost:';
+    const port = '8001';
+    const options = {
+      url: `${url}${port}/api/notify`,
+      qs: {
+        mails: listaDeMails,
+        subject: _subject,
+        message: _message
+      }
+    };
+    rp.post(options);
+  }
+}
 
 module.exports = {
-    NotifyClient,
+  NotifyClient
 };
