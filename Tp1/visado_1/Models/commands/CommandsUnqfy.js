@@ -188,6 +188,30 @@ class GetLyricsCommand {
   }
 }
 
+class SubscribeCommand {
+  invoke(args, unqfy) {
+    unqfy.suscribe(Number(args[0]), args[1]);
+  }
+}
+
+class UnSuscribeCommand {
+  invoke(args, unqfy) {
+    unqfy.unsubscribe(Number(args[0]), args[1]);
+  }
+}
+
+class SubscriptorsCommand {
+  invoke(args, unqfy) {
+    unqfy.subscriptors(Number(args[0]));
+  }
+}
+
+class BorrarSubscriptorsCommand {
+  invoke(args, unqfy) {
+    unqfy.borrarSubscriptors(Number(args[0]));
+  }
+}
+
 module.exports = {
   AddArtistCommand,
   AddAlbumCommand,
@@ -210,5 +234,9 @@ module.exports = {
   AllAlbumByNameCommand,
   AllArtistByNameCommand,
   PopulateAlbumsForArtist,
-  GetLyricsCommand
+  GetLyricsCommand,
+  SubscribeCommand,
+  UnSuscribeCommand,
+  SubscriptorsCommand,
+  BorrarSubscriptorsCommand
 };

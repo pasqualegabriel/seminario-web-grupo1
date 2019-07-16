@@ -23,7 +23,11 @@ const {
   AllAlbumByNameCommand,
   AllArtistByNameCommand,
   PopulateAlbumsForArtist,
-  GetLyricsCommand
+  GetLyricsCommand,
+  SubscribeCommand,
+  UnSuscribeCommand,
+  SubscriptorsCommand,
+  BorrarSubscriptorsCommand
 } = require('./Models/commands/CommandsUnqfy');
 const { Handler } = require('./Models/Handler/Handler.js');
 
@@ -95,7 +99,11 @@ class HandleCommand {
       allArtistByName: new AllArtistByNameCommand(),
       allAlbumByName: new AllAlbumByNameCommand(),
       populateAlbumsForArtist: new PopulateAlbumsForArtist(),
-      getLyricsCommand: new GetLyricsCommand()
+      getLyricsCommand: new GetLyricsCommand(),
+      subscribe: new SubscribeCommand(),
+      unsuscribe: new UnSuscribeCommand(),
+      subscriptors: new SubscriptorsCommand(),
+      borrarSubscriptors: new BorrarSubscriptorsCommand()
     };
   }
   get(key) {
