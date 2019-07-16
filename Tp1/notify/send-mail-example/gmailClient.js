@@ -1,12 +1,11 @@
 const fs = require('fs');
-const path = require('path');
 const promisify = require('util').promisify;
 const { google } = require('googleapis');
 
 const readFile = promisify(fs.readFile);
 
-const CREDENTIALS_PATH = path.basename('./credentials.json');
-const TOKEN_PATH = '/Escritorio/seminario-web-grupo1/Tp1/notify/send-mail-example/token.json';
+const CREDENTIALS_PATH = 'credentials.json';
+const TOKEN_PATH = 'token.json';
 
 function getGmailClient() {
   const credentials = fs.readFileSync(CREDENTIALS_PATH);

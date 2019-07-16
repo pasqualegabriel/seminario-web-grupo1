@@ -17,17 +17,15 @@ exports.notificarSuscriptor = (listaMail, sujeto, mensaje) => {
   });
 };
 
-function createMessage(mail, sujeto, mensaje) {
-  // You can use UTF-8 encoding for the subject using the method below.
-  // You can also just use a plain string if you don't need anything fancy.
-  const utf8Subject = `=?utf-8?B?${Buffer.from(sujeto).toString('base64')}?=`;
+const createMessage = (subEmail, subject, content) => {
+  const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
   const messageParts = [
-    'From: UNQfy <UNQfy.notifications@gmail.com> ',
-    `To: Lautaro Woites ${mail}`,
+    `To: <${subEmail}>`,
     'Content-Type: text/html; charset=utf-8',
     'MIME-Version: 1.0',
     `Subject: ${utf8Subject}`,
-    `${mensaje}`
+    '',
+    content
   ];
   const message = messageParts.join('\n');
 
@@ -39,4 +37,4 @@ function createMessage(mail, sujeto, mensaje) {
     .replace(/=+$/, '');
 
   return encodedMessage;
-}
+};
