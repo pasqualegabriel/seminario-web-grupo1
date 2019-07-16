@@ -10,5 +10,6 @@ const validate = validator.validate;
 const api = express.Router();
 
 api.post('/notify', notifyController);
+api.get('/active', (req, res, next) => res.status(200).send('ok'));
 
 module.exports = api;
