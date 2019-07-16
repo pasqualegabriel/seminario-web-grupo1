@@ -2,7 +2,7 @@ const rp = require('request-promise');
 
 class LogsClient {
   constructor() {
-    (this.url = 'http://127.0.0.1'), (this.port = '8003');
+    (this.url = 'http://172.20.0.4'), (this.port = '8003');
   }
 
   createOptions(level, message) {
